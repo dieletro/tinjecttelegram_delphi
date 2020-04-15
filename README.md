@@ -2,7 +2,7 @@
 
 Este Componente Foi desenvoilvido pela *ITDevCon*
 em projeto **colaborativo** de código aberto e Adaptado e Atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
-para uso com ChatBots e Integração com os metodos do TInject(por Mike Lustosa) para WhatsApp
+para uso com ChatBots e Integração com os metodos do TInject desenvolvido por [*Mike Lustosa*](https://github.com/mikelustosa/) para WhatsApp
 
 # TInjectTelegram para Delphi
 Para Obter as Ultimas Atualizações, acesse aqui
