@@ -1,17 +1,12 @@
  ![IMG_Logo_TInjectTelegram_s_Fundo](https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png)
 
-
-![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
-
 Este Componente Foi desenvoilvido pela *ITDevCon*
 em projeto **colaborativo** de código aberto e Adaptado por Ruan Diego Lacerda Menezes
 para uso com ChatBots e Integração com os metodos do TInject(por Mike Lustosa) para WhatsApp
 
-
 # TInjectTelegram para Delphi
-Para Obter as Ultimas Atualizações add por mim, acesse aqui
-[github] 
-***https://github.com/dieletro/tinjecttelegram_2020_delphi
+Para Obter as Ultimas Atualizações, acesse aqui
+ * **[*dieletro/tinjecttelegram_2020_delphi*](https://github.com/dieletro/tinjecttelegram_2020_delphi)**
 
 # TInjectTelegram ATUALIZAÇÃO 2020 para Delphi by (dieletro) LMCODE 
 > - [X] Código Atualizado para a Ultima versão da API do Telegram, versão 4.7 de 30 de Março de 2020.
@@ -20,6 +15,8 @@ Para Obter as Ultimas Atualizações add por mim, acesse aqui
 > - [X] Adicionado novos Objetos em conformidade com a API
 > - [X] Correção de Bugs 
 > - [X] Atualização de recursos desde a versão 3.5.5 até a 4.7
+
+![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
 As seguintes pessoas contribuíram para esta biblioteca:
 #///////////////////////////////////////////////////////////////////////////////////
