@@ -1,8 +1,9 @@
  ![IMG_Logo_TInjectTelegram_s_Fundo](https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png)
 
-Este Componente Foi desenvoilvido pela *ITDevCon*
-em projeto **colaborativo** de código aberto e Adaptado e Atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
-para uso com ChatBots e Integração com os metodos do TInject desenvolvido por [*Mike Lustosa*](https://github.com/mikelustosa/) para WhatsApp
+Este Componente Foi desenvoilvido pela *ITDevCon* em projeto **colaborativo** de código aberto, 
+adaptado e atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
+para uso com ChatBots e Integração com os metodos do TInject desenvolvido por 
+[*Mike Lustosa*](https://github.com/mikelustosa/) para WhatsApp
 
 # TInjectTelegram para Delphi
 Para Obter as Ultimas Atualizações, acesse aqui
