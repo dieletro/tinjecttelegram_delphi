@@ -1,6 +1,8 @@
  
 #TInjectTelegram
 
+![IMG_Logo_TInjectTelegram_s_Fundo](https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png)
+
 ![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
 Este Componente Foi desenvoilvido pela *ITDevCon*
