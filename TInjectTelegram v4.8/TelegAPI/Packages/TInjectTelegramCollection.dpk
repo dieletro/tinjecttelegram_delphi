@@ -1,0 +1,132 @@
+{
+ ![IMG_Logo_TInjectTelegram_s_Fundo](https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png)
+
+Este Componente Foi desenvoilvido pela *ITDevCon* em projeto **colaborativo** de código aberto,
+adaptado e atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
+para uso com ChatBots e a Integração com o TInject desenvolvido por
+[*Mike Lustosa*](https://github.com/mikelustosa/) para WhatsApp
+
+# TInjectTelegram para Delphi
+Para Obter as Ultimas Atualizações, acesse aqui
+ * **[*dieletro/tinjecttelegram_2020_delphi*](https://github.com/dieletro/tinjecttelegram_2020_delphi)**
+
+# TInjectTelegram ATUALIZAÇÃO 2020 para Delphi by (dieletro) LMCODE
+> - [X] Código Atualizado para a Ultima versão da API do Telegram, versão 4.7 de 30 de Março de 2020.
+> - [X] Nome dos Objetos Modificados.
+> - [X] Criado Novos Metodos para poder converter tipos distintos de array of string para JSonString
+> - [X] Adicionado novos Objetos em conformidade com a API
+> - [X] Correção de Bugs
+> - [X] Atualização de recursos desde a versão 3.5.5 até a 4.7
+
+![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
+
+As seguintes pessoas contribuíram para esta biblioteca:
+#///////////////////////////////////////////////////////////////////////////////////
+Ruan Diego Lacerda Menezes (dieletro). 03/03/2020;
+	[whatsapp]: ***+5521997196000;
+	[telegram]: ***@diegoguitarra;
+	[email]: ***diegolacerdamenezes@gmail.com;
+	[instagram]: ***lacerdamenezes;
+#///////////////////////////////////////////////////////////////////////////////////
+Aurino (Colaborador da Unit TelegAPI.Emoji)
+#///////////////////////////////////////////////////////////////////////////////////
+Renat Suleymanov (Al-muhandis);
+#///////////////////////////////////////////////////////////////////////////////////
+Bonmario;
+#///////////////////////////////////////////////////////////////////////////////////
+@ashumkin (Alexey Shumkin);
+#///////////////////////////////////////////////////////////////////////////////////
+Ilya Bukhonin (MstrVLT);
+#///////////////////////////////////////////////////////////////////////////////////
+Daniele Spinetti (spinettaro);
+
+# CrossUrl
+Biblioteca para usar bibliotecas de rede do usuário final.
+
+***Instalação e outras informações consulte:***
+[wiki-page] **https://github.com/ms301/CrossUrl/wiki
+[github]    **https://github.com/ms301/CrossUrl
+
+Para utilizar é necessário ter instalado o CrossURL, disponível no endereço:
+[github]
+***https://github.com/kitesoft/itdevcon_2018_delphi_telegram/tree/master/libs/CrossUrl
+ou
+[github]
+***https://github.com/ms301/CrossUrl
+
+Para obter o código original, acesse:
+# Delphi Telegram
+[github]
+***https://github.com/kitesoft/itdevcon_2018_delphi_telegram
+}
+
+package TInjectTelegramCollection;
+
+{$R *.res}
+{$R *.dcr}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  RESTComponents,
+  vcl,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  CrossUrl;
+
+contains
+  CoreAPI in '..\Source\CoreAPI.pas',
+  TelegAPI.Base in '..\Source\TelegAPI.Base.pas',
+  TelegAPI.Bot.Impl in '..\Source\TelegAPI.Bot.Impl.pas',
+  TelegAPI.Bot in '..\Source\TelegAPI.Bot.pas',
+  TelegAPI.Ext.Sessions in '..\Source\TelegAPI.Ext.Sessions.pas',
+  TelegAPI.Helpers in '..\Source\TelegAPI.Helpers.pas',
+  TelegAPI.Logger.Old in '..\Source\TelegAPI.Logger.Old.pas',
+  TelegAPI.Logger in '..\Source\TelegAPI.Logger.pas',
+  TelegAPI.Receiver.Base in '..\Source\TelegAPI.Receiver.Base.pas',
+  TelegAPI.Receiver.Console in '..\Source\TelegAPI.Receiver.Console.pas',
+  TelegAPI.Receiver.Service in '..\Source\TelegAPI.Receiver.Service.pas',
+  TelegAPI.Receiver.UI in '..\Source\TelegAPI.Receiver.UI.pas',
+  TelegAPI.Types.Enums in '..\Source\TelegAPI.Types.Enums.pas',
+  TelegAPI.Types.Impl in '..\Source\TelegAPI.Types.Impl.pas',
+  TelegAPI.Types.InlineQueryResults in '..\Source\TelegAPI.Types.InlineQueryResults.pas',
+  TelegAPI.Types.InputMessageContents in '..\Source\TelegAPI.Types.InputMessageContents.pas',
+  TelegAPI.Types in '..\Source\TelegAPI.Types.pas',
+  TelegAPI.Types.Passport in '..\Source\TelegAPI.Types.Passport.pas',
+  TelegAPI.Types.ReplyMarkups in '..\Source\TelegAPI.Types.ReplyMarkups.pas',
+  TelegAPI.UpdateParser in '..\Source\TelegAPI.UpdateParser.pas',
+  TelegAPI.Utils.Json in '..\Source\TelegAPI.Utils.Json.pas',
+  TelegraPh in '..\Source\TelegraPh.pas',
+  TelegraPh.Types in '..\Source\TelegraPh.Types.pas',
+  TelegAPI.RegisterIDE in '..\Source\TelegAPI.RegisterIDE.pas',
+  TelegAPI.Emoji in '..\Source\TelegAPI.Emoji.pas';
+
+end.
