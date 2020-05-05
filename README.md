@@ -9,13 +9,24 @@ para uso com ChatBots e a Integração com o TInject desenvolvido por
 Para Obter as Ultimas Atualizações, acesse aqui
  * **[*dieletro/tinjecttelegram_2020_delphi*](https://github.com/dieletro/tinjecttelegram_2020_delphi)**
 
+# Grupos de Apoio aos desenvolvedores:
+ * **[*Telegram*](https://t.me/TinjectTelegram)**
+ * **[*Whatsapp*](https://chat.whatsapp.com/KyepdH5XYw9KnuLlobGFAE)**
+
 # TInjectTelegram ATUALIZAÇÃO 2020 para Delphi by (dieletro) LMCODE 
-> - [X] Código Atualizado para a Ultima versão da API do Telegram, versão 4.7 de 30 de Março de 2020.
+> - [X] Código Atualizado para a Última versão da API do Telegram, versão 4.8 de 24 de Abril de 2020.
 > - [X] Nome dos Objetos Modificados.
 > - [X] Criado Novos Metodos para poder converter tipos distintos de array of string para JSonString 
 > - [X] Adicionado novos Objetos em conformidade com a API
-> - [X] Correção de Bugs 
-> - [X] Atualização de recursos desde a versão 3.5.5 até a 4.7
+> - [X] Correção de Bugs em diversos metodos  
+> - [X] Atualização de recursos desde a versão 3.5.5 até a 4.8
+> - [X] Adicionado a função SendPool (Envio de Enquetes e Quiz).
+> - [X] Adicionado a função SendDice (Envio de um Dado ou um Dardo animado).
+> - [X] Corrigida a função SendLocation (Envio de Localização).
+> - [X] Corrigida a função SendVenue (Envio de Localização com Texto).
+> - [ ] Adicionado a função SendAnimaion (Envio de uma animação).
+> - [ ] Adicionado a função SendInvoice (Envio de uma Ordem de Pagamento).
+> - [X] Adicionado o type TtgKeyboardButtonPollType.
 
 ![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
