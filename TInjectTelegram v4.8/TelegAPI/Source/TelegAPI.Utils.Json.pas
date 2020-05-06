@@ -75,8 +75,8 @@ begin
   LValue := Self.FindValue(APath);
   if (LValue is TJSONString) then
   begin
-    TJSONStringHack(LValue).FValue := '';// FStrBuffer.Clear();
-    TJSONStringHack(LValue).FValue :=AValue;//FStrBuffer.Append(AValue);
+    TJSONStringHack(LValue).{$Ifdef VER330}FValue{$else}Value{$endif} := '';// FStrBuffer.Clear();
+    TJSONStringHack(LValue).{$Ifdef VER330}FValue{$else}Value{$endif} :=AValue;//FStrBuffer.Append(AValue);
   end;
 end;
 { TJsonUtils }

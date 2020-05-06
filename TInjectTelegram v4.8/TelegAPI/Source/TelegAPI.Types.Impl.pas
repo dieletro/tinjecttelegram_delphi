@@ -18,6 +18,9 @@ type
     function LastName: string;
     function Username: string;
     function LanguageCode: string;
+    function CanJoinGroups: Boolean;
+    function CanReadAllGroupMessages: Boolean;
+    function SupportsInlineQueries: Boolean;
   end;
 
   TtgChatMember = class(TBaseJson, ItgChatMember)
@@ -165,6 +168,14 @@ type
     function FirstName: string;
     function LastName: string;
     function UserId: Int64;
+  end;
+
+{ TODO 5 -oRuan Diego -cContatos : Adicionando Metodo Para Capturar lista de Contatos }
+  TtgContacts = class(TBaseJson, ItgContacts)
+    public
+      function Contacts : TArray<ItgContact>;
+      function SavedCount : Integer;
+      function Users : TArray<ItgUser>;
   end;
 
   TtgPollOption = class(TBaseJson, ItgPollOption)
@@ -1108,6 +1119,21 @@ end;
 
 { TtgUser }
 
+function TtgUser.CanJoinGroups: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('can_join_groups');
+end;
+
+function TtgUser.CanReadAllGroupMessages: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('can_read_all_group_messages');
+end;
+
+function TtgUser.SupportsInlineQueries: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('supports_inline_queries');
+end;
+
 function TtgUser.FirstName: string;
 begin
   Result := ReadToSimpleType<string>('first_name');
@@ -1132,6 +1158,7 @@ function TtgUser.LastName: string;
 begin
   Result := ReadToSimpleType<string>('last_name');
 end;
+
 
 function TtgUser.Username: string;
 begin
@@ -2141,6 +2168,23 @@ end;
 function TtgDice.value: Integer;
 begin
   Result := ReadToSimpleType<Integer>('value');
+end;
+
+{ TtgContacts }
+
+function TtgContacts.Contacts: TArray<ItgContact>;
+begin
+  Result := ReadToArray<ItgContact>(TtgContact, 'contacts');
+end;
+
+function TtgContacts.SavedCount: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('saved_count');
+end;
+
+function TtgContacts.Users: TArray<ItgUser>;
+begin
+  Result := ReadToArray<ItgUser>(TtgUser, 'users');
 end;
 
 End.

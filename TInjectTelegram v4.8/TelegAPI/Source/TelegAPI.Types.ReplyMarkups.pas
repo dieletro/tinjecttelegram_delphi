@@ -20,6 +20,7 @@ type
     FType: string;
   public
     property &Type: string read FType write FType;
+    constructor Create(const AType: string); overload;
   end;
 
   TtgInlineKeyboardButton = class(TtgButtonBase)
@@ -54,13 +55,15 @@ type
     FRequestLocation: Boolean;
     [JSONName('request_contact')]
     FRequestContact: Boolean;
-    [JSONName('request_poll')]
     FRequestPoll : TtgKeyboardButtonPollType;
   public
+    constructor Create(Const ARequestPoll: TtgKeyboardButtonPollType; AText: string; ARequestContact: Boolean = False;
+      ARequestLocation: Boolean = False); overload;
     constructor Create(const AText: string; ARequestContact: Boolean = False;
       ARequestLocation: Boolean = False); overload;
     property RequestContact: Boolean read FRequestContact write FRequestContact;
     property RequestLocation: Boolean read FRequestLocation write FRequestLocation;
+    [JSONName('request_poll')]
     property RequestPoll : TtgKeyboardButtonPollType read FRequestPoll write FRequestPoll;
   end;
 
@@ -148,13 +151,17 @@ begin
   Self.CallbackData := ACallbackData;
 end;
 
-constructor TtgKeyboardButton.Create(const AText: string; ARequestContact,
-  ARequestLocation: Boolean);
+constructor TtgKeyboardButton.Create(Const ARequestPoll: TtgKeyboardButtonPollType; AText: string; ARequestContact: Boolean = False;
+      ARequestLocation: Boolean = False);
 begin
   inherited Create;
   Self.Text := AText;
   Self.RequestContact := ARequestContact;
   Self.RequestLocation := ARequestLocation;
+  if ARequestPoll <> nil then
+  Begin
+    Self.RequestPoll := ARequestPoll;
+  End;
 end;
 
 constructor TtgInlineKeyboardMarkup.Create(AInlineKeyboardRow: TArray<
@@ -240,6 +247,22 @@ constructor TtgReplyKeyboardRemove.Create(ARemoveKeyboard: Boolean);
 begin
   inherited Create;
   RemoveKeyboard := ARemoveKeyboard;
+end;
+
+{ TtgKeyboardButtonPollType }
+
+constructor TtgKeyboardButtonPollType.Create(const AType: string);
+begin
+  &Type := AType;
+end;
+
+constructor TtgKeyboardButton.Create(const AText: string; ARequestContact,
+  ARequestLocation: Boolean);
+begin
+  inherited Create;
+  Self.Text := AText;
+  Self.RequestContact := ARequestContact;
+  Self.RequestLocation := ARequestLocation;
 end;
 
 end.

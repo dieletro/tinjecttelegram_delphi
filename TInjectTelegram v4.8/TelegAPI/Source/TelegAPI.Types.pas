@@ -16,6 +16,9 @@ type
     function LastName: string;
     function Username: string;
     function LanguageCode: string;
+    function CanJoinGroups: Boolean;           //can_join_groups	Boolean	                Optional. True, if the bot can be invited to groups. Returned only in getMe.
+    function CanReadAllGroupMessages: Boolean; //can_read_all_group_messages	Boolean	    Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
+    function SupportsInlineQueries: Boolean;   //supports_inline_queries	Boolean	        Optional. True, if the bot supports inline queries. Returned only in
   end;
 
   ItgChatMember = interface
@@ -157,6 +160,17 @@ type
     function FirstName: string;
     function LastName: string;
     function UserId: Int64;
+  end;
+
+{ TODO 5 -oRuan Diego -cContatos : Adicionando Metodo Para Capturar lista de Contatos }
+  ItgContacts = interface
+    ['{FCD0E130-1BD3-4058-9A3A-B888CCAC13DA}']
+//    contacts	Vector<Contact>	Contact list
+//    saved_count	int	Number of contacts that were saved successfully
+//    users	Vector<User>	User list
+    function Contacts : TArray<ItgContact>;
+    function SavedCount : Integer;
+    function Users : TArray<ItgUser>;
   end;
 
   ItgPollOption = interface
