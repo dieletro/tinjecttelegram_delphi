@@ -65,9 +65,17 @@ type
     btnEnviarDardo: TButton;
     txtNomeJogo: TEdit;
     Label4: TLabel;
+<<<<<<< .mine
     btnSolicitarCtt: TButton;
     btnSolicitarLocalizacao: TButton;
     btnComoSaberID: TButton;
+    btnADD: TButton;
+||||||| .r18
+=======
+    btnSolicitarCtt: TButton;
+    btnSolicitarLocalizacao: TButton;
+    btnComoSaberID: TButton;
+>>>>>>> .r28
     procedure btnEnviaTextoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -103,10 +111,19 @@ type
       AChosenInlineResult: ItgChosenInlineResult);
     procedure btnEnviarAnimacaoClick(Sender: TObject);
     procedure btnEnviarDardoClick(Sender: TObject);
+<<<<<<< .mine
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnSolicitarCttClick(Sender: TObject);
     procedure btnSolicitarLocalizacaoClick(Sender: TObject);
     procedure btnComoSaberIDClick(Sender: TObject);
+    procedure btnADDClick(Sender: TObject);
+||||||| .r18
+=======
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnSolicitarCttClick(Sender: TObject);
+    procedure btnSolicitarLocalizacaoClick(Sender: TObject);
+    procedure btnComoSaberIDClick(Sender: TObject);
+>>>>>>> .r28
   private
     { Private declarations }
   public
@@ -119,6 +136,7 @@ type
     MyInlineQuery   : ItgInlineQuery;
 
     MyFile          : TtgFileToSend;
+    MyFiles         : TArray<TtgFileToSend>;
     MyLocation      : TtgLocation;
     MyVenue         : TtgVenue;
     MyMedia         : TArray<TtgInputMedia>;
@@ -135,7 +153,7 @@ type
     LMarkup         : IReplyMarkup; //Necessario declarar TelegAPI.Types.ReplyMarkups
 
     LChatID         : Int64;
-
+    FileCount       : Integer; //Variavel para contar os Arquivos no SendMediaGroup
     { Public declarations }
   end;
 
@@ -145,6 +163,38 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.btnADDClick(Sender: TObject);
+var
+  I : Integer;
+  F: Integer;
+begin
+  if FileCount > 10 then
+    FileCount := 0;
+
+  FileCount := FileCount + 1;
+
+  AbrirArquivo.InitialDir := '..\..\'+ExtractFilePath(Application.ExeName);
+  AbrirArquivo.Filter := 'Fotos e Videos|*.jpeg;*.jpg;*.gif;*.png;*.bmp;*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv';
+
+  if FileCount <= 10 then // Limite de arquivos da API
+  Begin
+    SetLength(MyFiles, FileCount);
+
+    if AbrirArquivo.Execute then
+      MyFiles[FileCount - 1] := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
+
+    SetLength(MyMedia, Length(MyFiles));
+
+    if ExtractFileExt(AbrirArquivo.FileName) = '.png' then
+      MyMedia[FileCount - 1] := TtgInputMediaPhoto.Create(MyFiles[FileCount - 1], 'Meu teste de Midia Group');
+    if ExtractFileExt(AbrirArquivo.FileName) = '.mp4' then
+      MyMedia[FileCount - 1] := TtgInputMediaVideo.Create(MyFiles[FileCount - 1], 'Meu teste de Midia Group');
+  End
+  Else
+  Showmessage('Você já atingiu o limite de 10 arquivos para envio agrupado!');
+
+end;
 
 procedure TForm1.btnApagarBotoesClick(Sender: TObject);
 begin
@@ -251,10 +301,22 @@ begin
 end;
 
 procedure TForm1.btnEnviarAnimacaoClick(Sender: TObject);
+var
+ MyThumb : TtgFileToSend;
 begin
-{
-Função com erro... Em desenvolvimento
-}
+
+<<<<<<< .mine
+  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv|Todos|*.*';
+
+  if AbrirArquivo.Execute then
+    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
+||||||| .r18
+  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv|Todos|*.*';
+  if AbrirArquivo.Execute then
+    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
+=======
 //  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
 //  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv|Todos|*.*';
 //  if AbrirArquivo.Execute then
@@ -277,14 +339,56 @@ Função com erro... Em desenvolvimento
 //  end
 //  else
 //    memConsole.Lines.Add('Ative o Serviço primeiro!');
+>>>>>>> .r28
 
+<<<<<<< .mine
+  AbrirArquivo.Filter := 'Fotos|*.jpeg;*.jpg;*.gif;*.png;*.bmp|Todos|*.*';
+  if AbrirArquivo.Execute then
+    MyThumb := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
+||||||| .r18
+  AbrirArquivo.Filter := 'Fotos|*.jpeg;*.jpg;*.gif;*.png;*.bmp|Todos|*.*';
+  if AbrirArquivo.Execute then
+    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
+=======
+>>>>>>> .r28
 
+<<<<<<< .mine
+  if InjectTelegramReceiverService1.IsActive then
+  begin
+    if txtID.Text <> '' then
+    try
+      InjectTelegram1.SendAnimation(StrToInt(txtID.Text), MyFile,10,0,0,MyThumb,'Texo da Animção', LParseMode, False, 0, LMarkup);
+      except on e:exception do
+      begin
+        memConsole.Lines.Add('**** Falha ***** Tente outra Animação.');
+      end;
+    end;
+  end
+  else
+    memConsole.Lines.Add('Ative o Serviço primeiro!');
+||||||| .r18
+  if InjectTelegramReceiverService1.IsActive then
+  begin
+    if txtID.Text <> '' then
+    try
+      InjectTelegram1.SendAnimation(StrToInt(txtID.Text), MyFile,30,0,0,{Thumb}MyFile,{Caption}'Texo da Animção', LParseMode, False, 0, LMarkup);
+      except on e:exception do
+      begin
+        memConsole.Lines.Add('**** Falha ***** Tente outra Animação.');
+      end;
+    end;
+  end
+  else
+    memConsole.Lines.Add('Ative o Serviço primeiro!');
+=======
   MyChatId  := TtgUserLink.FromUserName(txtID.Text);
 
  // MyChatId  := TtgUserLink.FromID(StrToInt(txtID.Text));
 
   memConsole.Lines.Add(MyChatId.ID.ToString);
   memConsole.Lines.Add(MyChatId.Username);
+>>>>>>> .r28
+
 end;
 
 procedure TForm1.btnEnviarContatoClick(Sender: TObject);
@@ -330,32 +434,24 @@ end;
 
 procedure TForm1.btnEnviarGrpMidiasClick(Sender: TObject);
 var
-  AAnexo : String;
   I: integer;
 Begin
 {
 Função com erro... Em desenvolvimento
 }
-  AbrirArquivo.InitialDir := '..\..\'+ExtractFilePath(Application.ExeName);
-
-  if AbrirArquivo.Execute then
-    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
-
-  SetLength(MyMedia, Length(MyMedia){AbrirArquivo.Files.Count});
-
-  MyMedia[0] := TtgInputMedia.Create(MyFile, 'Meu teste de Midia');
-
-//  for I := 1 to AbrirArquivo.Files.Count do
-//  Begin
-//    MyMedia[I] := TtgInputMedia.Create(MyFile, 'Meu teste de Midia');
-//  End;
-
   if InjectTelegramReceiverService1.IsActive then
   begin
     if txtID.Text <> '' then
     try
       MyChatId  := TtgUserLink.FromID(StrToInt(txtID.Text));
-      InjectTelegram1.sendMediaGroup(MyChatId.ID, MyMedia, False, 0);
+      if Assigned(MyMedia) then
+        try
+          InjectTelegram1.sendMediaGroup(MyChatId.ID, MyMedia, False, 0);
+        finally
+          MyFile.Free;
+          for I := 0 to Length(MyMedia) - 1 do
+            MyMedia[I].Free;
+        end;
       except on e:exception do
       begin
         memConsole.Lines.Add('**** Falha ***** Tente outra Coletania de Midias.');
@@ -381,8 +477,8 @@ Função com erro... Em desenvolvimento
   pgMetod := 'pm_card_visa';
 
   SetLength(MyPrices, 1);
-//  MyPrices[0] :=  TtgLabeledPrice.Create('Açucar Mascavo', 100);
-    MyPrices[1] :=  TtgLabeledPrice.Create('{["label":Açucar,"amount":1500]}');
+  MyPrices[0] :=  TtgLabeledPrice.Create('Açucar', 100);
+ //   MyPrices[1] :=  TtgLabeledPrice.Create('{["label":Açucar,"amount":1500]}');
   //'[{"jSon":"{"label":Acucar Mascavo,"amount":100}"}]'
 
   if InjectTelegramReceiverService1.IsActive then
@@ -399,7 +495,7 @@ Função com erro... Em desenvolvimento
         pvToken,//'ProviderToken', //Token do Provedor de PG via BotFather..
         pgMetod ,//'StatParameter'
         'BRL',//'Currency', //BRL
-        {MyPrices}[TtgLabeledPrice.Create('label', 6000)]   //Até aqui é Obrigatorio...
+        MyPrices  //Até aqui é Obrigatorio...
         );//,
         //               'PhotoUrl',
         //               0, 0, 0, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0,nil);
@@ -805,19 +901,31 @@ Begin
   result := FloatToStr(floatValue);
 End;
 
+<<<<<<< .mine
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  I: Integer;
+begin
+  if InjectTelegramReceiverService1.IsActive then
+    InjectTelegramReceiverService1.Stop;
+end;
+
+||||||| .r18
+=======
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if InjectTelegramReceiverService1.IsActive then
     InjectTelegramReceiverService1.Stop;
 end;
 
+>>>>>>> .r28
 procedure TForm1.FormCreate(Sender: TObject);
 begin
 {Envie Markdown ou HTML, se você deseja que os aplicativos Telegram
 mostrem texto em negrito, itálico, largura fixa ou URLs embutidos na
 mensagem do seu bot.}
 LParseMode := TtgParseMode.Markdown; //Necessario declarar TelegAPI.Types.Enums
-
+FileCount := 0;
 end;
 
 procedure TForm1.InjectTelegramExceptionManagerUI1Log(ASender: TObject;
