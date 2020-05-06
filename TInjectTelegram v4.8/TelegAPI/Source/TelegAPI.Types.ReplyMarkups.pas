@@ -63,7 +63,7 @@ type
       ARequestLocation: Boolean = False); overload;
     property RequestContact: Boolean read FRequestContact write FRequestContact;
     property RequestLocation: Boolean read FRequestLocation write FRequestLocation;
-    [JSONName('request_poll')]
+    [JSONName('request_poll')] //Resolvido
     property RequestPoll : TtgKeyboardButtonPollType read FRequestPoll write FRequestPoll;
   end;
 
