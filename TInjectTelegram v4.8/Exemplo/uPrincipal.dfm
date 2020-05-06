@@ -3592,7 +3592,6 @@ object Form1: TForm1
     Align = alBottom
     ScrollBars = ssBoth
     TabOrder = 4
-    ExplicitTop = 411
   end
   object btnEnviaFoto: TButton
     Left = 151
@@ -3754,9 +3753,10 @@ object Form1: TForm1
   object btnEnviarGrpMidias: TButton
     Left = 8
     Top = 361
-    Width = 137
+    Width = 113
     Height = 25
     Caption = 'Enviar Grupo de M'#237'dias'
+    Default = True
     TabOrder = 21
     OnClick = btnEnviarGrpMidiasClick
   end
@@ -3796,6 +3796,7 @@ object Form1: TForm1
     Width = 137
     Height = 25
     Caption = 'Enviar Anima'#231#227'o'
+    Default = True
     TabOrder = 25
     OnClick = btnEnviarAnimacaoClick
   end
@@ -3847,6 +3848,16 @@ object Form1: TForm1
     Default = True
     TabOrder = 30
     OnClick = btnComoSaberIDClick
+  end
+  object btnADD: TButton
+    Left = 120
+    Top = 361
+    Width = 25
+    Height = 25
+    Caption = '+'
+    Default = True
+    TabOrder = 31
+    OnClick = btnADDClick
   end
   object InjectTelegram1: TInjectTelegram
     Logger = InjectTelegramExceptionManagerUI1
