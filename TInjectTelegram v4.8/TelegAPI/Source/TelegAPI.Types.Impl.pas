@@ -401,7 +401,7 @@ type
     constructor Create(const AText: string; AAmount: Int64); reintroduce; overload;
     constructor Create(const AJson: string); overload; override;
     [JSonName('label')]
-    property sText: String read FText write FText;
+    property sLabel: String read FText write FText;
     [JSonName('amount')]
     property sAmount: Int64 read FAmount write FAmount;
   end;

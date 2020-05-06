@@ -267,10 +267,6 @@ type
     function TotalAmount: Int64;
   end;
 
-  ITgMessagePadrao = interface
-    ['{66BC2558-00C0-4BDD-BDDE-E83249787B30}']
-  end;
-
   ITgMessage = interface
     ['{66BC2558-00C0-4BDD-BDDE-E83249787B30}']
     function MessageId: Int64;
@@ -465,9 +461,10 @@ type
     FFileToSend: TtgFileToSend;
   public
     function GetFileToSend: TtgFileToSend;
-    constructor Create(AMedia: TtgFileToSend; const ACaption: string = ''); virtual;
+    constructor Create(AMedia: TtgFileToSend; const ACaption: string = ''); overload;  virtual;
+    constructor Create(AType: String; AMedia: TtgFileToSend; const ACaption: string = ''); overload;
     [JsonName('type')]
-    property {}&Type: string read FType write FType;
+    property &Type: string read FType write FType;
     property Media: string read FMedia write FMedia;
     property Caption: string read FCaption write FCaption;
     [JsonName('parse_mode')]
@@ -523,6 +520,13 @@ begin
     TtgFileToSendTag.FromFile, TtgFileToSendTag.FromStream:
       FMedia := 'attach://' + ExtractFileName(AMedia.Data);
   end;
+end;
+
+constructor TtgInputMedia.Create(AType: String; AMedia: TtgFileToSend;
+  const ACaption: string);
+begin
+  Self.Create(AMedia, ACaption);
+  FType := AType;
 end;
 
 function TtgInputMedia.GetFileToSend: TtgFileToSend;
