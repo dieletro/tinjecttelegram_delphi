@@ -1502,6 +1502,8 @@ type
       const NeedPhoneNumber: Boolean = False; //
       const NeedEmail: Boolean = False; //
       const NeedShippingAddress: Boolean = False; //
+      const SendPhoneNumberToProvider: Boolean = False; //
+      const SendRmailToProvider: Boolean = False; //
       const IsFlexible: Boolean = False; //
       const DisableNotification: Boolean = False; //
       const ReplyToMessageId: Int64 = 0; //

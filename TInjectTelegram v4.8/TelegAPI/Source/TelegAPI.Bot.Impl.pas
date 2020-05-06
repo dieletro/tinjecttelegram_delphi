@@ -338,6 +338,8 @@ type
       const NeedPhoneNumber: Boolean = False; //
       const NeedEmail: Boolean = False; //
       const NeedShippingAddress: Boolean = False; //
+      const SendPhoneNumberToProvider: Boolean = False; //
+      const SendRmailToProvider: Boolean = False; //
       const IsFlexible: Boolean = False; //
       const DisableNotification: Boolean = False; //
       const ReplyToMessageId: Int64 = 0; //
@@ -1592,7 +1594,8 @@ function TInjectTelegram.SendInvoice(const ChatId: Int64; const Title: string;
   TtgLabeledPrice>; const ProviderData: string; const PhotoUrl: string; const
   PhotoSize: Int64; const PhotoWidth: Int64; const PhotoHeight: Int64; const
   NeedName: Boolean; const NeedPhoneNumber: Boolean; const NeedEmail: Boolean;
-  const NeedShippingAddress: Boolean; const IsFlexible: Boolean; const
+  const NeedShippingAddress: Boolean; const SendPhoneNumberToProvider: Boolean;
+      const SendRmailToProvider: Boolean; const IsFlexible: Boolean; const
   DisableNotification: Boolean; const ReplyToMessageId: Int64; ReplyMarkup:
   IReplyMarkup): ITgMessage;
 Var
@@ -1619,6 +1622,8 @@ begin
     .AddParameter('need_phone_number', NeedPhoneNumber, False, False) //
     .AddParameter('need_email', NeedEmail, False, False) //
     .AddParameter('need_shipping_address', NeedShippingAddress, False, False) //
+    .AddParameter('send_phone_number_to_provider', SendPhoneNumberToProvider, False, False) //
+    .AddParameter('send_email_to_provider', SendRmailToProvider, False, False) //
     .AddParameter('is_flexible', IsFlexible, False, False) //
     .AddParameter('disable_notification', DisableNotification, False, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
