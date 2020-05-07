@@ -28,7 +28,7 @@ Para Obter as Ultimas Atualizações, acesse aqui
 > - [X] Adicionado a função SendMediaGroup (Envio de Fotos e Videos Agrupados).
 > - [X] Adicionado o type TtgKeyboardButtonPollType.
 > - [X] Correção no Método de Envio Send com Botões.
-> - [ ] Adicionado a função SendInvoice (Envio de uma Ordem de Pagamento).
+> - [X] Adicionado a função SendInvoice (Envio de uma Ordem de Pagamento).
 
 ![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
