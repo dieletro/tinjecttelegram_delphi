@@ -409,8 +409,8 @@ type
 
   ItgLabeledPrice = interface
     ['{3EB70EDB-1D5D-42E4-AACD-A225316482E3}']
-    function Text: string;
-    function Amount: Int64;
+    function &label: string;
+    function amount: Int64;
   end;
 
   ItgShippingOption = interface

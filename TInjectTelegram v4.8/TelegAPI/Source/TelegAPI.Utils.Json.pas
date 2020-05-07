@@ -3,7 +3,7 @@
 interface
 
 uses
-  System.Json;
+  System.Json, REST.Json, REST.JsonReflect, REST.Json.Types;
 
 type
   TBaseJsonClass = class of TBaseJson;
@@ -32,7 +32,11 @@ type
   TJsonUtils = class
     /// Nova Função ArrayStringToJString By Ruan Diego Lacerda Menezes
     /// para compatibilizar e add o SendPoll
+    class function ObjectToJsonValue(AObject: TObject; AOptions: TJsonOptions): TJSONValue; static;
+    class procedure ProcessOptions(AJsonObject: TJSONObject; AOptions: TJsonOptions); static;
     class function ArrayStringToJString(LArray: Array of String): string;
+    class function ArrayLebeledPriceToJString<T: class>(LArray:  TArray<T>): string; static;
+    class function ArrayToJString2<T: class>(LArray: TArray<T>): string;
     class function ArrayToJString<T: class>(LArray: TArray<T>): string;
     class function ObjectToJString(AObj: TObject): string;
     class function FileToObject<T: class, constructor>(const AFileName: string): T;
@@ -51,7 +55,7 @@ type
 implementation
 
 uses
-  REST.Json,
+  TelegAPI.Types.Impl,
   System.DateUtils,
   System.IOUtils,
   System.SysUtils,
@@ -99,6 +103,41 @@ begin
 
 end;
 
+class function TJsonUtils.ArrayLebeledPriceToJString<T>(LArray:  TArray<T>): string;
+Var
+  I: Integer;
+begin
+  result := '[{"jSon":"{';
+  for I := Low(LArray) to High(LArray) do
+  begin
+    if (LArray[I] as TtgLabeledPrice).sLabel <> '' then
+      Result := Result + '"label":"' + (LArray[I] as TtgLabeledPrice).sLabel + '"';
+    if (LArray[I] as TtgLabeledPrice).sAmount.ToString <> '' then
+      Result := Result + ',"amount":"' +(LArray[I] as TtgLabeledPrice).sAmount.ToString +'"}' ;
+     if I <> High(LArray) then
+       result := result +',';
+  End;
+  Result := Result + '}]';
+  Result := Result.Replace('"inline_keyboard":null', '', [rfReplaceAll]);
+end;
+
+class function TJsonUtils.ArrayToJString2<T>(LArray: TArray<T>): string;
+var
+  I: Integer;
+begin
+  Result := '[';
+  for I := Low(LArray) to High(LArray) do
+    if Assigned(LArray[I]) then
+    begin
+      Result := Result  + ObjectToJString(LArray[I]);
+      if I <> High(LArray) then
+        Result := Result + ',';
+    end;
+  Result := Result + ']';
+  Result := Result.Replace('"inline_keyboard":null', '', [rfReplaceAll]);
+//
+end;
+
 class function TJsonUtils.ArrayToJString<T>(LArray: TArray<T>): string;
 var
   I: Integer;
@@ -142,6 +181,73 @@ begin // IF DELPHI_VERSION < TOKIO
     Result := TJson.ObjectToJsonString(AObj)
   else
     Result := 'null';
+end;
+
+class function TJsonUtils.ObjectToJsonValue(AObject: TObject; AOptions: TJsonOptions): TJSONValue;
+var
+  LMarshaler: TJSONMarshal;
+begin
+
+  LMarshaler := TJSONMarshal.Create(TJSONConverter.Create);
+  try
+    LMarshaler.DateTimeIsUTC  := joDateIsUTC in AOptions;
+    if joDateFormatUnix in AOptions then
+      LMarshaler.DateFormat :=jdfUnix
+    else if joDateFormatISO8601 in AOptions then
+      LMarshaler.DateFormat := jdfISO8601
+    else if joDateFormatMongo in AOptions then
+      LMarshaler.DateFormat := jdfMongo
+    else if joDateFormatParse in AOptions then
+      LMarshaler.DateFormat := jdfParse;
+
+    Result := LMarshaler.Marshal(AObject);
+    if Result is TJSONObject then
+      ProcessOptions(TJSONObject(Result), AOptions);
+  finally
+    LMarshaler.Free;
+  end;
+end;
+
+class procedure TJsonUtils.ProcessOptions(AJsonObject: TJSONObject;
+  AOptions: TJsonOptions);
+var
+  LPair: TJSONPair;
+  LItem: TObject;
+  i: Integer;
+
+  function IsEmpty(ASet: TJsonOptions): Boolean;
+  var
+    LElement: TJsonOption;
+  begin
+    Result := True;
+    for LElement in ASet do
+    begin
+      Result := False;
+      break;
+    end;
+  end;
+
+begin
+  if Assigned(AJsonObject) and not IsEmpty(AOptions) then
+
+    for i := AJsonObject.Count - 1 downto 0 do
+    begin
+      LPair := TJSONPair(AJsonObject.Pairs[i]);
+      if LPair.JsonValue is TJSONObject then
+        ProcessOptions(TJSONObject(LPair.JsonValue), AOptions)
+      else if LPair.JsonValue is TJSONArray then
+      begin
+        if (joIgnoreEmptyArrays in AOptions) and (TJSONArray(LPair.JsonValue).Count = 0) then
+          AJsonObject.RemovePair(LPair.JsonString.Value).DisposeOf
+        else
+          for LItem in TJSONArray(LPair.JsonValue) do
+            if LItem is TJSONObject then
+              ProcessOptions(TJSONObject(LItem), AOptions)
+      end
+      else
+        if (joIgnoreEmptyStrings in AOptions) and (LPair.JsonValue.value = '') then
+          AJsonObject.RemovePair(LPair.JsonString.Value).DisposeOf;
+    end;
 end;
 
 { TBaseJson }

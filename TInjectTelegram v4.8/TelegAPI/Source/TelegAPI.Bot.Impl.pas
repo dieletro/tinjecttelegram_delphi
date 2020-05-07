@@ -355,6 +355,7 @@ type
     function AnswerPreCheckoutQueryBad( //
       const PreCheckoutQueryId: string; //
       const ErrorMessage: string): Boolean;
+
 {$ENDREGION}
 
 {$REGION 'Games'}
@@ -1599,9 +1600,10 @@ function TInjectTelegram.SendInvoice(const ChatId: Int64; const Title: string;
   DisableNotification: Boolean; const ReplyToMessageId: Int64; ReplyMarkup:
   IReplyMarkup): ITgMessage;
 Var
-  LTmpJson: string;
+  LTmpJson : string;
 begin
   LTmpJson := TJsonUtils.ArrayToJString<TtgLabeledPrice>(Prices);
+ // LTmpJson := TJsonUtils.ArrayLebeledPriceToJString<TtgLabeledPrice>(Prices);
 
   Logger.Enter(Self, 'SendInvoice');
   Result := TTgMessage.Create(GetRequest.SetMethod('sendInvoice') //
@@ -1612,7 +1614,7 @@ begin
     .AddParameter('provider_token', ProviderToken, '', True) //
     .AddParameter('start_parameter', StartParameter, '', True) //
     .AddParameter('currency', Currency, '', True) //
-    .AddParameter('prices', LTmpJson, '', True) //
+    .AddParameter('prices', LTmpJson, '[{"label":"teste","amount":"1500"}]', True) //
     .AddParameter('provider_data', ProviderData, '', False) //
     .AddParameter('photo_url', PhotoUrl, '', False) //
     .AddParameter('photo_size', PhotoSize, 0, False) //

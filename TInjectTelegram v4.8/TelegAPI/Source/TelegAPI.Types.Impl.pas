@@ -382,28 +382,41 @@ type
 {$REGION 'Payments'}
 
   TtgInvoice = class(TBaseJson, ItgInvoice)
+  private
+    FTitle : string;
+    FStartParameter: string;
+    FDescription: string;
+    FCurrency: string;
+    FTotalAmount: Int64;
   public
     function Title: string;
     function Description: string;
     function StartParameter: string;
     function Currency: string;
     function TotalAmount: Int64;
+
+    property sTitle: string read Title write FTitle;
+    property sDescription: string read Description write FDescription;
+    property sStartParameter: string read StartParameter write FStartParameter;
+    property sCurrency: string read Currency write FCurrency;
+    property sTotalAmount: Int64 read TotalAmount write FTotalAmount;
+    constructor Create(const ATitle, ADescription, AStartParameter, Currency: string; ATotalAmount: Int64); overload;
   end;
 
   TtgLabeledPrice = class(TBaseJson, ItgLabeledPrice)
   private
     AJSon : String;
-    FAmount: Int64;
-    FText: String;
-  public
-    function Text: string;
-    function Amount: Int64;
-    constructor Create(const AText: string; AAmount: Int64); reintroduce; overload;
-    constructor Create(const AJson: string); overload; override;
-    [JSonName('label')]
-    property sLabel: String read FText write FText;
     [JSonName('amount')]
-    property sAmount: Int64 read FAmount write FAmount;
+    FAmount: Int64;
+   [JSonName('label')]
+    FLabel: String;
+  public
+    function &label: string;
+    function amount: Int64;
+    constructor Create(const ALabel: string; AAmount: Int64); reintroduce; overload;
+    constructor Create(const AJson: string); overload; override;
+    property sLabel: String read &label write FLabel;
+    property sAmount: Int64 read amount write FAmount;
   end;
 
   /// <summary>
@@ -1073,20 +1086,17 @@ end;
 
 { TtgLabeledPrice }
 //UPDated By Ruan Diego Lacerda Menezes
-constructor TtgLabeledPrice.Create(const AText: string; AAmount: Int64);
+constructor TtgLabeledPrice.Create(const ALabel: string; AAmount: Int64);
 begin
-  FText   := AText;
+  FLabel   := ALabel;
   FAmount := AAmount;
 
-  if Not Assigned(FJSON) then
-  Begin
-    FJSON := TJSONObject.Create;
-    FJSON.AddPair('label', TJSONString.Create(AText));
-    FJSON.AddPair('amount', TJSONNumber.Create(AAmount));
-  End;
+  FJSON := TJSONObject.Create;
+  FJSON.AddPair('label', TJSONString.Create(ALabel));
+  FJSON.AddPair('amount', TJSONNumber.Create(AAmount));
 
-  AJSon := '{["label"='+FText+',"amount"='+FAmount.ToString+']}';
-  // '{["label":'+FText+','+'"amount":'+FAmount.ToString+']}';
+  AJSon := '{"'+FJSON.ToString+'"}';
+
   inherited Create(AJSon);
 end;
 
@@ -1095,14 +1105,16 @@ begin
  inherited Create(AJson);
 end;
 
-function TtgLabeledPrice.Amount: Int64;
+function TtgLabeledPrice.amount: Int64;
 begin
-  Result := ReadToSimpleType<Int64>('amount');
+  FAmount := ReadToSimpleType<Int64>('amount');
+  Result := FAmount;
 end;
 
-function TtgLabeledPrice.Text: string;
+function TtgLabeledPrice.&label: string;
 begin
-  Result := ReadToSimpleType<string>('label');
+  FLabel := ReadToSimpleType<string>('label');
+  Result := FLabel;
 end;
 
 { TtgResponseParameters }
@@ -1739,29 +1751,49 @@ end;
 
 { TtgInvoice }
 
+constructor TtgInvoice.Create(const ATitle, ADescription, AStartParameter,
+  Currency: string; ATotalAmount: Int64);
+begin
+  FTitle := ATitle;
+  FDescription := ADescription;
+  FStartParameter := AStartParameter;
+  FCurrency := Currency;
+  FTotalAmount := ATotalAmount;
+end;
+
 function TtgInvoice.Currency: string;
 begin
-  Result := ReadToSimpleType<string>('currency');
+  //Result := ReadToSimpleType<string>('currency');
+  FCurrency := ReadToSimpleType<string>('currency');
+  Result := FCurrency;
 end;
 
 function TtgInvoice.Description: string;
 begin
-  Result := ReadToSimpleType<string>('description');
+  //Result := ReadToSimpleType<string>('description');
+  FDescription := ReadToSimpleType<string>('description');
+  Result := FDescription;
 end;
 
 function TtgInvoice.StartParameter: string;
 begin
-  Result := ReadToSimpleType<string>('start_parameter');
+  //Result := ReadToSimpleType<string>('start_parameter');
+  FStartParameter := ReadToSimpleType<string>('start_parameter');
+  Result := FStartParameter;
 end;
 
 function TtgInvoice.Title: string;
 begin
-  Result := ReadToSimpleType<string>('title');
+ // Result := ReadToSimpleType<string>('title');
+  FTitle := ReadToSimpleType<string>('title');
+  Result := FTitle;
 end;
 
 function TtgInvoice.TotalAmount: Int64;
 begin
-  Result := ReadToSimpleType<Int64>('total_amount');
+  //Result := ReadToSimpleType<Int64>('total_amount');
+  FTotalAmount := ReadToSimpleType<Int64>('total_amount');
+  Result := FTotalAmount;
 end;
 
 { TtgVideo }
