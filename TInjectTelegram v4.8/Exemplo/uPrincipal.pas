@@ -65,17 +65,10 @@ type
     btnEnviarDardo: TButton;
     txtNomeJogo: TEdit;
     Label4: TLabel;
-<<<<<<< .mine
     btnSolicitarCtt: TButton;
     btnSolicitarLocalizacao: TButton;
     btnComoSaberID: TButton;
     btnADD: TButton;
-||||||| .r18
-=======
-    btnSolicitarCtt: TButton;
-    btnSolicitarLocalizacao: TButton;
-    btnComoSaberID: TButton;
->>>>>>> .r28
     procedure btnEnviaTextoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -111,19 +104,13 @@ type
       AChosenInlineResult: ItgChosenInlineResult);
     procedure btnEnviarAnimacaoClick(Sender: TObject);
     procedure btnEnviarDardoClick(Sender: TObject);
-<<<<<<< .mine
+
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnSolicitarCttClick(Sender: TObject);
     procedure btnSolicitarLocalizacaoClick(Sender: TObject);
     procedure btnComoSaberIDClick(Sender: TObject);
     procedure btnADDClick(Sender: TObject);
-||||||| .r18
-=======
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnSolicitarCttClick(Sender: TObject);
-    procedure btnSolicitarLocalizacaoClick(Sender: TObject);
-    procedure btnComoSaberIDClick(Sender: TObject);
->>>>>>> .r28
+
   private
     { Private declarations }
   public
@@ -174,7 +161,6 @@ begin
 
   FileCount := FileCount + 1;
 
-  AbrirArquivo.InitialDir := '..\..\'+ExtractFilePath(Application.ExeName);
   AbrirArquivo.Filter := 'Fotos e Videos|*.jpeg;*.jpg;*.gif;*.png;*.bmp;*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv';
 
   if FileCount <= 10 then // Limite de arquivos da API
@@ -192,7 +178,7 @@ begin
       MyMedia[FileCount - 1] := TtgInputMediaVideo.Create(MyFiles[FileCount - 1], 'Meu teste de Midia Group');
   End
   Else
-  Showmessage('Você já atingiu o limite de 10 arquivos para envio agrupado!');
+    Showmessage('Você já atingiu o limite de 10 arquivos para envio agrupado!');
 
 end;
 
@@ -226,7 +212,7 @@ end;
 
 procedure TForm1.btnEnviaAudioClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+
   AbrirArquivo.Filter := 'Audio|*.mp3;*.wav;*.ogg';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
@@ -248,7 +234,7 @@ end;
 
 procedure TForm1.btnEnviaFotoClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+
   AbrirArquivo.Filter := 'Fotos|*.jpeg;*.jpg;*.gif;*.png;*.bmp';
   if AbrirArquivo.Execute then
       ImgLoad.Picture.LoadFromFile(AbrirArquivo.FileName);
@@ -305,59 +291,19 @@ var
  MyThumb : TtgFileToSend;
 begin
 
-<<<<<<< .mine
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
-  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv|Todos|*.*';
-
+  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv;*.tgs|Todos|*.*';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
-||||||| .r18
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
-  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv|Todos|*.*';
-  if AbrirArquivo.Execute then
-    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
-=======
-//  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
-//  AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv|Todos|*.*';
-//  if AbrirArquivo.Execute then
-//    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
-//
-//  AbrirArquivo.Filter := 'Fotos|*.jpeg;*.jpg;*.gif;*.png;*.bmp|Todos|*.*';
-//  if AbrirArquivo.Execute then
-//    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
-//
-//  if InjectTelegramReceiverService1.IsActive then
-//  begin
-//    if txtID.Text <> '' then
-//    try
-//      InjectTelegram1.SendAnimation(StrToInt(txtID.Text), MyFile,30,0,0,{Thumb}MyFile,{Caption}'Texo da Animção', LParseMode, False, 0, LMarkup);
-//      except on e:exception do
-//      begin
-//        memConsole.Lines.Add('**** Falha ***** Tente outra Animação.');
-//      end;
-//    end;
-//  end
-//  else
-//    memConsole.Lines.Add('Ative o Serviço primeiro!');
->>>>>>> .r28
 
-<<<<<<< .mine
   AbrirArquivo.Filter := 'Fotos|*.jpeg;*.jpg;*.gif;*.png;*.bmp|Todos|*.*';
   if AbrirArquivo.Execute then
     MyThumb := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
-||||||| .r18
-  AbrirArquivo.Filter := 'Fotos|*.jpeg;*.jpg;*.gif;*.png;*.bmp|Todos|*.*';
-  if AbrirArquivo.Execute then
-    MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile, AbrirArquivo.FileName);
-=======
->>>>>>> .r28
 
-<<<<<<< .mine
   if InjectTelegramReceiverService1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegram1.SendAnimation(StrToInt(txtID.Text), MyFile,10,0,0,MyThumb,'Texo da Animção', LParseMode, False, 0, LMarkup);
+      InjectTelegram1.SendAnimation(StrToInt(txtID.Text), MyFile,30,0,0,MyThumb,'Texo da Animção', LParseMode, False, 0, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add('**** Falha ***** Tente outra Animação.');
@@ -366,28 +312,6 @@ begin
   end
   else
     memConsole.Lines.Add('Ative o Serviço primeiro!');
-||||||| .r18
-  if InjectTelegramReceiverService1.IsActive then
-  begin
-    if txtID.Text <> '' then
-    try
-      InjectTelegram1.SendAnimation(StrToInt(txtID.Text), MyFile,30,0,0,{Thumb}MyFile,{Caption}'Texo da Animção', LParseMode, False, 0, LMarkup);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add('**** Falha ***** Tente outra Animação.');
-      end;
-    end;
-  end
-  else
-    memConsole.Lines.Add('Ative o Serviço primeiro!');
-=======
-  MyChatId  := TtgUserLink.FromUserName(txtID.Text);
-
- // MyChatId  := TtgUserLink.FromID(StrToInt(txtID.Text));
-
-  memConsole.Lines.Add(MyChatId.ID.ToString);
-  memConsole.Lines.Add(MyChatId.Username);
->>>>>>> .r28
 
 end;
 
@@ -412,7 +336,7 @@ end;
 
 procedure TForm1.btnEnviarDocumentoClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+
   AbrirArquivo.Filter := 'Todos os Arquivos|*.*';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
@@ -436,9 +360,7 @@ procedure TForm1.btnEnviarGrpMidiasClick(Sender: TObject);
 var
   I: integer;
 Begin
-{
-Função com erro... Em desenvolvimento
-}
+
   if InjectTelegramReceiverService1.IsActive then
   begin
     if txtID.Text <> '' then
@@ -447,15 +369,15 @@ Função com erro... Em desenvolvimento
       if Assigned(MyMedia) then
         try
           InjectTelegram1.sendMediaGroup(MyChatId.ID, MyMedia, False, 0);
-        finally
-          MyFile.Free;
-          for I := 0 to Length(MyMedia) - 1 do
-            MyMedia[I].Free;
+        except on e:exception do
+          begin
+            memConsole.Lines.Add('**** Falha ***** Tente outra Coletania de Midias.');
+          end;
         end;
-      except on e:exception do
-      begin
-        memConsole.Lines.Add('**** Falha ***** Tente outra Coletania de Midias.');
-      end;
+    finally
+      MyFile.Free;
+      for I := 0 to Length(MyMedia) -1 do
+        MyMedia[I].Free;
     end;
   end
   else
@@ -464,41 +386,37 @@ end;
 
 procedure TForm1.btnEnviarInvoiceClick(Sender: TObject);
 var
-  AText, sJson : String;
+  AText, sJson, FotoUrl : String;
   Ctt : Int64;
   pvToken, BrandName, pgMetod: String;
+  MyInvoice : TtgInvoice;
 begin
-{
-Função com erro... Em desenvolvimento
-}
 
-  pvToken := 'tok_visa';
+  FotoUrl := 'https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png';
+
+  pvToken := '';  //'SEU TOKEN_PROVIDER GERADO NO BOTFATHER PARA PAGAMENTOS';
   BrandName := 'Visa';
   pgMetod := 'pm_card_visa';
+                                                                                      //R$10,00
+ // MyInvoice := TtgInvoice.Create('Teste Titulo','Descrição', 'www.lmcode.com.br','USD',1000);
 
-  SetLength(MyPrices, 1);
-  MyPrices[0] :=  TtgLabeledPrice.Create('Açucar', 100);
- //   MyPrices[1] :=  TtgLabeledPrice.Create('{["label":Açucar,"amount":1500]}');
-  //'[{"jSon":"{"label":Acucar Mascavo,"amount":100}"}]'
+  if pvToken = '' then
+    Showmessage('Gere seu Provider_Token no BotFather, use o comando /mybots, clique no seu bot e depois clique em Payments'+#10#13+
+    'Eu recomendo obanco TRANZZO para testes, depois disso clique em Connect Tranzzo Test. Depois retorne ao BotFather e copie'+#10#13+
+    ' o Token que aparece na parte superior da lista de bancos');
+
+  SetLength(MyPrices, 2);
+  MyPrices[0] :=  TtgLabeledPrice.Create('Goiaba', 1000);
+  MyPrices[1] :=  TtgLabeledPrice.Create('Abacaxi', 300);
+
 
   if InjectTelegramReceiverService1.IsActive then
   begin
     if txtID.Text <> '' then
     try
       MyChatId  := TtgUserLink.FromID(StrToInt(txtID.Text));
-
-      InjectTelegram1.SendInvoice(
-        MyChatId.ID,
-        'Titulo',
-        'Teste de Descrição',
-        'LMCODE-Delivery', //'Playload', //Nome que aparece na Fatura do Cartao
-        pvToken,//'ProviderToken', //Token do Provedor de PG via BotFather..
-        pgMetod ,//'StatParameter'
-        'BRL',//'Currency', //BRL
-        MyPrices  //Até aqui é Obrigatorio...
-        );//,
-        //               'PhotoUrl',
-        //               0, 0, 0, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0,nil);
+                                 //ID          //TITULO   //DESC               //PLayload      //Token  //Param //Curr  //Prices //ProvData    //Foto
+      InjectTelegram1.SendInvoice(MyChatId.ID, 'Titulo', 'Teste de Descrição','LMCODE-Delivery',pvToken, pgMetod ,'USD', MyPrices, '' , FotoUrl, 300, 100, 100, FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0,nil);
       except on e:exception do
       begin
         memConsole.Lines.Add('**** Falha ***** Tente outro Pagamento.');
@@ -537,8 +455,6 @@ begin
 
 end;
 
-
-
 procedure TForm1.btnEnviarLocalizacaoClick(Sender: TObject);
 var
   lt, lg: Single;
@@ -565,7 +481,7 @@ end;
 
 procedure TForm1.btnEnviarNotaDeVideoClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+
   AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.mpeg';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
@@ -618,8 +534,8 @@ end;
 
 procedure TForm1.btnEnviarStikerClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
-  AbrirArquivo.Filter := 'Stiker|*.jpeg;*.jpg;*.gif;*.png;*.bmp';
+
+  AbrirArquivo.Filter := 'Stiker|*.jpeg;*.jpg;*.gif;*.png;*.bmp;*.tgs';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
 
@@ -673,7 +589,7 @@ end;
 
 procedure TForm1.btnEnviarVideoClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+
   AbrirArquivo.Filter := 'Videos|*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
@@ -695,7 +611,7 @@ end;
 
 procedure TForm1.btnEnviarVozClick(Sender: TObject);
 begin
-  AbrirArquivo.InitialDir := ExtractFilePath(Application.ExeName);
+
   AbrirArquivo.Filter := 'Arquivo de Voz|*.mp3;*.wav;*.ogg';
   if AbrirArquivo.Execute then
     MyFile := TtgFileToSend.Create(TtgFileToSendTag.FromFile,AbrirArquivo.FileName);
@@ -901,31 +817,20 @@ Begin
   result := FloatToStr(floatValue);
 End;
 
-<<<<<<< .mine
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
-var
-  I: Integer;
-begin
-  if InjectTelegramReceiverService1.IsActive then
-    InjectTelegramReceiverService1.Stop;
-end;
-
-||||||| .r18
-=======
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if InjectTelegramReceiverService1.IsActive then
     InjectTelegramReceiverService1.Stop;
 end;
 
->>>>>>> .r28
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-{Envie Markdown ou HTML, se você deseja que os aplicativos Telegram
-mostrem texto em negrito, itálico, largura fixa ou URLs embutidos na
-mensagem do seu bot.}
-LParseMode := TtgParseMode.Markdown; //Necessario declarar TelegAPI.Types.Enums
-FileCount := 0;
+  {Envie Markdown ou HTML, se você deseja que os aplicativos Telegram
+  mostrem texto em negrito, itálico, largura fixa ou URLs embutidos na
+  mensagem do seu bot.}
+  LParseMode := TtgParseMode.Markdown; //Necessario declarar TelegAPI.Types.Enums
+  FileCount := 0;
+  AbrirArquivo.InitialDir := '../../'+ExtractFilePath(Application.ExeName)+'\midias';
 end;
 
 procedure TForm1.InjectTelegramExceptionManagerUI1Log(ASender: TObject;

@@ -3747,6 +3747,7 @@ object Form1: TForm1
     Width = 137
     Height = 25
     Caption = 'Enviar Invoice'
+    Default = True
     TabOrder = 20
     OnClick = btnEnviarInvoiceClick
   end
@@ -3757,6 +3758,12 @@ object Form1: TForm1
     Height = 25
     Caption = 'Enviar Grupo de M'#237'dias'
     Default = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -9
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 21
     OnClick = btnEnviarGrpMidiasClick
   end
