@@ -1,40 +1,46 @@
-﻿# TInjectTelegram
+﻿ ![IMG_Logo_TInjectTelegram_s_Fundo](https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png)
 
+Este Componente Foi desenvoilvido pela *ITDevCon* em projeto **colaborativo** de código aberto, 
+adaptado e atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
+para uso com ChatBots e a Integração com o TInject desenvolvido por 
+[*Mike Lustosa*](https://github.com/mikelustosa/) para WhatsApp
 
-
-Este Componente Foi desenvoilvido pela *ITDevCon*
-em projeto **colaborativo** de código aberto e Adaptado por Ruan Diego Lacerda Menezes
-para uso com ChatBots e Integração com os metodos do TInject(por Mike Lustosa) para WhatsApp
-
-
-Para Obter as Ultimas Atualizações add por mim, acesse aqui
 # TInjectTelegram para Delphi
-[github] 
-***https://github.com/dieletro/tinjecttelegram_2020_delphi
+Para Obter as Ultimas Atualizações, acesse aqui
+ * **[*dieletro/tinjecttelegram_2020_delphi*](https://github.com/dieletro/tinjecttelegram_2020_delphi)**
 
+# Grupos de Apoio aos desenvolvedores:
+ * **[*Telegram*](https://t.me/TinjectTelegram)**
+ * **[*Whatsapp*](https://chat.whatsapp.com/KyepdH5XYw9KnuLlobGFAE)**
 
+# TInjectTelegram ATUALIZAÇÃO 2020 para Delphi by (dieletro) LMCODE 
+> - [X] Código Atualizado para a Última versão da API do Telegram, versão 4.8 de 24 de Abril de 2020.
+> - [X] Nome dos Objetos Modificados.
+> - [X] Criado Novos Metodos para poder converter tipos distintos de array of string para JSonString 
+> - [X] Adicionado novos Objetos em conformidade com a API
+> - [X] Correção de Bugs em diversos metodos  
+> - [X] Atualização de recursos desde a versão 3.5.5 até a 4.8
+> - [X] Adicionado a função SendPool (Envio de Enquetes e Quiz).
+> - [X] Adicionado a função SendDice (Envio de um Dado ou um Dardo animado).
+> - [X] Corrigida a função SendLocation (Envio de Localização).
+> - [X] Corrigida a função SendVenue (Envio de Localização com Texto).
+> - [X] Adicionado a função SendAnimaion (Envio de uma animação).
+> - [X] Adicionado a função SendMediaGroup (Envio de Fotos e Videos Agrupados).
+> - [X] Adicionado o type TtgKeyboardButtonPollType.
+> - [X] Correção no Método de Envio Send com Botões.
+> - [X] Adicionado a função SendInvoice (Envio de uma Ordem de Pagamento).
 
-# LMCODE TInjectTelegram ATUALIZAÇÃO 2020 para Delphi e Telegram
-Código Atualizado para a Ultima versão da API do Telegram, versão 4.8 de 24 de Abril de 2020.
-Nome dos Objetos Modificados.
-Criado Novos Metodos para poder converter tipos distintos de array of string para JSonString
-Adicionado novos Objetos em conformidade com a API
-Correção de Bugs 
-Atualização de recursos desde a versão 3.5.5 até a 4.8
-
-Adicionado a função SendPool (Envio de Enquetes e Quiz).
-Adicionado a função SendDice (Envio de um Dado ou um Dardo animado).
-Corrigida a função SendLocation (Envio de Localização).
-Corrigida a função SendVenue (Envio de Localização com Texto).
+![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
 As seguintes pessoas contribuíram para esta biblioteca:
 #///////////////////////////////////////////////////////////////////////////////////
-Ruan Diego Lacerda Menezes (dieletro). 03/03/2020 
-	[whatsapp]: ***+5521997196000,  
-	[telegram]: ***@diegoguitarra,  
-	[email]: ***diegolacerdamenezes@gmail.com,
-	[instagram]: ***lacerdamenezes.
-
+Ruan Diego Lacerda Menezes (dieletro). 03/03/2020;
+	[whatsapp]: ***+5521997196000;  
+	[telegram]: ***@diegoguitarra;  
+	[email]: ***diegolacerdamenezes@gmail.com;
+	[instagram]: ***lacerdamenezes;
+#///////////////////////////////////////////////////////////////////////////////////
+Aurino (Colaborador da Unit TelegAPI.Emoji);
 #///////////////////////////////////////////////////////////////////////////////////
 Renat Suleymanov (Al-muhandis);
 #///////////////////////////////////////////////////////////////////////////////////

@@ -1,11 +1,13 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
   Caption = 
     'Exemplo de uso do TinjectTelegram (By Ruan Diego Lacerda Menezes' +
     ')'
-  ClientHeight = 532
-  ClientWidth = 747
+  ClientHeight = 542
+  ClientWidth = 740
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +22,8 @@ object Form1: TForm1
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 747
-    Height = 185
+    Width = 740
+    Height = 169
     Align = alTop
     Picture.Data = {
       0954506E67496D61676589504E470D0A1A0A0000000D494844520000024E0000
@@ -3508,26 +3510,24 @@ object Form1: TForm1
       C5F4471C7CF05C742FCDD7E2A3D4B5AC11C5662F568B0FE6510E1F763C95E243
       42F5F1896BF7FD7F43AD0EBDFA2406840000000049454E44AE426082}
     Stretch = True
-    ExplicitLeft = 24
-    ExplicitTop = 16
-    ExplicitWidth = 697
+    ExplicitWidth = 747
   end
   object Label1: TLabel
     Left = 8
-    Top = 191
+    Top = 175
     Width = 29
     Height = 13
     Caption = 'Token'
   end
   object Label2: TLabel
     Left = 415
-    Top = 191
+    Top = 175
     Width = 118
     Height = 13
     Caption = 'ID do Usu'#225'rio de destino'
   end
   object ImgLoad: TImage
-    Left = 634
+    Left = 627
     Top = 8
     Width = 105
     Height = 105
@@ -3542,15 +3542,22 @@ object Form1: TForm1
     Caption = 'Log do Bot'
   end
   object Label4: TLabel
-    Left = 580
-    Top = 361
+    Left = 415
+    Top = 221
     Width = 69
     Height = 13
     Caption = 'Nome Do Jogo'
   end
+  object Label5: TLabel
+    Left = 8
+    Top = 221
+    Width = 76
+    Height = 13
+    Caption = 'Token do Banco'
+  end
   object btnEnviaTexto: TButton
     Left = 8
-    Top = 237
+    Top = 268
     Width = 137
     Height = 25
     Caption = 'Enviar Texto'
@@ -3560,7 +3567,7 @@ object Form1: TForm1
   end
   object txtToken: TEdit
     Left = 8
-    Top = 210
+    Top = 194
     Width = 401
     Height = 21
     TabOrder = 1
@@ -3568,7 +3575,7 @@ object Form1: TForm1
   end
   object Button2: TButton
     Left = 580
-    Top = 208
+    Top = 190
     Width = 75
     Height = 25
     Caption = 'Iniciar'
@@ -3577,7 +3584,7 @@ object Form1: TForm1
   end
   object Button3: TButton
     Left = 661
-    Top = 208
+    Top = 190
     Width = 75
     Height = 25
     Caption = 'Parar'
@@ -3586,16 +3593,18 @@ object Form1: TForm1
   end
   object memConsole: TMemo
     Left = 0
-    Top = 448
-    Width = 747
+    Top = 458
+    Width = 740
     Height = 84
     Align = alBottom
     ScrollBars = ssBoth
     TabOrder = 4
+    ExplicitTop = 448
+    ExplicitWidth = 747
   end
   object btnEnviaFoto: TButton
     Left = 151
-    Top = 237
+    Top = 268
     Width = 137
     Height = 25
     Caption = 'Enviar Foto'
@@ -3605,7 +3614,7 @@ object Form1: TForm1
   end
   object txtID: TEdit
     Left = 415
-    Top = 210
+    Top = 194
     Width = 159
     Height = 21
     TabOrder = 6
@@ -3613,7 +3622,7 @@ object Form1: TForm1
   end
   object btnEnviaAudio: TButton
     Left = 294
-    Top = 237
+    Top = 268
     Width = 137
     Height = 25
     Caption = 'Enviar Audio'
@@ -3622,8 +3631,8 @@ object Form1: TForm1
     OnClick = btnEnviaAudioClick
   end
   object btnEnviarDocumento: TButton
-    Left = 437
-    Top = 237
+    Left = 580
+    Top = 299
     Width = 137
     Height = 25
     Caption = 'Enviar Documento'
@@ -3633,7 +3642,7 @@ object Form1: TForm1
   end
   object btnEnviarVideo: TButton
     Left = 8
-    Top = 268
+    Top = 299
     Width = 137
     Height = 25
     Caption = 'Enviar V'#237'deo'
@@ -3643,7 +3652,7 @@ object Form1: TForm1
   end
   object btnEnviarVoz: TButton
     Left = 294
-    Top = 268
+    Top = 299
     Width = 137
     Height = 25
     Caption = 'Enviar Voz'
@@ -3653,7 +3662,7 @@ object Form1: TForm1
   end
   object btnEnviarNotaDeVideo: TButton
     Left = 151
-    Top = 268
+    Top = 299
     Width = 137
     Height = 25
     Caption = 'Enviar Nota de Video'
@@ -3663,7 +3672,7 @@ object Form1: TForm1
   end
   object btnEnviarLocalizacao: TButton
     Left = 580
-    Top = 299
+    Top = 361
     Width = 137
     Height = 25
     Caption = 'Enviar Localiza'#231#227'o'
@@ -3672,8 +3681,8 @@ object Form1: TForm1
     OnClick = btnEnviarLocalizacaoClick
   end
   object btnEnviarVenue: TButton
-    Left = 437
-    Top = 299
+    Left = 580
+    Top = 392
     Width = 137
     Height = 25
     Caption = 'Enviar Venue'
@@ -3683,7 +3692,7 @@ object Form1: TForm1
   end
   object btnEnviarContato: TButton
     Left = 151
-    Top = 299
+    Top = 330
     Width = 137
     Height = 25
     Caption = 'Enviar Contato'
@@ -3693,7 +3702,7 @@ object Form1: TForm1
   end
   object btnEnviarPoll: TButton
     Left = 294
-    Top = 299
+    Top = 330
     Width = 137
     Height = 25
     Caption = 'Enviar Enquete ou Quiz'
@@ -3703,7 +3712,7 @@ object Form1: TForm1
   end
   object btnEnviarDado: TButton
     Left = 437
-    Top = 268
+    Top = 330
     Width = 137
     Height = 25
     Caption = 'Enviar um Dado'
@@ -3713,7 +3722,7 @@ object Form1: TForm1
   end
   object btnEnviarStiker: TButton
     Left = 8
-    Top = 299
+    Top = 330
     Width = 137
     Height = 25
     Caption = 'Enviar Stiker'
@@ -3722,8 +3731,8 @@ object Form1: TForm1
     OnClick = btnEnviarStikerClick
   end
   object btnEnviarJogo: TButton
-    Left = 580
-    Top = 330
+    Left = 437
+    Top = 268
     Width = 137
     Height = 25
     Caption = 'Enviar Jogo'
@@ -3732,8 +3741,8 @@ object Form1: TForm1
     OnClick = btnEnviarJogoClick
   end
   object btnEnviarAcao: TButton
-    Left = 580
-    Top = 237
+    Left = 437
+    Top = 299
     Width = 137
     Height = 25
     Caption = 'Enviar A'#231#227'o'
@@ -3743,7 +3752,7 @@ object Form1: TForm1
   end
   object btnEnviarInvoice: TButton
     Left = 151
-    Top = 361
+    Top = 392
     Width = 137
     Height = 25
     Caption = 'Enviar Invoice'
@@ -3753,7 +3762,7 @@ object Form1: TForm1
   end
   object btnEnviarGrpMidias: TButton
     Left = 8
-    Top = 361
+    Top = 392
     Width = 113
     Height = 25
     Caption = 'Enviar Grupo de M'#237'dias'
@@ -3769,7 +3778,7 @@ object Form1: TForm1
   end
   object Button1: TButton
     Left = 151
-    Top = 330
+    Top = 361
     Width = 137
     Height = 25
     Caption = 'Enviar Texto c/ Botoes'
@@ -3779,7 +3788,7 @@ object Form1: TForm1
   end
   object Button4: TButton
     Left = 294
-    Top = 330
+    Top = 361
     Width = 137
     Height = 25
     Caption = 'Enviar txt c/ Botoes Inline'
@@ -3789,7 +3798,7 @@ object Form1: TForm1
   end
   object btnApagarBotoes: TButton
     Left = 437
-    Top = 330
+    Top = 361
     Width = 137
     Height = 25
     Caption = 'Enviar txt e Apagar Botoes'
@@ -3799,7 +3808,7 @@ object Form1: TForm1
   end
   object btnEnviarAnimacao: TButton
     Left = 8
-    Top = 330
+    Top = 361
     Width = 137
     Height = 25
     Caption = 'Enviar Anima'#231#227'o'
@@ -3809,7 +3818,7 @@ object Form1: TForm1
   end
   object btnEnviarDardo: TButton
     Left = 580
-    Top = 268
+    Top = 330
     Width = 137
     Height = 25
     Caption = 'Enviar um Dardo'
@@ -3818,9 +3827,9 @@ object Form1: TForm1
     OnClick = btnEnviarDardoClick
   end
   object txtNomeJogo: TEdit
-    Left = 580
-    Top = 380
-    Width = 137
+    Left = 415
+    Top = 240
+    Width = 159
     Height = 21
     TabOrder = 27
     Text = 'jogodavelha'
@@ -3828,7 +3837,7 @@ object Form1: TForm1
   end
   object btnSolicitarCtt: TButton
     Left = 294
-    Top = 361
+    Top = 392
     Width = 137
     Height = 25
     Caption = 'Solicitar Contato'
@@ -3838,7 +3847,7 @@ object Form1: TForm1
   end
   object btnSolicitarLocalizacao: TButton
     Left = 437
-    Top = 361
+    Top = 392
     Width = 137
     Height = 25
     Caption = 'Solicitar Localiza'#231#227'o'
@@ -3847,8 +3856,8 @@ object Form1: TForm1
     OnClick = btnSolicitarLocalizacaoClick
   end
   object btnComoSaberID: TButton
-    Left = 437
-    Top = 392
+    Left = 580
+    Top = 268
     Width = 137
     Height = 25
     Caption = 'Como Saber Meu ID?'
@@ -3858,13 +3867,21 @@ object Form1: TForm1
   end
   object btnADD: TButton
     Left = 120
-    Top = 361
+    Top = 392
     Width = 25
     Height = 25
     Caption = '+'
     Default = True
     TabOrder = 31
     OnClick = btnADDClick
+  end
+  object txtTokenBanco: TEdit
+    Left = 8
+    Top = 240
+    Width = 401
+    Height = 21
+    TabOrder = 32
+    TextHint = 'Preencha este campo com o Token do Banco'
   end
   object InjectTelegram1: TInjectTelegram
     Logger = InjectTelegramExceptionManagerUI1

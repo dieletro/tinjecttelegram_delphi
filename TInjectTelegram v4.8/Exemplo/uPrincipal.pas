@@ -69,6 +69,8 @@ type
     btnSolicitarLocalizacao: TButton;
     btnComoSaberID: TButton;
     btnADD: TButton;
+    txtTokenBanco: TEdit;
+    Label5: TLabel;
     procedure btnEnviaTextoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -394,16 +396,19 @@ begin
 
   FotoUrl := 'https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png';
 
-  pvToken := '';  //'SEU TOKEN_PROVIDER GERADO NO BOTFATHER PARA PAGAMENTOS';
+  pvToken := txtTokenBanco.Text;//'SEU TOKEN_PROVIDER GERADO NO BOTFATHER PARA PAGAMENTOS';
   BrandName := 'Visa';
   pgMetod := 'pm_card_visa';
                                                                                       //R$10,00
  // MyInvoice := TtgInvoice.Create('Teste Titulo','Descrição', 'www.lmcode.com.br','USD',1000);
 
-  if pvToken = '' then
+  if txtTokenBanco.Text = '' then
+  Begin
     Showmessage('Gere seu Provider_Token no BotFather, use o comando /mybots, clique no seu bot e depois clique em Payments'+#10#13+
     'Eu recomendo obanco TRANZZO para testes, depois disso clique em Connect Tranzzo Test. Depois retorne ao BotFather e copie'+#10#13+
     ' o Token que aparece na parte superior da lista de bancos');
+    Exit;
+  End;
 
   SetLength(MyPrices, 2);
   MyPrices[0] :=  TtgLabeledPrice.Create('Goiaba', 1000);
@@ -634,14 +639,11 @@ end;
 procedure TForm1.btnEnviaTextoClick(Sender: TObject);
 begin
 
-  MyChatId  := TtgUserLink.FromUserName(txtID.Text);
-
-  Showmessage(InjectTelegram1.GetMe.ID.ToString);
-
   if InjectTelegramReceiverService1.IsActive then
   Begin
     if txtID.Text <> '' then
     try
+      MyChatId  := TtgUserLink.FromID(StrToInt(txtID.Text));
       InjectTelegram1.SendMessage(MyChatId.ID,'Este é o Seu ID : '+MyChatId.ID.ToString, LParseMode, False, False, 0, LMarkup)
     except on E: Exception do
       memConsole.Lines.Add('Falha no Envio para este destinatáio  - ' + E.Message);
