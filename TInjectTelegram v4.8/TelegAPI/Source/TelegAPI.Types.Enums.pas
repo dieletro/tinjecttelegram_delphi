@@ -169,6 +169,8 @@ type
     VideoMessage, VideoNoteMessage, VoiceMessage, DocumentMessage,
     StickerMessage, GameMessage, LocationMessage, ContactMessage, ServiceMessage,
     VenueMessage);
+
+
   /// <summary>
   ///   Text parsing mode
   /// </summary>
@@ -359,7 +361,7 @@ type
   TAllowedUpdates = set of TAllowedUpdate;
 
 const
-  UPDATES_ALLOWED_ALL =[Low(TAllowedUpdate)..High(TAllowedUpdate)];
+  UPDATES_ALLOWED_ALL = [Low(TAllowedUpdate)..High(TAllowedUpdate)];
 
 implementation
 

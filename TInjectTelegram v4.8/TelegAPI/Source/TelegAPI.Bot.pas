@@ -181,39 +181,39 @@ type
     /// </returns>
     function GetMe: ItgUser;
     /// <summary>
-    /// Use this method to send text messages.
+    /// Use este método para enviar mensagens de texto.
     /// </summary>
     /// <param name="ChatId">
     /// Int64 or String. Unique identifier for the target chat or username of
     /// the target channel (in the format <c>@channelusername</c> ).
     /// </param>
     /// <param name="Text">
-    /// Text of the message to be sent
+    /// Texto da mensagem a ser enviada, 1-4096 caracteres após a análise das
+    /// entidades
     /// </param>
     /// <param name="ParseMode">
-    /// Send Markdown or HTML, if you want Telegram apps to show bold,
-    /// italic, fixed-width text or inline URLs in your bot's message.
+    /// Modo para analisar entidades no texto da mensagem. Veja as opções de
+    /// formatação para mais detalhes.
     /// </param>
     /// <param name="DisableWebPagePreview">
-    /// Disables link previews for links in this message
+    /// Desativa visualizações de link para links nesta mensagem
     /// </param>
     /// <param name="DisableNotification">
-    /// Sends the message silently. iOS users will not receive a
-    /// notification, Android users will receive a notification with no
-    /// sound.
+    /// Envia a mensagem silenciosamente . Os usuários receberão uma notificação
+    /// sem som.
     /// </param>
     /// <param name="ReplyToMessageId">
-    /// If the message is a reply, ID of the original message
+    /// Se a mensagem for uma resposta, o ID da mensagem original
     /// </param>
     /// <param name="ReplyMarkup">
     /// InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardHide or
-    /// ForceReply. Additional interface options. A JSON-serialized object
-    /// for an inline keyboard, custom reply keyboard, instructions to hide
-    /// reply keyboard or to force a reply from the user.
+    /// ForceReply. Opções de interface adicionais. Um objeto serializado JSON
+    /// para um teclado embutido , teclado de resposta personalizado , instruções
+    /// para remover o teclado de resposta ou forçar uma resposta do usuário.
     /// </param>
     /// <returns>
-    /// On success, the sent <see cref="TelegAPi.Types|TtgMessage">Message</see>
-    /// is returned.
+    /// Em caso de sucesso, a mensagem enviada é retornada.
+    /// <a href="https://core.telegram.org/bots/api#sendmessage">SendMessage</a>
     /// </returns>
     function SendMessage( //
       const ChatId: TtgUserLink; //
@@ -716,6 +716,54 @@ type
       const ReplyToMessageId: Int64 = 0; //
       ReplyMarkup: IReplyMarkup = nil): ITgMessage;
     /// <summary>
+    ///  Updated by Ruan Diego Lacerda Menezes 13/04/2020
+    /// Use this method to send information about a venue.
+    /// </summary>
+    /// <param name="ChatId">
+    /// Unique identifier for the target chat or username of the target
+    /// channel (in the format @channelusername) <br />
+    /// </param>
+    /// <param name="Venue">
+    /// Latitude and Longitude of the venue <br />
+    /// </param>
+    /// </param>
+    /// <param name="Venue.title">
+    /// Name of the venue
+    /// </param>
+    /// <param name="Venue.address">
+    /// Address of the venue
+    /// </param>
+    /// <param name="Venue.foursquare_id">
+    /// Foursquare identifier of the venue
+    /// </param>
+    /// <param name="Venue.foursquare_type">
+    /// String	Optional	Foursquare type of the venue, if known.
+    /// (For example, “arts_entertainment/default”,
+    /// “arts_entertainment/aquarium” or “food/icecream”.)
+    /// </param>
+    /// <param name="DisableNotification">
+    /// Sends the message <see href="https://telegram.org/blog/channels-2-0#silent-messages">
+    /// silently</see>. iOS users will not receive a notification, Android
+    /// users will receive a notification with no sound. <br />
+    /// </param>
+    /// <param name="ReplyToMessageId">
+    /// If the message is a reply, ID of the original message <br />
+    /// </param>
+    /// <param name="ReplyMarkup">
+    /// Additional interface options. A JSON-serialized object for an inline
+    /// keyboard, custom reply keyboard, instructions to hide reply keyboard
+    /// or to force a reply from the user. <br />
+    /// </param>
+    /// <returns>
+    /// On success, the sent Message is returned.
+    /// </returns>
+    function SendVenue2( //
+      const ChatId: TtgUserLink; //
+      const Venue: TtgVenue; //
+      const DisableNotification: Boolean = False; //
+      const ReplyToMessageId: Int64 = 0; //
+      ReplyMarkup: IReplyMarkup = nil): ITgMessage;
+    /// <summary>
     /// Use this method to send phone contacts.
     /// </summary>
     /// <param name="ChatId">
@@ -1085,6 +1133,34 @@ type
       const Url: string = ''; //
       const CacheTime: Int64 = 0): Boolean;
 {$ENDREGION}
+
+//Novo Recurso
+{$REGION 'BotCommands'}
+    /// <summary>
+    ///  setMyCommands
+    ///  Use this method to change the list of the bot's commands.
+    /// </summary>
+    /// <param name="commands" type="Array of BotCommand">
+    /// A JSON-serialized list of bot commands to be set as the list of the
+    /// bot's commands. At most 100 commands can be specified. <br />
+    /// </param>
+    /// <returns>
+    /// On success, True is returned.
+    /// </returns>
+    /// <seealso href="https://core.telegram.org/bots/api#setmycommands" />
+    function SetMyCommands(Command: TArray<TtgBotCommand>): Boolean;
+    /// <summary>
+    ///  getMyCommands
+    ///  Use this method to get the current list of the bot's commands.
+    ///  Requires no parameters.
+    /// </summary>
+    /// <returns>
+    /// On success, Returns Array of BotCommand.
+    /// </returns>
+    /// <seealso href="https://core.telegram.org/bots/api#getmycommands" />
+    function GetMyCommands: TArray<TtgBotCommand>;
+{$ENDREGION 'BotCommands'}
+
 {$REGION 'Updating messages'}
     /// <summary>
     /// Use this method to edit text messages sent by the bot or via the bot

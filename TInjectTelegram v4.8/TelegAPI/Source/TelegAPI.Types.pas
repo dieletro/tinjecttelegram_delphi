@@ -65,6 +65,8 @@ type
     function StickerSetName: string;
     function CanSetStickerSet: Boolean;
     function IsGroup: Boolean;
+    function ToJSonStr: String;
+    function ToString: String;
   end;
 
   ItgMessageEntity = interface
@@ -160,17 +162,6 @@ type
     function FirstName: string;
     function LastName: string;
     function UserId: Int64;
-  end;
-
-{ TODO 5 -oRuan Diego -cContatos : Adicionando Metodo Para Capturar lista de Contatos }
-  ItgContacts = interface
-    ['{FCD0E130-1BD3-4058-9A3A-B888CCAC13DA}']
-//    contacts	Vector<Contact>	Contact list
-//    saved_count	int	Number of contacts that were saved successfully
-//    users	Vector<User>	User list
-    function Contacts : TArray<ItgContact>;
-    function SavedCount : Integer;
-    function Users : TArray<ItgUser>;
   end;
 
   ItgPollOption = interface
@@ -313,6 +304,8 @@ type
     function ConnectedWebsite: string;
     function &Type: TtgMessageType;
     function IsCommand(const AValue: string): Boolean;
+    //messages.getChats#3c6aa187 id:Vector<int> = messages.Chats;
+   // messages.chatFull#e5d7d19c full_chat:ChatFull chats:Vector<Chat> users:Vector<User> = messages.ChatFull;
   end;
 
   ItgUserProfilePhotos = interface
@@ -394,7 +387,7 @@ type
   ItgUpdate = interface
     ['{5D001F9B-B0BC-4A44-85E3-E0586DAAABD2}']
     function ID: Int64;
-    function message: ITgMessage;
+    function &message: ITgMessage;
     function EditedMessage: ITgMessage;
     function InlineQuery: ItgInlineQuery;
     function ChosenInlineResult: ItgChosenInlineResult;
@@ -430,6 +423,22 @@ type
     function MaxConnections: Int64;
     function AllowedUpdates: TArray<string>;
   end;
+
+  ILoginURL = Interface
+    ['{DC372234-7B40-4EED-8FD6-362977BCDEE8}']
+      function URL: String; //
+      function ForwardText: String; //
+      function BotUserName: String;
+      function RequestWriteAccess: Boolean;
+  End;
+
+  ItgBotCommand = interface
+    ['{D8F751A3-BEAF-4565-875D-1F5B5D78CA7C}']
+    function Command: String;
+    function Description: String;
+  end;
+
+
   {$SCOPEDENUMS ON}
 
   TtgFileToSendTag = (ERROR = 254, ID = 0, FromURL = 1, FromFile = 2, FromStream = 3);
@@ -501,7 +510,11 @@ type
     class operator Implicit(AID: Int64): TtgUserLink;
     class operator Implicit(AUsername: string): TtgUserLink;
     function ToString: string;
+    function IsIDEmpty: Boolean;
+    function IsUsernameEmpty: Boolean;
   end;
+
+
 
 implementation
 
@@ -620,6 +633,22 @@ end;
 class operator TtgUserLink.Implicit(AUsername: string): TtgUserLink;
 begin
   Result := TtgUserLink.FromUserName(AUsername);
+end;
+
+function TtgUserLink.IsIDEmpty: Boolean;
+begin
+  if ID = 0 then
+    result := True
+  Else
+    result := False;
+end;
+
+function TtgUserLink.IsUsernameEmpty: Boolean;
+begin
+  if Username = '' then
+    Result := True
+  Else
+    Result := False;
 end;
 
 function TtgUserLink.ToString: string;

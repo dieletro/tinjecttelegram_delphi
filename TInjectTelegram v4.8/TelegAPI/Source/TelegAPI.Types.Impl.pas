@@ -21,6 +21,7 @@ type
     function CanJoinGroups: Boolean;
     function CanReadAllGroupMessages: Boolean;
     function SupportsInlineQueries: Boolean;
+    function ToJSonStr: String;
   end;
 
   TtgChatMember = class(TBaseJson, ItgChatMember)
@@ -64,6 +65,8 @@ type
     function StickerSetName: string;
     function CanSetStickerSet: Boolean;
     function IsGroup: Boolean;
+    function ToJSonStr: String;
+    function ToString: String;
   end;
 
   TtgMessageEntity = class(TBaseJson, ItgMessageEntity)
@@ -168,14 +171,6 @@ type
     function FirstName: string;
     function LastName: string;
     function UserId: Int64;
-  end;
-
-{ TODO 5 -oRuan Diego -cContatos : Adicionando Metodo Para Capturar lista de Contatos }
-  TtgContacts = class(TBaseJson, ItgContacts)
-    public
-      function Contacts : TArray<ItgContact>;
-      function SavedCount : Integer;
-      function Users : TArray<ItgUser>;
   end;
 
   TtgPollOption = class(TBaseJson, ItgPollOption)
@@ -481,7 +476,7 @@ type
   TtgUpdate = class(TBaseJson, ItgUpdate)
   public
     function ID: Int64;
-    function Message: ITgMessage;
+    function &Message: ITgMessage;
     function EditedMessage: ITgMessage;
     function InlineQuery: ItgInlineQuery;
     function ChosenInlineResult: ItgChosenInlineResult;
@@ -503,6 +498,35 @@ type
     function MaxConnections: Int64;
     function AllowedUpdates: TArray<string>;
   end;
+
+  TtgLoginURL = class(TBaseJson, ILoginURL)
+  private
+    FRequestWriteAccess: Boolean;
+    FURL: String;
+    FBotUserName: String;
+    FForwardText: String;
+
+    function URL: String; //
+    function ForwardText: String; //
+    function BotUserName: String;
+    function RequestWriteAccess: Boolean;
+  public
+//    constructor Create(const AJson: String); reintroduce; overload;
+    constructor Create(const AUrl: String;const AForwardText: String = '';
+     const ABotUserName: String = '';const ARequestWriteAccess: Boolean = False); overload;
+
+    property sUrl: String read URL write FURL;
+    property sForwardText: String read ForwardText write FForwardText;
+    property sBotUserName: String read BotUserName write FBotUserName;
+    property sRequestWriteAccess: Boolean read RequestWriteAccess write FRequestWriteAccess;
+  end;
+
+  TtgBotCommand = class(TBaseJson, ItgBotCommand)
+    function Command: String;
+    function Description: String;
+  end;
+
+
 
 implementation
 
@@ -982,7 +1006,7 @@ begin
   Result := ReadToClass<TtgInlineQuery>('inline_query');
 end;
 
-function TtgUpdate.Message: ITgMessage;
+function TtgUpdate.&Message: ITgMessage;
 begin
   Result := ReadToClass<TTgMessage>('message');
 end;
@@ -1159,6 +1183,13 @@ end;
 function TtgUser.IsBot: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('is_bot');
+end;
+
+function TtgUser.ToJSonStr: String;
+begin
+ Result := '{"'+ID.ToString+'","'+IsBot.ToString+'","'+FirstName+'",'+
+ '"'+LastName+'","'+LanguageCode+'","'+CanJoinGroups.ToString+'",'+
+ '"'+CanReadAllGroupMessages.ToString+'","'+SupportsInlineQueries.ToString+'"}';
 end;
 
 function TtgUser.LanguageCode: string;
@@ -1459,6 +1490,57 @@ end;
 function TtgChat.Title: string;
 begin
   Result := ReadToSimpleType<string>('title');
+end;
+
+function TtgChat.ToJSonStr: String;
+var
+  LValue: string;
+  Saida : Boolean;
+begin
+  LValue := ReadToSimpleType<string>('type');
+  Saida := (LValue = 'group');
+
+ Result := '[{'+
+ '"id":'+ReadToSimpleType<Int64>('id').ToString+sLineBreak+
+ '","type":"'+ReadToSimpleType<string>('type')+sLineBreak+
+ '","title":"'+ReadToSimpleType<string>('title')+sLineBreak+
+ '","username":"'+ReadToSimpleType<string>('username')+sLineBreak+
+ '","first_name":"'+ReadToSimpleType<string>('first_name')+sLineBreak+
+ '","last_name":"'+ReadToSimpleType<string>('last_name')+sLineBreak+
+ '","all_members_are_administrators":"'+ReadToSimpleType<Boolean>('all_members_are_administrators').ToString+sLineBreak+
+ '","photo":"'+ReadToSimpleType<string>('photo')+sLineBreak+
+ '","description":"'+ReadToSimpleType<string>('description')+sLineBreak+
+ '","invite_link":"'+ReadToSimpleType<string>('invite_link')+sLineBreak+
+ '","pinned_message":"'+ReadToSimpleType<string>('pinned_message')+sLineBreak+
+ '","sticker_set_name":"'+ReadToSimpleType<string>('sticker_set_name')+sLineBreak+
+ '","can_set_sticker_set":"'+ReadToSimpleType<Boolean>('can_set_sticker_set').ToString+sLineBreak+
+ '","is_group":"'+Saida.ToString+'"}]';
+end;
+
+function TtgChat.ToString: String;
+var
+  LValue: string;
+  Saida : Boolean;
+begin
+  LValue := ReadToSimpleType<string>('type');
+  Saida := (LValue = 'group');
+
+ Result :=
+ '[id='+ReadToSimpleType<Int64>('id').ToString+sLineBreak+
+ 'type='+ReadToSimpleType<string>('type')+sLineBreak+
+ 'title='+ReadToSimpleType<string>('title')+sLineBreak+
+ 'username='+ReadToSimpleType<string>('username')+sLineBreak+
+ 'first_name='+ReadToSimpleType<string>('first_name')+sLineBreak+
+ 'last_name='+ReadToSimpleType<string>('last_name')+sLineBreak+
+ 'all_members_are_administrators='+ReadToSimpleType<Boolean>('all_members_are_administrators').ToString+sLineBreak+
+ 'photo='+ReadToSimpleType<string>('photo')+sLineBreak+
+ 'description='+ReadToSimpleType<string>('description')+sLineBreak+
+ 'invite_link='+ReadToSimpleType<string>('invite_link')+sLineBreak+
+ 'pinned_message='+ReadToSimpleType<string>('pinned_message')+sLineBreak+
+ 'sticker_set_name='+ReadToSimpleType<string>('sticker_set_name')+sLineBreak+
+ 'can_set_sticker_set='+ReadToSimpleType<Boolean>('can_set_sticker_set').ToString+sLineBreak+
+ 'is_group='+Saida.ToString+']';
+
 end;
 
 function TtgChat.TypeChat: TtgChatType;
@@ -2202,21 +2284,64 @@ begin
   Result := ReadToSimpleType<Integer>('value');
 end;
 
-{ TtgContacts }
 
-function TtgContacts.Contacts: TArray<ItgContact>;
+{ TtgLoginURL }
+
+function TtgLoginURL.BotUserName: String;
 begin
-  Result := ReadToArray<ItgContact>(TtgContact, 'contacts');
+  Result := ReadToSimpleType<String>('bot_username');
 end;
 
-function TtgContacts.SavedCount: Integer;
+//constructor TtgLoginURL.Create(AJson: String);
+//begin
+//  inherited Create(AJson);
+//end;
+
+constructor TtgLoginURL.Create(const AUrl: String;const AForwardText: String = '';
+     const ABotUserName: String = '';const ARequestWriteAccess: Boolean = False);
+  var
+  AJson: String;
 begin
-  Result := ReadToSimpleType<Integer>('saved_count');
+  FRequestWriteAccess := ARequestWriteAccess;
+  FUrl := AUrl;
+  FForwardText := AForwardText;
+  FBotUserName := ABotUserName;
+
+//  FJson.AddPair('url',TJSONString(FUrl));
+//  FJson.AddPair('forward_text',TJSONString(FForwardText));
+//  FJson.AddPair('bot_username',TJSONString(FBotUserName));
+//  FJson.AddPair('request_write_access',TJSONBool(FRequestWriteAccess));
+
+
+  AJson := '{"url":"'+FUrl+'","forward_text":"'+FForwardText+'","bot_username":"'+FBotUserName+'","request_write_access":"'+FRequestWriteAccess.ToString+'"}';
+  inherited Create(AJson);
 end;
 
-function TtgContacts.Users: TArray<ItgUser>;
+function TtgLoginURL.ForwardText: String;
 begin
-  Result := ReadToArray<ItgUser>(TtgUser, 'users');
+  Result := ReadToSimpleType<String>('forward_text');
+end;
+
+function TtgLoginURL.RequestWriteAccess: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('request_write_access');
+end;
+
+function TtgLoginURL.URL: String;
+begin
+  Result := ReadToSimpleType<String>('url');
+end;
+
+{ TtgBotCommand }
+
+function TtgBotCommand.Command: String;
+begin
+  Result := ReadToSimpleType<String>('command');
+end;
+
+function TtgBotCommand.Description: String;
+begin
+  Result := ReadToSimpleType<String>('description');
 end;
 
 End.

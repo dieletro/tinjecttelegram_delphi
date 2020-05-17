@@ -8,7 +8,6 @@ uses
   System.SysUtils;
 
 type
-  {TInjectTelegramReceiverConsole}
   TInjectTelegramReceiverConsole = class(TInjectTelegramBotReceiverBase)
   private
     FOnStart: TProc;

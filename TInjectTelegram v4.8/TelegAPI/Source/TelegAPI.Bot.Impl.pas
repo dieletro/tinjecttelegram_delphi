@@ -255,6 +255,12 @@ type
       const CacheTime: Int64 = 0): Boolean;
 {$ENDREGION}
 
+//Novo Recurso
+{$REGION 'BotCommands'}
+    function SetMyCommands(Command: TArray<TtgBotCommand>): Boolean;
+    function GetMyCommands: TArray<TtgBotCommand>;
+{$ENDREGION 'BotCommands'}
+
 {$REGION 'Updating messages'}
     function EditMessageText( //
       const ChatId: TtgUserLink; //
@@ -864,6 +870,7 @@ function TInjectTelegram.SendMessage(const ChatId: TtgUserLink; const Text: stri
   IReplyMarkup): ITgMessage;
 begin
   Logger.Enter(Self, 'SendMessage');
+
   Result := TTgMessage.Create(GetRequest.SetMethod('sendMessage') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('text', Text, '', True) //
@@ -1138,6 +1145,26 @@ begin
   Logger.Leave(Self, 'GetMe');
 end;
 
+
+function TInjectTelegram.SetMyCommands(Command: TArray<TtgBotCommand>): Boolean;
+Var
+  LTmpJson: String;
+begin
+  LTmpJson := TJsonUtils.ArrayToJString<TtgBotCommand>(Command);
+  Logger.Enter(Self, 'SetMyCommands');
+  Result := GetRequest.SetMethod('setMyCommands') //
+    .AddParameter('command', LTmpJson, '[]', True).ExecuteAsBool;
+  Logger.Leave(Self, 'SetMyCommands');
+end;
+
+function TInjectTelegram.GetMyCommands: TArray<TtgBotCommand>;
+begin
+  Logger.Enter(Self, 'GetMyCommands');
+  Result := GetArrayFromMethod<TtgBotCommand>(TtgBotCommand,
+    GetRequest.SetMethod('getMyCommands').Execute);
+  Logger.Leave(Self, 'GetMyCommands');
+end;
+
 function TInjectTelegram.ForwardMessage(const ChatId, FromChatId: TtgUserLink;
   const MessageId: Int64; const DisableNotification: Boolean): ITgMessage;
 begin
@@ -1152,6 +1179,8 @@ begin
 end;
 
 function TInjectTelegram.GetChat(const ChatId: TtgUserLink): ItgChat;
+var
+  AID : String;
 begin
   Logger.Enter(Self, 'GetChat');
   Result := TtgChat.Create(GetRequest.SetMethod('getChat').//
@@ -1754,6 +1783,7 @@ begin
     .Execute);
   Logger.Leave(Self, 'SetGameScore');
 end;
+
 {$ENDREGION}
 
 end.

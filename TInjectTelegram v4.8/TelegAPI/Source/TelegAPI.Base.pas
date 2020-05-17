@@ -35,13 +35,6 @@ begin
   FDesenvolvedor := 'Ruan Diego Lacerda Menezes';
   FVersion := '4.8';
   FDataVersao := '24 de Abril de 2020';
-
-//  FColaboradores.Add('Renat Suleymanov');
-//  FColaboradores.Add('Bonmario');
-//  FColaboradores.Add('Alexey Shumkin');
-//  FColaboradores.Add('Ilya Bukhonin');
-//  FColaboradores.Add('Daniele Spinetti');
-
 end;
 
 destructor TInjectTelegramAbstractComponent.Destroy;

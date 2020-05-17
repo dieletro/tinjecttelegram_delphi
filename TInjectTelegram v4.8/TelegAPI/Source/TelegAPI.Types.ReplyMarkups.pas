@@ -3,7 +3,8 @@
 interface
 
 uses
-  REST.Json.Types;
+  REST.Json.Types,
+  TelegAPI.Types.Impl;
 
 type
   TtgButtonBase = class
@@ -31,6 +32,8 @@ type
     FPay: Boolean;
     [JSONName('url')]
     FURL: string;
+    [JSONName('loginurl')]
+    FLoginURL : TtgLoginURL;
     [JSONName('switch_inline_query')]
     FSwitchInlineQuery: string;
     [JSONName('switch_inline_query_current_chat')]
@@ -41,6 +44,7 @@ type
     constructor Create(const AText: string); overload;
     constructor Create(const AText, ACallbackData: string); overload;
     property Url: string read FURL write FURL;
+    property LoginURL : TtgLoginURL read FLoginURL write FLoginURL;
     property CallbackData: string read FCallbackData write FCallbackData;
     property SwitchInlineQuery: string read FSwitchInlineQuery write FSwitchInlineQuery;
     property SwitchInlineQueryCurrentChat: string read
