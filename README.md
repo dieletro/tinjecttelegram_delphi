@@ -4,11 +4,10 @@ Este Componente Foi desenvoilvido pela *ITDevCon* em projeto **colaborativo** de
 adaptado e atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
 para uso e consumo da API Oficial do [*Telegram Bot*](https://core.telegram.org/bots/api) via Delphi
 
-#  Link para doações
+#  Ajude a manter este projeto, segue os Links para doações
 
-**[*Doações*](https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=96811362-1e105bcc-763d-424b-a4bf-17fcfd7f06b1)**
 
-**[*Doações*](https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=96811362-2dfdd162-7e7b-4063-b4a9-077c29d7fb14)**
+**[*Doações*](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2JPLRUD9S2RBY&item_name=Projeto+TInjectTelegram+para+Delphi&currency_code=BRL&source=url)**
 
 **[*Doações*](https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=96811362-c8e28ed6-7ee2-4a89-a043-a18d5c1ec317)**
 
