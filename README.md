@@ -5,7 +5,7 @@ adaptado e atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/diel
 para uso e consumo da API Oficial do [*Telegram Bot*](https://core.telegram.org/bots/api) via Delphi
 
 #  Ajude a manter este projeto, segue os Links para doações
-
+---
 **[*Doação via PAYPAL*](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2JPLRUD9S2RBY&item_name=Projeto+TInjectTelegram+para+Delphi&currency_code=BRL&source=url)**
 
 # Use QR CODE se preferir para fazer sua doação via PAYPAL
@@ -13,16 +13,17 @@ para uso e consumo da API Oficial do [*Telegram Bot*](https://core.telegram.org/
 ![QR CodeDoacoesTInjectTelegram](https://user-images.githubusercontent.com/11804577/82735377-ae19c100-9cf7-11ea-9e63-86266ecaa55f.png)
 
 **[*Doação via Mercado Pago*](https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=96811362-c8e28ed6-7ee2-4a89-a043-a18d5c1ec317)**
+---
 
 # TInjectTelegram para Delphi
 Para Obter as Ultimas Atualizações, acesse aqui
- * **[*dieletro/tinjecttelegram_2020_delphi*](https://github.com/dieletro/tinjecttelegram_2020_delphi)**
+ * **[*dieletro/tinjecttelegram_delphi*](https://github.com/dieletro/tinjecttelegram_delphi)**
 
 # Grupos de Apoio aos desenvolvedores:
  * **[*Telegram*](https://t.me/TinjectTelegram)**
  * **[*Whatsapp*](https://chat.whatsapp.com/KyepdH5XYw9KnuLlobGFAE)**
 
-# TInjectTelegram ATUALIZAÇÃO 2020 para Delphi by (dieletro) LMCODE 
+# TInjectTelegram ATUALIZAÇÕES para Delphi by (dieletro) 
 > - [X] Código Atualizado para a Última versão da API do Telegram, versão 4.8 de 24 de Abril de 2020.
 > - [X] Nome dos Objetos Modificados.
 > - [X] Criado Novos Metodos para poder converter tipos distintos de array of string para JSonString 
@@ -42,40 +43,24 @@ Para Obter as Ultimas Atualizações, acesse aqui
 ![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
 As seguintes pessoas contribuíram para esta biblioteca:
-#///////////////////////////////////////////////////////////////////////////////////
-Ruan Diego Lacerda Menezes (dieletro). 03/03/2020;
-	[whatsapp]: ***+5521997196000;  
-	[telegram]: ***@diegoguitarra;  
-	[email]: ***diegolacerdamenezes@gmail.com;
-	[instagram]: ***lacerdamenezes;
-#///////////////////////////////////////////////////////////////////////////////////
-Aurino (Colaborador da Unit TelegAPI.Emoji);
-#///////////////////////////////////////////////////////////////////////////////////
-Renat Suleymanov (Al-muhandis);
-#///////////////////////////////////////////////////////////////////////////////////
-Bonmario;
-#///////////////////////////////////////////////////////////////////////////////////
-@ashumkin (Alexey Shumkin);
-#///////////////////////////////////////////////////////////////////////////////////
-Ilya Bukhonin (MstrVLT);
-#///////////////////////////////////////////////////////////////////////////////////
-Daniele Spinetti (spinettaro);
+---
+> **Ruan Diego Lacerda Menezes (dieletro).**
+1. Contatos
+    * **[whatsapp](https://web.whatsapp.com/send?phone=5521997196000&text=Olá#13gostaria#13de#13saber#13mais#13sobre#13o#13Projeto#13TinjectTelegram)** 
+    * **[telegram](https://t.me/diegolacerdamenezes)**  
+    * **[email](https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to=diegolacerdamenezes@gmail.com)**
+    * **[instagram](https://www.instagram.com/lacerdamenezes/?hl=pt-br)**
+---
+> **Aurino (Colaborador da Unit TelegAPI.Emoji)**
+---
 
 # CrossUrl
 Biblioteca para usar bibliotecas de rede do usuário final.
 
 ***Instalação e outras informações consulte:*** 
-[wiki-page] **https://github.com/ms301/CrossUrl/wiki
-[github]    **https://github.com/ms301/CrossUrl
+[wiki-page] **https://github.com/ms301/CrossUrl/wiki**
+[github]    **https://github.com/ms301/CrossUrl**
 
 Para utilizar é necessário ter instalado o CrossURL, disponível no endereço:
 [github]
-***https://github.com/kitesoft/itdevcon_2018_delphi_telegram/tree/master/libs/CrossUrl
-ou
-[github]
-***https://github.com/ms301/CrossUrl
-
-Para obter o código original, acesse:
-# Delphi Telegram
-[github] 
-***https://github.com/kitesoft/itdevcon_2018_delphi_telegram
+***https://github.com/ms301/CrossUrl***
