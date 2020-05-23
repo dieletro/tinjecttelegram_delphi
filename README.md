@@ -6,10 +6,13 @@ para uso e consumo da API Oficial do [*Telegram Bot*](https://core.telegram.org/
 
 #  Ajude a manter este projeto, segue os Links para doações
 
+**[*Doação via PAYPAL*](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2JPLRUD9S2RBY&item_name=Projeto+TInjectTelegram+para+Delphi&currency_code=BRL&source=url)**
 
-**[*Doações*](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2JPLRUD9S2RBY&item_name=Projeto+TInjectTelegram+para+Delphi&currency_code=BRL&source=url)**
+# Use QR CODE se preferir para fazer sua doação via PAYPAL
 
-**[*Doações*](https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=96811362-c8e28ed6-7ee2-4a89-a043-a18d5c1ec317)**
+![QR CodeDoacoesTInjectTelegram](https://user-images.githubusercontent.com/11804577/82735377-ae19c100-9cf7-11ea-9e63-86266ecaa55f.png)
+
+**[*Doação via Mercado Pago*](https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=96811362-c8e28ed6-7ee2-4a89-a043-a18d5c1ec317)**
 
 # TInjectTelegram para Delphi
 Para Obter as Ultimas Atualizações, acesse aqui
