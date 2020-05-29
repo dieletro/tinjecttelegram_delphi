@@ -4,11 +4,11 @@ Este Componente Foi desenvoilvido pela *ITDevCon* em projeto **colaborativo** de
 adaptado e atualizado por [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
 para uso e consumo da API Oficial do [*Telegram Bot*](https://core.telegram.org/bots/api) via Delphi
 
-#  Ajude a manter este projeto, segue os Links para doações
+#  Ajude a manter este projeto, seguem os Links para doações
 ---
 **[*Doação via PAYPAL*](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=2JPLRUD9S2RBY&item_name=Projeto+TInjectTelegram+para+Delphi&currency_code=BRL&source=url)**
 
-# Use QR CODE se preferir para fazer sua doação via PAYPAL
+# Use QR CODE, se preferir, para fazer sua doação via PAYPAL
 
 ![QR CodeDoacoesTInjectTelegram](https://user-images.githubusercontent.com/11804577/82735377-ae19c100-9cf7-11ea-9e63-86266ecaa55f.png)
 
