@@ -2,10 +2,10 @@ program ExemplosTInjectTelegram;
 
 uses
   Vcl.Forms,
-  uPrincipal in 'uPrincipal.pas' {Form1};
+  uPrincipal in 'uPrincipal.pas' {Form1},
+  uResourceString in 'uResourceString.pas';
 
 {$R *.res}
-
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;

@@ -17,6 +17,7 @@ object Form1: TForm1
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -3599,8 +3600,6 @@ object Form1: TForm1
     Align = alBottom
     ScrollBars = ssBoth
     TabOrder = 4
-    ExplicitTop = 448
-    ExplicitWidth = 747
   end
   object btnEnviaFoto: TButton
     Left = 151
@@ -3776,7 +3775,7 @@ object Form1: TForm1
     TabOrder = 21
     OnClick = btnEnviarGrpMidiasClick
   end
-  object Button1: TButton
+  object btnEnviarTxtComBt: TButton
     Left = 151
     Top = 361
     Width = 137
@@ -3784,9 +3783,9 @@ object Form1: TForm1
     Caption = 'Enviar Texto c/ Botoes'
     Default = True
     TabOrder = 22
-    OnClick = Button1Click
+    OnClick = btnEnviarTxtComBtClick
   end
-  object Button4: TButton
+  object btnEnviarTxtComBTInline: TButton
     Left = 294
     Top = 361
     Width = 137
@@ -3794,7 +3793,7 @@ object Form1: TForm1
     Caption = 'Enviar txt c/ Botoes Inline'
     Default = True
     TabOrder = 23
-    OnClick = Button4Click
+    OnClick = btnEnviarTxtComBTInlineClick
   end
   object btnApagarBotoes: TButton
     Left = 437

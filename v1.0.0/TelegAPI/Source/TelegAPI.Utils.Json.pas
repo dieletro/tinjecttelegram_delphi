@@ -2,6 +2,8 @@
 
 interface
 
+{$I config.inc}
+
 uses
   System.Json, REST.Json, REST.JsonReflect, REST.Json.Types;
 
@@ -50,6 +52,7 @@ type
     procedure SetS(const APath, AValue: string);
   public
     property S[const APath: string]: string read GetS write SetS;
+    procedure Call; inline;
   end;
 
 implementation
@@ -61,10 +64,19 @@ uses
   System.SysUtils,
   System.TypInfo;
 
-
 { TJSONValueHelper }
 type
   TJSONStringHack = class(TJSONString);
+
+function ComplicatedCall: TJSONStringHack;
+begin
+ { Fill default param values }
+end;
+
+procedure TJSONValueHelper.Call;
+begin
+  writeln(Value, ' ');
+end;
 
 function TJSONValueHelper.GetS(const APath: string): string;
 begin
@@ -77,12 +89,17 @@ var
   LValue: TJSONValue;
 begin
   LValue := Self.FindValue(APath);
-  if (LValue is TJSONString) then
-  begin
-    TJSONStringHack(LValue).{$Ifdef VER330}FValue{$else}Value{$endif} := '';// FStrBuffer.Clear();
-    TJSONStringHack(LValue).{$Ifdef VER330}FValue{$else}Value{$endif} :=AValue;//FStrBuffer.Append(AValue);
-  end;
+  {$IFDEF DELPHI13_UP}
+    if (LValue is TJSONString) then
+    begin
+      TJSONStringHack(LValue).Value := '';     // FStrBuffer.Clear();
+      TJSONStringHack(LValue).Value := AValue; //FStrBuffer.Append(AValue);
+    end;
+  {$ELSE}
+      LValue := TJSONStringHack.Create(AValue);
+  {$ENDIF}
 end;
+
 { TJsonUtils }
 
 //By Ruan Diego Lacerda Menezes
