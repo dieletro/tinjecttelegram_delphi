@@ -39,9 +39,6 @@
         <Projects Include="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\..\..\libs\Exemplo\GerenciadorGP.dproj">
-            <Dependencies/>
-        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -158,23 +155,14 @@
     <Target Name="ExemplosTInjectTelegram_RUS:Make">
         <MSBuild Projects="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj" Targets="Make"/>
     </Target>
-    <Target Name="GerenciadorGP">
-        <MSBuild Projects="..\..\..\libs\Exemplo\GerenciadorGP.dproj"/>
-    </Target>
-    <Target Name="GerenciadorGP:Clean">
-        <MSBuild Projects="..\..\..\libs\Exemplo\GerenciadorGP.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="GerenciadorGP:Make">
-        <MSBuild Projects="..\..\..\libs\Exemplo\GerenciadorGP.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="CrossUrl;CrossUrl_Indy;CrossUrl_SystemNet;TInjectTelegramCollection;ExemplosTInjectTelegram;ExemplosTInjectTelegram_ENU;ExemplosTInjectTelegram_ESB;ExemplosTInjectTelegram_FRA;ExemplosTInjectTelegram_HEB;ExemplosTInjectTelegram_ITA;ExemplosTInjectTelegram_FAR;ExemplosTInjectTelegram_RUS;GerenciadorGP"/>
+        <CallTarget Targets="CrossUrl;CrossUrl_Indy;CrossUrl_SystemNet;TInjectTelegramCollection;ExemplosTInjectTelegram;ExemplosTInjectTelegram_ENU;ExemplosTInjectTelegram_ESB;ExemplosTInjectTelegram_FRA;ExemplosTInjectTelegram_HEB;ExemplosTInjectTelegram_ITA;ExemplosTInjectTelegram_FAR;ExemplosTInjectTelegram_RUS"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="CrossUrl:Clean;CrossUrl_Indy:Clean;CrossUrl_SystemNet:Clean;TInjectTelegramCollection:Clean;ExemplosTInjectTelegram:Clean;ExemplosTInjectTelegram_ENU:Clean;ExemplosTInjectTelegram_ESB:Clean;ExemplosTInjectTelegram_FRA:Clean;ExemplosTInjectTelegram_HEB:Clean;ExemplosTInjectTelegram_ITA:Clean;ExemplosTInjectTelegram_FAR:Clean;ExemplosTInjectTelegram_RUS:Clean;GerenciadorGP:Clean"/>
+        <CallTarget Targets="CrossUrl:Clean;CrossUrl_Indy:Clean;CrossUrl_SystemNet:Clean;TInjectTelegramCollection:Clean;ExemplosTInjectTelegram:Clean;ExemplosTInjectTelegram_ENU:Clean;ExemplosTInjectTelegram_ESB:Clean;ExemplosTInjectTelegram_FRA:Clean;ExemplosTInjectTelegram_HEB:Clean;ExemplosTInjectTelegram_ITA:Clean;ExemplosTInjectTelegram_FAR:Clean;ExemplosTInjectTelegram_RUS:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="CrossUrl:Make;CrossUrl_Indy:Make;CrossUrl_SystemNet:Make;TInjectTelegramCollection:Make;ExemplosTInjectTelegram:Make;ExemplosTInjectTelegram_ENU:Make;ExemplosTInjectTelegram_ESB:Make;ExemplosTInjectTelegram_FRA:Make;ExemplosTInjectTelegram_HEB:Make;ExemplosTInjectTelegram_ITA:Make;ExemplosTInjectTelegram_FAR:Make;ExemplosTInjectTelegram_RUS:Make;GerenciadorGP:Make"/>
+        <CallTarget Targets="CrossUrl:Make;CrossUrl_Indy:Make;CrossUrl_SystemNet:Make;TInjectTelegramCollection:Make;ExemplosTInjectTelegram:Make;ExemplosTInjectTelegram_ENU:Make;ExemplosTInjectTelegram_ESB:Make;ExemplosTInjectTelegram_FRA:Make;ExemplosTInjectTelegram_HEB:Make;ExemplosTInjectTelegram_ITA:Make;ExemplosTInjectTelegram_FAR:Make;ExemplosTInjectTelegram_RUS:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
