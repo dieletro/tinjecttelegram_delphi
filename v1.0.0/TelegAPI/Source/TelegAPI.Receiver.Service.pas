@@ -26,6 +26,10 @@ type
 
   TtgOnPreCheckoutQuery = procedure(ASender: TObject; APreCheckoutQuery: ItgPreCheckoutQuery) of object;
 
+  TtgOnPollStatus = procedure(ASender: TObject; APoll: ItgPollStatus) of object;
+
+  TtgOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItgPollAnswer) of object;
+
   TInjectTelegramReceiverService = class(TInjectTelegramBotReceiverBase)
   private
     FOnUpdate: TtgOnUpdate;
@@ -41,7 +45,9 @@ type
     FOnChosenInlineResult: TtgOnInlineResultChosen;
     FOnEditedChannelPost: TtgOnMessage;
     FOnCallbackQuery: TtgOnCallbackQuery;
-  protected
+    FOnPollStatus: TtgOnPollStatus;
+
+    FOnPollAnswer: TtgOnPollAnswer;  protected
     procedure DoOnStart; override;
     procedure DoOnStop; override;
     procedure DoOnUpdates(AUpdates: TArray<ItgUpdate>); override;
@@ -55,6 +61,8 @@ type
     procedure DoOnShippingQuery(AShippingQuery: ItgShippingQuery); override;
     procedure DoOnPreCheckoutQuery(APreCheckoutQuery: ItgPreCheckoutQuery); override;
     procedure DoOnCallbackQuery(ACallbackQuery: ItgCallbackQuery); override;
+    procedure DoOnPollStatus(APollStatus: ItgOnPollStatus); override;
+    procedure DoOnPollAnswer(APollAnswer: ItgOnPollAnswer); override;
   published
     property OnStart: TNotifyEvent read FOnStart write FOnStart;
     property OnStop: TNotifyEvent read FOnStop write FOnStop;
@@ -69,6 +77,8 @@ type
     property OnShippingQuery: TtgOnShippingQuery read FOnShippingQuery write FOnShippingQuery;
     property OnPreCheckoutQuery: TtgOnPreCheckoutQuery read FOnPreCheckoutQuery write FOnPreCheckoutQuery;
     property OnCallbackQuery: TtgOnCallbackQuery read FOnCallbackQuery write FOnCallbackQuery;
+    property OnPollStatus: TtgOnPollStatus read FOnPollStatus write FOnPollStatus;
+    property OnPollAnswer: TtgOnPollAnswer read FOnPollAnswer write FOnPollAnswer;
   end;
 
 implementation
@@ -122,6 +132,22 @@ begin
   inherited;
   if Assigned(OnMessage) then
     OnMessage(Self, AMessage);
+end;
+
+procedure TInjectTelegramReceiverService.DoOnPollAnswer(
+  APollAnswer: ItgOnPollAnswer);
+begin
+  inherited;
+  if Assigned(OnPollAnswer) then
+    OnPollAnswer(Self, APollAnswer);
+end;
+
+procedure TInjectTelegramReceiverService.DoOnPollStatus(
+  APollStatus: ItgOnPollStatus);
+begin
+  inherited;
+  if Assigned(OnPollStatus) then
+    OnPollStatus(Self, APollStatus);
 end;
 
 procedure TInjectTelegramReceiverService.DoOnPreCheckoutQuery(APreCheckoutQuery: ItgPreCheckoutQuery);
