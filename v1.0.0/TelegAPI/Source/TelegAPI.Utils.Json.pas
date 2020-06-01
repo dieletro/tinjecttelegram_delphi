@@ -84,20 +84,23 @@ begin
     Result := string.Empty;
 end;
 
+//By Ruan Diego Lacerda Menezes
 procedure TJSONValueHelper.SetS(const APath, AValue: string);
 var
   LValue: TJSONValue;
 begin
   LValue := Self.FindValue(APath);
+
+  if (LValue is TJSONString) then
+  begin
   {$IFDEF DELPHI13_UP}
-    if (LValue is TJSONString) then
-    begin
-      TJSONStringHack(LValue).FValue := '';     // FStrBuffer.Clear();
-      TJSONStringHack(LValue).FValue := AValue; //FStrBuffer.Append(AValue);
-    end;
+    TJSONStringHack(LValue).FValue := '';
+    TJSONStringHack(LValue).FValue := AValue;
   {$ELSE}
-      LValue := TJSONStringHack.Create(AValue);
+    TJSONStringHack(LValue).FStrBuffer.Clear;
+    TJSONStringHack(LValue).FStrBuffer.Append(AValue);
   {$ENDIF}
+  end;
 end;
 
 { TJsonUtils }
