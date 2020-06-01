@@ -40,6 +40,8 @@ begin
       Result := '';
     TtgParseMode.Markdown:
       Result := 'Markdown';
+    TtgParseMode.MarkdownV2:
+      Result := 'MarkdownV2';
     TtgParseMode.Html:
       Result := 'HTML';
   end;
@@ -67,6 +69,14 @@ begin
       LAllowed.Add('"chosen_inline_result"');
     if TAllowedUpdate.Callback_query in Self then
       LAllowed.Add('"callback_query"');
+    if TAllowedUpdate.ShippingQuery in Self then
+      LAllowed.Add('"shipping_query"');
+    if TAllowedUpdate.PreCheckoutQuery in Self then
+      LAllowed.Add('"pre_checkout_query"');
+    if TAllowedUpdate.PollState in Self then
+      LAllowed.Add('"poll"');
+    if TAllowedUpdate.PollAnswer in Self then
+      LAllowed.Add('"poll_answer"');
     Result := '[' + Result.Join(',', LAllowed.ToArray) + ']';
   finally
     LAllowed.Free;

@@ -268,6 +268,16 @@ type
     PreCheckoutQueryUpdate,
 
     /// <summary>
+    ///   The <see cref="Update" /> contains an <see cref="Poll" />
+    /// </summary>
+    PollState,
+
+    /// <summary>
+    ///   The <see cref="Update" /> contains an <see cref="PollAnswer" />
+    /// </summary>
+    PollAnswer,
+
+    /// <summary>
     ///   Receive all <see cref="Update" /> Types
     /// </summary>
     All = 255);
@@ -360,8 +370,10 @@ type
     BankStatement, RentalAgreement, PassportRegistration, TemporaryRegistration,
     AdressDocument, PhoneNumber, Email);
 
-  TAllowedUpdate = (message, Edited_message, Channel_post, Edited_channel_post,
-    Inline_query, Chosen_inline_result, Callback_query);
+  TAllowedUpdate = (message,
+    Edited_message, Channel_post, Edited_channel_post,
+    Inline_query, Chosen_inline_result, Callback_query,
+    ShippingQuery, PreCheckoutQuery, PollState, PollAnswer);
 
   TAllowedUpdates = set of TAllowedUpdate;
 

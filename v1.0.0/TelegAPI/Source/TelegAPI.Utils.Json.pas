@@ -92,8 +92,8 @@ begin
   {$IFDEF DELPHI13_UP}
     if (LValue is TJSONString) then
     begin
-      TJSONStringHack(LValue).Value := '';     // FStrBuffer.Clear();
-      TJSONStringHack(LValue).Value := AValue; //FStrBuffer.Append(AValue);
+      TJSONStringHack(LValue).FValue := '';     // FStrBuffer.Clear();
+      TJSONStringHack(LValue).FValue := AValue; //FStrBuffer.Append(AValue);
     end;
   {$ELSE}
       LValue := TJSONStringHack.Create(AValue);

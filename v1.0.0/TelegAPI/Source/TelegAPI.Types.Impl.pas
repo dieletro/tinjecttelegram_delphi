@@ -485,6 +485,8 @@ type
     function EditedChannelPost: ITgMessage;
     function ShippingQuery: ItgShippingQuery;
     function PreCheckoutQuery: ItgPreCheckoutQuery;
+    function PollState: ItgPoll;
+    function PollAnswer: ItgPollAnswer;
     function &Type: TtgUpdateType;
   end;
 
@@ -1009,6 +1011,16 @@ end;
 function TtgUpdate.&Message: ITgMessage;
 begin
   Result := ReadToClass<TTgMessage>('message');
+end;
+
+function TtgUpdate.PollAnswer: ItgPollAnswer;
+begin
+  Result := ReadToClass<TtgPollAnswer>('poll_answer');
+end;
+
+function TtgUpdate.PollState: ItgPoll;
+begin
+  Result := ReadToClass<TtgPoll>('poll');
 end;
 
 function TtgUpdate.PreCheckoutQuery: ItgPreCheckoutQuery;
