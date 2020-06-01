@@ -28,6 +28,8 @@ type
     procedure DoOnEditedChannelPost(AEditedChannelPost: ITgMessage); virtual; abstract;
     procedure DoOnShippingQuery(AShippingQuery: ItgShippingQuery); virtual; abstract;
     procedure DoOnPreCheckoutQuery(APreCheckoutQuery: ItgPreCheckoutQuery); virtual; abstract;
+    procedure DoOnPollStatus(APoll: ItgPoll); virtual; abstract;
+    procedure DoOnPollAnswer(APollAnswer: ItgPollAnswer); virtual; abstract;
   public
     procedure ParseResponse(const JSON: string);
   end;
@@ -55,7 +57,7 @@ var
   LUpdates: TArray<ItgUpdate>;
   LBot: IInjectTelegramBot;
 begin
-  LBot := {TTelegramBot}TInjectTelegram.Create(nil);
+  LBot := TInjectTelegram.Create(nil);
   LUpdates := LBot.GetUpdates(JSON);
   EventParser(LUpdates);
 end;
@@ -89,6 +91,12 @@ begin
 
     TtgUpdateType.PreCheckoutQueryUpdate:
       DoOnPreCheckoutQuery(AUpdate.PreCheckoutQuery);
+
+    TtgUpdateType.PollState:
+      DoOnPollStatus(AUpdate.PollState);
+
+    TtgUpdateType.PollAnswer:
+      DoOnPollAnswer(AUpdate.PollAnswer);
   end;
 end;
 

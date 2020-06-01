@@ -26,7 +26,7 @@ type
 
   TtgOnPreCheckoutQuery = procedure(ASender: TObject; APreCheckoutQuery: ItgPreCheckoutQuery) of object;
 
-  TtgOnPollStatus = procedure(ASender: TObject; APoll: ItgPollStatus) of object;
+  TtgOnPollStatus = procedure(ASender: TObject; APoll: ItgPoll) of object;
 
   TtgOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItgPollAnswer) of object;
 
@@ -61,8 +61,8 @@ type
     procedure DoOnShippingQuery(AShippingQuery: ItgShippingQuery); override;
     procedure DoOnPreCheckoutQuery(APreCheckoutQuery: ItgPreCheckoutQuery); override;
     procedure DoOnCallbackQuery(ACallbackQuery: ItgCallbackQuery); override;
-    procedure DoOnPollStatus(APollStatus: ItgOnPollStatus); override;
-    procedure DoOnPollAnswer(APollAnswer: ItgOnPollAnswer); override;
+    procedure DoOnPollStatus(APoll: ItgPoll); override;
+    procedure DoOnPollAnswer(APollAnswer: ItgPollAnswer); override;
   published
     property OnStart: TNotifyEvent read FOnStart write FOnStart;
     property OnStop: TNotifyEvent read FOnStop write FOnStop;
@@ -135,7 +135,7 @@ begin
 end;
 
 procedure TInjectTelegramReceiverService.DoOnPollAnswer(
-  APollAnswer: ItgOnPollAnswer);
+  APollAnswer: ItgPollAnswer);
 begin
   inherited;
   if Assigned(OnPollAnswer) then
@@ -143,11 +143,11 @@ begin
 end;
 
 procedure TInjectTelegramReceiverService.DoOnPollStatus(
-  APollStatus: ItgOnPollStatus);
+  APoll: ItgPoll);
 begin
   inherited;
   if Assigned(OnPollStatus) then
-    OnPollStatus(Self, APollStatus);
+    OnPollStatus(Self, APoll);
 end;
 
 procedure TInjectTelegramReceiverService.DoOnPreCheckoutQuery(APreCheckoutQuery: ItgPreCheckoutQuery);
