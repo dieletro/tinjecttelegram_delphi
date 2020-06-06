@@ -23,7 +23,17 @@ Para Obter as Ultimas Atualizações, acesse aqui
  * **[*Telegram*](https://t.me/TinjectTelegram)**
  * **[*Whatsapp*](https://chat.whatsapp.com/KyepdH5XYw9KnuLlobGFAE)**
 
-# TInjectTelegram ATUALIZAÇÕES para Delphi by (dieletro) 
+# TInjectTelegram ATUALIZAÇÕES para Delphi by (dieletro)
+
+* **Versão do componente 1.1.0**
+> - [X] Código atualizado para a ultima versão da API do Telegram, versão 4.9 de 04 de Junho de 2020.
+> - [X] Adicionado o novo campo ViaBot ao objeto TtgMessage. Agora você pode saber qual bot foi usado para enviar uma mensagem.
+> - [X] Miniaturas de vídeo com suporte para animações GIF e MPEG4 embutidas.
+> - [X] Suporte a nova animação de basquete para os dados aleatórios. Escolha entre diferentes animações (etDados, etDardos, etBasquete), especificando o parâmetro emoji no método sendDice .
+> - [X] Adicionado Telegram Passport.
+> - [X] Leitura de Invoice, Dice, Poll, PassportData, no objeto TtgMessage
+
+* **Versão do componente 1.0.0**
 > - [X] Código Atualizado para a Última versão da API do Telegram, versão 4.8 de 24 de Abril de 2020.
 > - [X] Nome dos Objetos Modificados.
 > - [X] Criado Novos Metodos para poder converter tipos distintos de array of string para JSonString 
