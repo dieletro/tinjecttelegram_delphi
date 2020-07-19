@@ -2,7 +2,7 @@
 
 interface
 
-{$I config.inc}
+{$I ..\Source\config.inc}
 
 uses
   System.Json, REST.Json, REST.JsonReflect, REST.Json.Types;

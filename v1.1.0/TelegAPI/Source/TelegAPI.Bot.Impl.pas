@@ -1,6 +1,6 @@
 ﻿unit TelegAPI.Bot.Impl;
 
-{$I config.inc}
+{$I ..\Source\config.inc}
 
 interface
 
@@ -411,6 +411,11 @@ type
     function AnswerPreCheckoutQueryBad( //
       const PreCheckoutQueryId: string; //
       const ErrorMessage: string): Boolean;
+
+    function AnswerPreCheckoutQuery( //
+      const PreCheckoutQueryId: string; //
+      const OK: Boolean;
+      const ErrorMessage: string = ''): Boolean;
 
 {$ENDREGION}
 
@@ -1742,7 +1747,7 @@ begin
     .AddParameter('provider_token', ProviderToken, '', True) //
     .AddParameter('start_parameter', StartParameter, '', True) //
     .AddParameter('currency', Currency, '', True) //
-    .AddParameter('prices', LTmpJson, '[{"label":"teste","amount":"1500"}]', True) //
+    .AddParameter('prices', LTmpJson, '[{"label":"null","amount":"0"}]', True) //
     .AddParameter('provider_data', ProviderData, '', False) //
     .AddParameter('photo_url', PhotoUrl, '', False) //
     .AddParameter('photo_size', PhotoSize, 0, False) //
@@ -1762,14 +1767,31 @@ begin
   Logger.Leave(Self, 'SendInvoice');
 end;
 
+function TInjectTelegram.AnswerPreCheckoutQuery(
+  const PreCheckoutQueryId: string;
+  const OK: Boolean;
+  const ErrorMessage: string): Boolean;
+  var
+    DefaultBol : Boolean;
+begin
+  DefaultBol := Not OK;
+  Logger.Enter(Self, 'AnswerPreCheckoutQuery');
+  Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
+    .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, '0', True) //
+    .AddParameter('ok', OK, DefaultBol, True) //
+    .AddParameter('error_message', ErrorMessage, '', False) //
+    .ExecuteAsBool;
+  Logger.Leave(Self, 'AnswerPreCheckoutQuery');
+end;
+
 function TInjectTelegram.AnswerPreCheckoutQueryBad(const PreCheckoutQueryId,
   ErrorMessage: string): Boolean;
 begin
   Logger.Enter(Self, 'AnswerPreCheckoutQueryBad');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, 0, True) //
-    .AddParameter('ok', False, True, False) //
-    .AddParameter('error_message', ErrorMessage, '', True) //
+    .AddParameter('ok', True, True, True) //
+    .AddParameter('error_message', ErrorMessage, '', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQueryBad');
 end;
@@ -1780,7 +1802,7 @@ begin
   Logger.Enter(Self, 'AnswerPreCheckoutQueryGood');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, 0, True) //
-    .AddParameter('ok', True, False, False) //
+    .AddParameter('ok', True, False, True) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQueryGood');
 end;

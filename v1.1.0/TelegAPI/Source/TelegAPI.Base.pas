@@ -1,6 +1,6 @@
 ﻿unit TelegAPI.Base;
 
-{$I config.inc}
+{$I ..\Source\config.inc}
 
 interface
 

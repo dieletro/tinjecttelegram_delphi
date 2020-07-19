@@ -2,6 +2,8 @@
 
 interface
 
+{$I ..\Source\config.inc}
+
 uses
   System.SysUtils,
   System.Classes,
@@ -2091,8 +2093,10 @@ end;
 
 destructor TtgVenue.Destroy;
 begin
+  {$IF NOT DEFINE DELPHI14_UP}
   if Assigned(FLocation) then
     FreeAndNil(FLocation);
+  {$ENDIF DELPHI14_UP}
   Inherited Destroy;
 end;
 

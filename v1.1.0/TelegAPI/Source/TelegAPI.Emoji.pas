@@ -9,124 +9,137 @@ const
 
 //Novos EMojis v11.0
 {$REGION 'EMOJI 11.0'}
-  SuperHeróiMulher      = '🦸♀️' ;
-  SuperHeróiHomem       = '🦸♂️' ;
-  SupervivênciaMulher   = '🦹♀️' ;
+  SuperHeroiMulher      = '🦸♀️' ;
+  SuperHeroiHomem       = '🦸♂️' ;
+  SupervivenciaMulher   = '🦹♀️' ;
   HomemSuperando        = '🦹♂️' ;
-  HomemCabeloVermelho   = '👨🦰' ;
-  HomemCabeloVermelhoPeleClara = '👨🏻🦰' ;
-  HomemCabeloVermelhoPeleLuzMédia = '👨🏼🦰' ;
-  HomemCabeloVermelhoPeleMédia = '👨🏽🦰' ;
-  HomemCabeloVermelhoPeleMédioEscuro = '👨🏾🦰' ;
-  HomemCabeloVermelhoPeleEscura = '👨🏿🦰' ;
-  HomemCabelosEncaracolados   = '👨🦱' ;
-  HomemCabelosEncaracoladosPeleClara = '👨🏻🦱' ;
-  HomemCabelosEncaracoladosPeleLuzMédia = '👨🏼🦱' ;
-{
-'👨🏽🦱' Homem, Cabelos Encaracolados: Tom De Pele Média =
-'👨🏾🦱' Homem, Cabelos Encaracolados: Tom De Pele Médio-escuro =
-'👨🏿🦱' Homem, Cabelos Encaracolados: Tom De Pele Escura =
-'👨🦲' Homem Calvo =
-'👨🏻🦲' Homem, Calvo: Tom De Pele Clara
-'👨🏼🦲' Homem, Calvo: Tom De Pele De Luz Média
-'👨🏽🦲' Homem, Calvo: Tom De Pele Média
-'👨🏾🦲' Homem, Calvo: Tom De Pele Médio-escuro
-'👨🏿🦲' Homem, Calvo: Tom De Pele Escura
-'👨🦳' Homem, Cabelos Brancos
-'👨🏻🦳' Homem, Cabelos Brancos: Tom De Pele Clara
-'👨🏼🦳' Homem, Cabelos Brancos: Tom De Pele De Luz Média
-'👨🏽🦳' Homem, Cabelos Brancos: Tom De Pele Média
-'👨🏾🦳' Homem, Cabelos Brancos: Tom De Pele Médio-escuro
-'👨🏿🦳' Homem, Cabelos Brancos: Tom De Pele Escura
-'👩🦰' Mulher, Cabelo Vermelho
-'👩🏻🦰' Mulher, Cabelo Vermelho: Tom De Pele Clara
-'👩🏼🦰' Mulher, Cabelo Vermelho: Tom De Pele De Luz Média
-'👩🏽🦰' Mulher, Cabelo Vermelho: Tom De Pele Média
-'👩🏾🦰' Mulher, Cabelo Vermelho: Tom De Pele Médio-escuro
-'👩🏿🦰' Mulher, Cabelo Vermelho: Tom De Pele Escura
-'👩🦱' Mulher, Cabelos Encaracolados
-'👩🏻🦱' Mulher, Cabelos Encaracolados: Tom De Pele Clara
-'👩🏼🦱' Mulher, Cabelos Encaracolados: Tom De Pele De Luz Média
-'👩🏽🦱' Mulher, Cabelos Encaracolados: Tom De Pele Média
-'👩🏾🦱' Mulher, Cabelos Encaracolados: Tom De Pele Médio-escuro
-'👩🏿🦱' Mulher, Cabelos Encaracolados: Tom De Pele Escura
-'👩🦲' Mulher Calva
-'👩🏻🦲' Mulher Calva: Tom De Pele Clara
-'👩🏼🦲' Mulher Calva: Tom De Pele De Luz Média
-'👩🏽🦲' Mulher, Calva: Tom De Pele Média
-'👩🏾🦲' Mulher, Calva: Tom De Pele Médio-escuro
-'👩🏿🦲' Mulher Calva: Tom De Pele Escura
-'👩🦳' Mulher, Cabelos Brancos
-'👩🏻🦳' Mulher, Cabelos Brancos: Tom De Pele Clara
-'👩🏼🦳' Mulher, Cabelos Brancos: Tom De Pele De Luz Média
-'👩🏽🦳' Mulher, Cabelos Brancos: Tom De Pele Média
-'👩🏾🦳' Mulher, Cabelos Brancos: Tom De Pele Médio-escuro
-'👩🏿🦳' Mulher, Cabelos Brancos: Tom De Pele Escura
-'♾' Infinito
-'🏴☠️ 'Bandeira De Pirata
-Microbio = '🦠' ;M
-Bagagem = '🧳' ;    ;
-BolaFios = '🧶' ; ;
-'🥺' Carinha Com Olhos Suplicantes =
-'🧷' Pino De Segurança  =
-'🧰' Caixa De Ferramentas
-'🧹' Vassoura
-'🧺' Cesta
-'🥎' Softball
-'🧁' Cupcake
-'🧼' Barra De Sabão
-'🦵' Perna
-'🥭' Manga
-'🧸' Ursinho De Pelúcia
-'🧵' Carretel De Fio
-'🧾' Recibo
-'🧻' Rolo De Papel Higiênico
-'🧴' Garrafa De Loção
-'🥵' Carinha Superaquecido
-'🧧' Envelope De Presente Vermelho
-'🥶' Carinha Gelado
-'🧮' ábaco
-'🧿' Amuleto Nazaré
-'🥰' Carinha Sorridente Com Olhos Sorridentes E Três Corações
-'🥮' Bolo De Lua
-'🧭' Bússola
-'🦘' Canguru
-'🦸' Super-herói
-'🥴' Carinha Com Olhos Irregulares E Boca Ondulada
-'🦴' Osso
-'🥏' Disco Voador
-'🦡' Texugo
-'🦢' Cisne
-'🧽' Esponja
-'🦛' Hipopótamo
-'🧫' Petri Dish
-'🧬' Dna
-'🧂' Salador
-'🧯' Extintor De Incêndio
-'🦷' Dente
-'🥾' Botas De Caminhada
-'🧲' ímã
-'🥼' Bata De Laboratório
-'🥿' Sapato Plano
-'🦚' Pavão
-'🦙' Lama
-'🥳' Carinha Com Olhos Sorridentes E Chifre De Festa E Chapéu De Festa
-'🧪' Tubo De Ensaio
-'🦝' Raccoon
-'🦞' Lagosta
-'🦟' Mosquito
-'🥬' Verde Frondoso
-'🦜' Papagaio
-'🥍' Lacrosse Stick E Bola
-'🛹' Skateboard
-'🦶' Pé
-'🦹' Supervilância
-'🧨' Foguete
-'🧩' Peça De Quebra-cabeça
-'🥯' Bagel
-'🥽' Goggles
-'🧱' Tijolos
-}
+
+  HomemCabeloVermelho                 = '👨🦰' ;
+  HomemCabeloVermelhoPeleClara        = '👨🏻🦰' ;
+  HomemCabeloVermelhoPeleLuzMedia     = '👨🏼🦰' ;
+  HomemCabeloVermelhoPeleMedia        = '👨🏽🦰' ;
+  HomemCabeloVermelhoPeleMedioEscuro  = '👨🏾🦰' ;
+  HomemCabeloVermelhoPeleEscura       = '👨🏿🦰' ;
+
+  HomemCabelosEncaracolados               = '👨🦱' ;
+  HomemCabelosEncaracoladosPeleClara      = '👨🏻🦱' ;
+  HomemCabelosEncaracoladosPeleLuzMedia   = '👨🏼🦱' ;
+  HomemCabeloEncaracoladoPeleMedia        = '👨🏽🦱' ;
+  HomemCabeloEncaracoladoPeleMedioEscuro  = '👨🏾🦱' ;
+  HomemCabeloEncaracoladosPeleEscura      = '👨🏿🦱' ;
+
+  HomemCalvo                  = '👨🦲' ;
+  HomemCalvoPeleClara         = '👨🏻🦲' ;
+  HomemCalvoPeleLuzMedia      = '👨🏼🦲' ;
+  HomemCalvoPeleMedia         = '👨🏽🦲' ;
+  HomemCalvoPeleMedioEscuro   = '👨🏾🦲' ;
+  HomemCalvoPeleEscura        = '👨🏿🦲' ;
+
+  HomemCabeloBranco                  = '👨🦳' ;
+  HomemCabeloBrancoPeleClara         = '👨🏻🦳' ;
+  HomemCabeloBrancoPeleLuzMedia      = '👨🏼🦳' ;
+  HomemCabeloBrancoPeleMedia         = '👨🏽🦳' ;
+  HomemCabeloBrancoPeleMedioEscuro   = '👨🏾🦳' ;
+  HomemCabeloBrancoPeleEscura        = '👨🏿🦳' ;
+
+  MulherCabeloVermelho                  = '👩🦰' ;
+  MulherCabeloVermelhoPeleClara         = '👩🏻🦰' ;
+  MulherCabeloVermelhoPeleLuzMedia      = '👩🏼🦰' ;
+  MulherCabeloVermelhoPeleMedia         = '👩🏽🦰' ;
+  MulherCabeloVermelhoPeleMedioEscuro   = '👩🏾🦰' ;
+  MulherCabeloVermelhoPeleEscura        = '👩🏿🦰' ;
+
+  MulherCabeloEncaracolado                = '👩🦱' ;
+  MulherCabeloEncaracoladoPeleClara       = '👩🏻🦱' ;
+  MulherCabeloEncaracoladoPeleLuzMedia    = '👩🏼🦱' ;
+  MulherCabeloEncaracoladoPeleMedia       = '👩🏽🦱' ;
+  MulherCabeloEncaracoladoPeleMedioEscuro = '👩🏾🦱' ;
+  MulherCabeloEncaracoladoPeleEscura      = '👩🏿🦱' ;
+
+  MulherCalva                 = '👩🦲' ;
+  MulherCalvaPeleClara        = '👩🏻🦲' ;
+  MulherCalvaPeleLuzMedia     = '👩🏼🦲' ;
+  MulherCalvaPeleMedia        = '👩🏽🦲' ;
+  MulherCalvaPeleMedioEscuro  = '👩🏾🦲' ;
+  MulherCalvaPeleEscura       = '👩🏿🦲' ;
+
+  MulherCabeloBranco                = '👩🦳' ;
+  MulherCabeloBrancoPeleClara       = '👩🏻🦳' ;
+  MulherCabeloBrancoPeleLuzMedia    = '👩🏼🦳' ;
+  MulherCabeloBrancoPeleMedia       = '👩🏽🦳' ;
+  MulherCabeloBrancoPeleMedioEscuro = '👩🏾🦳' ;
+  MulherCabeloBrancoPeleEscura      = '👩🏿🦳' ;
+
+  Infinito = '♾' ;
+  BandeiraDePirata = '🏴☠️ ';
+  Microbio = '🦠' ;
+  Bagagem  = '🧳' ;
+  BolaFios = '🧶' ;
+
+  CarinhaComOlhosSuplicantes = '🥺' ;
+  CarinhaComOlhosIrregularesEBocaOndulada = '🥴' ;
+  CarinhaSorridenteComOlhosSorridentesETresCoracoes = '🥰' ;
+  CarinhaComOlhosSorridentesEChifreDeFestaEChapeuDeFesta = '🥳' ;
+
+  PinoDeSegurança       = '🧷' ;
+  CaixaDeFerramentas    = '🧰' ;
+  Vassoura              = '🧹' ;
+  Cesta                 = '🧺' ;
+  Softball              = '🥎' ;
+  Cupcake               = '🧁' ;
+  BarraDeSabao          = '🧼' ;
+  Perna                 = '🦵' ;
+  Manga                 = '🥭' ;
+  UrsinhoDePelucia      = '🧸' ;
+  CarretelDeFio         = '🧵' ;
+  Recibo                = '🧾' ;
+  RoloDePapelHigienico  = '🧻' ;
+  GarrafaDeLoção        = '🧴' ;
+  CarinhaSuperaquecido  = '🥵' ;
+  EnvelopeDePresenteVermelho = '🧧' ;
+  CarinhaGelado                = '🥶' ;
+  Abaco                        = '🧮' ;
+  AmuletoNazare                = '🧿' ;
+
+  BoloDeLua  = '🥮' ;
+  Bussola    = '🧭' ;
+  Canguru    = '🦘' ;
+  SuperHeroi = '🦸' ;
+
+  Osso                 = '🦴' ;
+  DiscoVoador          = '🥏' ;
+  Texugo               = '🦡' ;
+  Cisne                = '🦢' ;
+  Esponja              = '🧽' ;
+  Hipopotamo           = '🦛' ;
+  PetriDish            = '🧫' ;
+  Dna                  = '🧬' ;
+  Salador              = '🧂' ;
+  ExtintorDeIncendio   = '🧯' ;
+  Dente                = '🦷' ;
+  BotasDeCaminhada     = '🥾' ;
+  Ima                  = '🧲' ;
+  BataDeLaboratório    = '🥼' ;
+  SapatoPlano          = '🥿' ;
+  Pavao                = '🦚' ;
+  Lama                 = '🦙' ;
+
+  TuboDeEnsaio           = '🧪' ;
+  Raccoon                = '🦝' ;
+  Lagosta                = '🦞' ;
+  Mosquito               = '🦟' ;
+  VerdeFrondoso          = '🥬' ;
+  Papagaio               = '🦜' ;
+  LacrosseStickEBola     = '🥍' ;
+  Skateboard             = '🛹' ;
+  Pe                     = '🦶' ;
+  Supervilancia          = '🦹' ;
+  Foguete                = '🧨' ;
+  PeçaDeQuebraCabeca     = '🧩' ;
+  Bagel                  = '🥯' ;
+  Goggles                = '🥽' ;
+  Tijolos                = '🧱' ;
+
 {$ENDREGION 'EMOJI 11.0'}
 
 {$REGION 'SUPER-REGION:PESSOAS'}
@@ -219,7 +232,7 @@ BolaFios = '🧶' ; ;
   const CoupleHeart               = '💑';
 {$ENDREGION 'FACES'}
 
-{$REGION 'GESTOS'}
+  {$REGION 'GESTOS'}
    Like                                 = '👍🏻';
    Deslike                              = '👎🏻';
    ApertoDeMao                          = '🤝🏻';
@@ -254,7 +267,7 @@ BolaFios = '🧶' ; ;
    Boca                                 = '👄';
 {$ENDREGION 'GESTOS'}
 
-{$REGION 'PERSONAGENS'}
+  {$REGION 'PERSONAGENS'}
   const LoiraFazerOq              = '🤷‍♀' ;
   const LoiraMaoNoRosto           = '🤦‍♀' ;
   const LoiraNotebook             = '👩🏼‍💻';
@@ -292,7 +305,7 @@ BolaFios = '🧶' ; ;
 
 {$REGION 'SUPER-REGION:NATUREZA'}
 
-{$REGION 'FACES E ANIMAIS'}
+  {$REGION 'FACES E ANIMAIS'}
   const ExtraterrestrialAlien = '👽';
   const SmilingCatOpenMouth = '😺';
   const GrinningCatSmilingEyes = '😸';
@@ -370,7 +383,7 @@ BolaFios = '🧶' ; ;
   const PawPrints = '🐾';
 {$ENDREGION 'FACES E ANIMAIS'}
 
-{$REGION 'NATUREZA'}
+  {$REGION 'NATUREZA'}
   const Bouquet = '💐';
   const CherryBlossom = '🌸';
   const Tulip = '🌷';
@@ -448,7 +461,7 @@ BolaFios = '🧶' ; ;
 
 {$REGION 'SUPER-REGION:COMIDAS E BEBIDAS'}
 
-{$REGION 'COMIDAS'}
+  {$REGION 'COMIDAS'}
   const Macarrao               = '🍜';
   const PizzaFatia             = '🍕';
   const Sorvete                = '🍧';
@@ -490,7 +503,7 @@ BolaFios = '🧶' ; ;
 
 {$ENDREGION 'COMIDAS'}
 
-{$REGION 'BEBIDAS'}
+  {$REGION 'BEBIDAS'}
   const Bebida            = '🥃';
   const HotBeverage       = '☕';
   const TeacupoutHandle = '🍵';
@@ -507,7 +520,7 @@ BolaFios = '🧶' ; ;
 
 {$REGION 'SUPER-REGION:SIMBOLOS E BANDEIRAS'}
 
-{$REGION 'SIMBOLOS'}
+  {$REGION 'SIMBOLOS'}
   const YellowHeart = '💛';
   const BlueHeart = '💙';
   const PurpleHeart = '💜';
@@ -693,7 +706,7 @@ BolaFios = '🧶' ; ;
   const RadioButton = '🔘';
 {$ENDREGION 'SIMBOLOS'}
 
-{$REGION 'HORARIO'}
+  {$REGION 'HORARIO'}
   const ClockTwelveOclock = '🕛';
   const ClockTwelveThirty = '🕧';
   const ClockOneOclock = '🕐';
@@ -720,7 +733,7 @@ BolaFios = '🧶' ; ;
   const ClockElevenThirty = '🕦';
 {$ENDREGION 'HORARIO'}
 
-{$REGION 'NUMEROS'}
+  {$REGION 'NUMEROS'}
   const Zero             = '0⃣';
   const Um               = '1⃣';
   const Dois             = '2⃣';
@@ -835,15 +848,15 @@ BolaFios = '🧶' ; ;
   const BridgeatNight = '🌉';
   const CarouselHorse = '🎠';
   const FerrisWheel = '🎡';
-  const fonte = '⛲';
+  const Fonte = '⛲';
   const RollerCoaster = '🎢';
   const Ship = '🚢';
   const Veleiro = '⛵';
   const Lancha = '🚤';
   const Rowboat = '🚣';
-  const Âncora = '⚓';
-  const Foguete = '🚀';
-  const Avião = '✈';
+  const Ancora = '⚓';
+  const FogueteNovo = '🚀';
+  const Aviao = '✈';
   const Seat = '💺';
   const Helicóptero = '🚁';
   const SteamLocomotive = '🚂';
@@ -895,7 +908,7 @@ BolaFios = '🧶' ; ;
   const Enviar           = '📩';
   const Fone             = '📞';
   const Onibus           = '🚍';
-  const Aviao            = '✈';
+  const Aviao2           = '✈';
   const Joystick         = '🎮';
   const Cartao           = '💳';
   const TuboEnsaio       = '🧪';

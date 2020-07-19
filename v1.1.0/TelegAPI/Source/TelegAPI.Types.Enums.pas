@@ -207,7 +207,7 @@ type
     /// </summary>
     Markdown,
     /// <summary>
-    ///   To use this mode, pass Markdown in the parse_mode field when using
+    ///   To use this mode, pass MarkdownV2 in the parse_mode field when using
     ///   sendMessage
     /// </summary>
     MarkdownV2,

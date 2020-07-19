@@ -1655,6 +1655,12 @@ type
     function AnswerPreCheckoutQueryBad( //
       const PreCheckoutQueryId: string; //
       const ErrorMessage: string): Boolean;
+
+    function AnswerPreCheckoutQuery( //
+      const PreCheckoutQueryId: string; //
+      const OK: Boolean;
+      const ErrorMessage: string): Boolean;
+
 {$ENDREGION}
 
 {$REGION 'Telegram Passport'}
