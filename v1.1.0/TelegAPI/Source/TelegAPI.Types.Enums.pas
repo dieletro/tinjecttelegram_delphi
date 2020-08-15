@@ -121,7 +121,11 @@ type
     /// <summary>
     ///   Define o emoji BascketBoll <see cref="Dice" />
     /// </summary>
-  etBasquete);
+  etBasquete,
+    /// <summary>
+    ///   Define o emoji Boll <see cref="Dice" />
+    /// </summary>
+  etBola);
 
 
   TtgChatType = (

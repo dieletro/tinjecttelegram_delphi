@@ -696,13 +696,13 @@ end;
 
 procedure TInjectTelegram.AssignTo(Dest: TPersistent);
 begin
-  if not (Assigned(Dest) or (Dest is {TTelegramBot}TInjectTelegram)) then
+  if not (Assigned(Dest) or (Dest is TInjectTelegram)) then
     Exit;
-  (Dest as {TTelegramBot}TInjectTelegram).Token := Self.Token;
-  (Dest as {TTelegramBot}TInjectTelegram).HttpCore := Self.HttpCore;
-  (Dest as {TTelegramBot}TInjectTelegram).Logger := Self.Logger;
-  (Dest as {TTelegramBot}TInjectTelegram).OnReceiveRawData := Self.OnReceiveRawData;
-  (Dest as {TTelegramBot}TInjectTelegram).OnSendData := Self.OnSendData;
+  (Dest as TInjectTelegram).Token := Self.Token;
+  (Dest as TInjectTelegram).HttpCore := Self.HttpCore;
+  (Dest as TInjectTelegram).Logger := Self.Logger;
+  (Dest as TInjectTelegram).OnReceiveRawData := Self.OnReceiveRawData;
+  (Dest as TInjectTelegram).OnSendData := Self.OnSendData;
   // inherited AssignTo(Dest);
 end;
 
@@ -863,6 +863,7 @@ begin
     .AddParameter('media', LTmpJson, '[]', True) //
     .AddParameter('disable_notification', ADisableNotification, False, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False);
+
   for LMedia in AMedia do
   begin
     case LMedia.GetFileToSend.Tag of
@@ -1147,16 +1148,7 @@ function TInjectTelegram.SendDice(
   const DisableNotification: Boolean = False; //
   const ReplyToMessageId: Int64 = 0; //
       ReplyMarkup: IReplyMarkup = nil): ITgMessage;
-//  var
-//  MyEmoji : String;
 begin
-
-//  case Emoji of
-//    TtgEmojiType.etDado:  MyEmoji := '🎲';
-//    TtgEmojiType.etDardo: MyEmoji := '🎯';
-//    TtgEmojiType.etBasquete: MyEmoji := '🏀';
-//  end;
-
   Logger.Enter(Self, 'SendDice');
   Result := TTgMessage.Create(GetRequest.SetMethod('sendDice') //
     .AddParameter('chat_id', ChatId, 0, True) //

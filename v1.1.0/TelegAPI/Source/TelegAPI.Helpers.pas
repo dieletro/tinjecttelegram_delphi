@@ -174,6 +174,8 @@ begin
         Result  := '🎯';
     TtgEmojiType.etBasquete:
         Result  := '🏀';
+    TtgEmojiType.etBola:
+        Result  := '⚽';
   end;
 end;
 
