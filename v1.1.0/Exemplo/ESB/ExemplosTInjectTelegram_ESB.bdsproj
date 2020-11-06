@@ -28,6 +28,9 @@
 			<Options Name="Evidence"></Options>
 			<Options Name="KeyFile"></Options>
 			<Options Name="KeyName"></Options>
-		</Options>
-		<FileList><File FileName="uPrincipal.dfm" ContainerId="W32Form" ModuleName="uPrincipal.dfm"/><File FileName="Win32\Debug\ExemplosTInjectTelegram_DRC.rc" ContainerId="W32RC" ModuleName="ExemplosTInjectTelegram_DRC.rc"/></FileList></W32ResourceDLL.Personality>
+		</Options>  <FileList>
+      <File FileName="uPrincipal.dfm" ContainerId="W32Form" ModuleName="uPrincipal.dfm"/>
+      <File FileName="Win32\Debug\ExemplosTInjectTelegram_DRC.rc" ContainerId="W32RC" ModuleName="ExemplosTInjectTelegram_DRC.rc"/>
+    </FileList>
+  </W32ResourceDLL.Personality>
 </BorlandProject>

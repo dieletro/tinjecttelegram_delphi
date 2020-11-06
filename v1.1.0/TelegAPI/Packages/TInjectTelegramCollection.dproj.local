@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <ProjectSortOrder AutoSort="0" SortType="0">
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\TelegAPI"/>
     <File Path="..\Source"/>
     <File Path="..\Source\CoreAPI.pas"/>
@@ -17,11 +17,11 @@
     <File Path="..\Source\TelegAPI.Receiver.Service.pas"/>
     <File Path="..\Source\TelegAPI.Receiver.UI.pas"/>
     <File Path="..\Source\TelegAPI.RegisterIDE.pas"/>
-    <File Path="..\Source\TelegAPI.Types.pas"/>
-    <File Path="..\Source\TelegAPI.Types.Impl.pas"/>
     <File Path="..\Source\TelegAPI.Types.Enums.pas"/>
+    <File Path="..\Source\TelegAPI.Types.Impl.pas"/>
     <File Path="..\Source\TelegAPI.Types.InlineQueryResults.pas"/>
     <File Path="..\Source\TelegAPI.Types.InputMessageContents.pas"/>
+    <File Path="..\Source\TelegAPI.Types.pas"/>
     <File Path="..\Source\TelegAPI.Types.Passport.pas"/>
     <File Path="..\Source\TelegAPI.Types.ReplyMarkups.pas"/>
     <File Path="..\Source\TelegAPI.UpdateParser.pas"/>
