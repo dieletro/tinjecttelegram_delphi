@@ -25,7 +25,6 @@ package CrossUrl.SystemNet;
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'Cross URL - SystemNet'}
 {$IMPLICITBUILD ON}
 
 requires

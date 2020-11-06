@@ -113,6 +113,14 @@ type
       const ReplyToMessageId: Int64 = 0; //
       ReplyMarkup: IReplyMarkup = nil): ITgMessage;
 
+    function SendMessageChannelGroup(
+      const ChatId, Text: string;
+      const ParseMode: TtgParseMode;
+      const DisableWebPagePreview,
+      DisableNotification: Boolean;
+      const ReplyToMessageId: Int64;
+      ReplyMarkup: IReplyMarkup): ITgMessage;
+
     function ForwardMessage( //
       const ChatId, FromChatId: TtgUserLink; //
       const MessageId: Int64; //
@@ -946,6 +954,25 @@ begin
 end;
 
 function TInjectTelegram.SendMessage(const ChatId: TtgUserLink; const Text: string;
+  const ParseMode: TtgParseMode; const DisableWebPagePreview,
+  DisableNotification: Boolean; const ReplyToMessageId: Int64; ReplyMarkup:
+  IReplyMarkup): ITgMessage;
+begin
+  Logger.Enter(Self, 'SendMessage');
+
+  Result := TTgMessage.Create(GetRequest.SetMethod('sendMessage') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('text', Text, '', True) //
+    .AddParameter('parse_mode', ParseMode.ToString, '', False) //
+    .AddParameter('disable_web_page_preview', DisableWebPagePreview, False, False) //
+    .AddParameter('disable_notification', DisableNotification, False, False) //
+    .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
+    .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
+    .Execute);
+  Logger.Leave(Self, 'SendMessage');
+end;
+
+function TInjectTelegram.SendMessageChannelGroup(const ChatId: string; const Text: string;
   const ParseMode: TtgParseMode; const DisableWebPagePreview,
   DisableNotification: Boolean; const ReplyToMessageId: Int64; ReplyMarkup:
   IReplyMarkup): ITgMessage;

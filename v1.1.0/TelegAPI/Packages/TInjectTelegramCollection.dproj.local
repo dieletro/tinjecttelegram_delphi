@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="CrossUrl.dcp"/>
-    <File Path="FireDAC.dcp"/>
-    <File Path="FireDACCommon.dcp"/>
-    <File Path="FireDACCommonDriver.dcp"/>
-    <File Path="IndyCore.dcp"/>
-    <File Path="IndyProtocols.dcp"/>
-    <File Path="IndySystem.dcp"/>
-    <File Path="RESTComponents.dcp"/>
-    <File Path="rtl.dcp"/>
-    <File Path="vcl.dcp"/>
     <File Path="..\..\TelegAPI"/>
     <File Path="..\Source"/>
     <File Path="..\Source\CoreAPI.pas"/>
@@ -38,5 +28,15 @@
     <File Path="..\Source\TelegAPI.Utils.Json.pas"/>
     <File Path="..\Source\TelegraPh.pas"/>
     <File Path="..\Source\TelegraPh.Types.pas"/>
+    <File Path="CrossUrl.dcp"/>
+    <File Path="FireDAC.dcp"/>
+    <File Path="FireDACCommon.dcp"/>
+    <File Path="FireDACCommonDriver.dcp"/>
+    <File Path="IndyCore.dcp"/>
+    <File Path="IndyProtocols.dcp"/>
+    <File Path="IndySystem.dcp"/>
+    <File Path="RESTComponents.dcp"/>
+    <File Path="rtl.dcp"/>
+    <File Path="vcl.dcp"/>
   </ProjectSortOrder>
 </BorlandProject>
