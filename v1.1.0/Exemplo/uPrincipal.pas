@@ -866,7 +866,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegram1.SendMessageChannelGroup(Trim(txtID.Text), VRes_Este_Seu_ID + MyChatId.ID.ToString, LParseMode, False, False, 0, LMarkup)
+      InjectTelegram1.SendMessageChannelGroup(Trim(txtID.Text), 'Data e Hora Agora: ' + DateTimeToStr(Now), LParseMode, False, False, 0, LMarkup)
     except
       on E: Exception do
         memConsole.Lines.Add(VRes_Falha_Envio_Destinatario + E.Message);
