@@ -6,8 +6,8 @@ object Form1: TForm1
   Caption = 
     'Exemplo de uso do TinjectTelegram (By Ruan Diego Lacerda Menezes' +
     ')'
-  ClientHeight = 542
-  ClientWidth = 740
+  ClientHeight = 550
+  ClientWidth = 744
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,6 +15,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
@@ -23,7 +24,7 @@ object Form1: TForm1
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 740
+    Width = 744
     Height = 169
     Align = alTop
     Picture.Data = {
@@ -3522,10 +3523,10 @@ object Form1: TForm1
   end
   object Label2: TLabel
     Left = 415
-    Top = 175
-    Width = 118
+    Top = 221
+    Width = 138
     Height = 13
-    Caption = 'ID do Usu'#225'rio de destino'
+    Caption = 'ID Usu'#225'rio/canal/supergrupo'
   end
   object ImgLoad: TImage
     Left = 627
@@ -3536,14 +3537,17 @@ object Form1: TForm1
     Visible = False
   end
   object Label3: TLabel
-    Left = 8
-    Top = 429
-    Width = 51
+    AlignWithMargins = True
+    Left = 3
+    Top = 450
+    Width = 738
     Height = 13
+    Align = alBottom
     Caption = 'Log do Bot'
+    ExplicitWidth = 51
   end
   object Label4: TLabel
-    Left = 415
+    Left = 577
     Top = 221
     Width = 69
     Height = 13
@@ -3555,6 +3559,13 @@ object Form1: TForm1
     Width = 76
     Height = 13
     Caption = 'Token do Banco'
+  end
+  object lblTipoEnvio: TLabel
+    Left = 415
+    Top = 175
+    Width = 49
+    Height = 13
+    Caption = 'Tipo Envio'
   end
   object btnEnviaTexto: TButton
     Left = 8
@@ -3594,8 +3605,8 @@ object Form1: TForm1
   end
   object memConsole: TMemo
     Left = 0
-    Top = 458
-    Width = 740
+    Top = 466
+    Width = 744
     Height = 84
     Align = alBottom
     ScrollBars = ssBoth
@@ -3613,11 +3624,11 @@ object Form1: TForm1
   end
   object txtID: TEdit
     Left = 415
-    Top = 194
+    Top = 240
     Width = 159
     Height = 21
     TabOrder = 6
-    TextHint = 'Id do Usuario'
+    TextHint = 'ID Usu'#225'rio/canal/grupo'
   end
   object btnEnviaAudio: TButton
     Left = 294
@@ -3826,7 +3837,7 @@ object Form1: TForm1
     OnClick = btnEnviarDardoClick
   end
   object txtNomeJogo: TEdit
-    Left = 415
+    Left = 577
     Top = 240
     Width = 159
     Height = 21
@@ -3891,6 +3902,32 @@ object Form1: TForm1
     Default = True
     TabOrder = 33
     OnClick = Button1Click
+  end
+  object btnEnviarTextoCanalGrupo: TButton
+    Left = 8
+    Top = 423
+    Width = 280
+    Height = 25
+    Caption = 'Enviar Texto Canal/Grupo'
+    Default = True
+    TabOrder = 34
+    OnClick = btnEnviarTextoCanalGrupoClick
+  end
+  object cbbTipoEnvio: TComboBox
+    Left = 415
+    Top = 194
+    Width = 159
+    Height = 21
+    Style = csDropDownList
+    ItemIndex = 0
+    TabOrder = 35
+    Text = 'Usu'#225'rio'
+    OnChange = cbbTipoEnvioChange
+    Items.Strings = (
+      'Usu'#225'rio'
+      'Canal P'#250'blico'
+      'Canal Privado'
+      'Grupo')
   end
   object InjectTelegram1: TInjectTelegram
     Logger = InjectTelegramExceptionManagerUI1
