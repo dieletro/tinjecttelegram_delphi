@@ -3524,9 +3524,9 @@ object Form1: TForm1
   object Label2: TLabel
     Left = 415
     Top = 221
-    Width = 138
+    Width = 111
     Height = 13
-    Caption = 'ID Usu'#225'rio/canal/supergrupo'
+    Caption = 'ID Usu'#225'rio/canal/grupo'
   end
   object ImgLoad: TImage
     Left = 627
@@ -3563,9 +3563,9 @@ object Form1: TForm1
   object lblTipoEnvio: TLabel
     Left = 415
     Top = 175
-    Width = 49
+    Width = 64
     Height = 13
-    Caption = 'Tipo Envio'
+    Caption = 'Tipo de Envio'
   end
   object btnEnviaTexto: TButton
     Left = 8

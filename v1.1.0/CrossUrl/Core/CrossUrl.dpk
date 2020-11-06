@@ -27,10 +27,10 @@ package CrossUrl;
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
 
-requires
+rrequires
   rtl;
 
-contains
+ocontains
   CrossUrl.HttpClient in 'CrossUrl.HttpClient.pas';
 
-end.
+d.

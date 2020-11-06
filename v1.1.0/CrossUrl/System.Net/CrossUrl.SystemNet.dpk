@@ -27,15 +27,15 @@ package CrossUrl.SystemNet;
 {$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD ON}
 
-requires
+rrequires
   rtl,
   CrossUrl;
 
-contains
+ocontains
   CrossUrl.SystemNet.Uri in 'CrossUrl.SystemNet.Uri.pas',
   CrossUrl.SystemNet.Register in 'CrossUrl.SystemNet.Register.pas',
   CrossUrl.SystemNet.MultipartFormData in 'CrossUrl.SystemNet.MultipartFormData.pas',
   CrossUrl.SystemNet.HttpResponse in 'CrossUrl.SystemNet.HttpResponse.pas',
   CrossUrl.SystemNet.HttpClient in 'CrossUrl.SystemNet.HttpClient.pas';
 
-end.
+d.
