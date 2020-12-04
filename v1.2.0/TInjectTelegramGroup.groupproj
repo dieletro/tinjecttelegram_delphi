@@ -1,0 +1,168 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{B6252712-F2CD-405F-91F8-7455B2975C60}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CrossUrl\Core\CrossUrl.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="CrossUrl\Indy\CrossUrl.Indy.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="CrossUrl\System.Net\CrossUrl.SystemNet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TInjectTelegram\Packages\TInjectTelegramCollection.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\ExemplosTInjectTelegram.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\ENU\ExemplosTInjectTelegram_ENU.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\ESB\ExemplosTInjectTelegram_ESB.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\FRA\ExemplosTInjectTelegram_FRA.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\HEB\ExemplosTInjectTelegram_HEB.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\ITA\ExemplosTInjectTelegram_ITA.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\FAR\ExemplosTInjectTelegram_FAR.bdsproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CrossUrl">
+        <MSBuild Projects="CrossUrl\Core\CrossUrl.dproj"/>
+    </Target>
+    <Target Name="CrossUrl:Clean">
+        <MSBuild Projects="CrossUrl\Core\CrossUrl.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CrossUrl:Make">
+        <MSBuild Projects="CrossUrl\Core\CrossUrl.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CrossUrl_Indy">
+        <MSBuild Projects="CrossUrl\Indy\CrossUrl.Indy.dproj"/>
+    </Target>
+    <Target Name="CrossUrl_Indy:Clean">
+        <MSBuild Projects="CrossUrl\Indy\CrossUrl.Indy.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CrossUrl_Indy:Make">
+        <MSBuild Projects="CrossUrl\Indy\CrossUrl.Indy.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CrossUrl_SystemNet">
+        <MSBuild Projects="CrossUrl\System.Net\CrossUrl.SystemNet.dproj"/>
+    </Target>
+    <Target Name="CrossUrl_SystemNet:Clean">
+        <MSBuild Projects="CrossUrl\System.Net\CrossUrl.SystemNet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CrossUrl_SystemNet:Make">
+        <MSBuild Projects="CrossUrl\System.Net\CrossUrl.SystemNet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TInjectTelegramCollection">
+        <MSBuild Projects="TInjectTelegram\Packages\TInjectTelegramCollection.dproj"/>
+    </Target>
+    <Target Name="TInjectTelegramCollection:Clean">
+        <MSBuild Projects="TInjectTelegram\Packages\TInjectTelegramCollection.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TInjectTelegramCollection:Make">
+        <MSBuild Projects="TInjectTelegram\Packages\TInjectTelegramCollection.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram">
+        <MSBuild Projects="Exemplo\ExemplosTInjectTelegram.dproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram:Clean">
+        <MSBuild Projects="Exemplo\ExemplosTInjectTelegram.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram:Make">
+        <MSBuild Projects="Exemplo\ExemplosTInjectTelegram.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ENU">
+        <MSBuild Projects="Exemplo\ENU\ExemplosTInjectTelegram_ENU.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ENU:Clean">
+        <MSBuild Projects="Exemplo\ENU\ExemplosTInjectTelegram_ENU.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ENU:Make">
+        <MSBuild Projects="Exemplo\ENU\ExemplosTInjectTelegram_ENU.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ESB">
+        <MSBuild Projects="Exemplo\ESB\ExemplosTInjectTelegram_ESB.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ESB:Clean">
+        <MSBuild Projects="Exemplo\ESB\ExemplosTInjectTelegram_ESB.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ESB:Make">
+        <MSBuild Projects="Exemplo\ESB\ExemplosTInjectTelegram_ESB.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_FRA">
+        <MSBuild Projects="Exemplo\FRA\ExemplosTInjectTelegram_FRA.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_FRA:Clean">
+        <MSBuild Projects="Exemplo\FRA\ExemplosTInjectTelegram_FRA.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_FRA:Make">
+        <MSBuild Projects="Exemplo\FRA\ExemplosTInjectTelegram_FRA.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_HEB">
+        <MSBuild Projects="Exemplo\HEB\ExemplosTInjectTelegram_HEB.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_HEB:Clean">
+        <MSBuild Projects="Exemplo\HEB\ExemplosTInjectTelegram_HEB.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_HEB:Make">
+        <MSBuild Projects="Exemplo\HEB\ExemplosTInjectTelegram_HEB.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ITA">
+        <MSBuild Projects="Exemplo\ITA\ExemplosTInjectTelegram_ITA.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ITA:Clean">
+        <MSBuild Projects="Exemplo\ITA\ExemplosTInjectTelegram_ITA.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_ITA:Make">
+        <MSBuild Projects="Exemplo\ITA\ExemplosTInjectTelegram_ITA.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_FAR">
+        <MSBuild Projects="Exemplo\FAR\ExemplosTInjectTelegram_FAR.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_FAR:Clean">
+        <MSBuild Projects="Exemplo\FAR\ExemplosTInjectTelegram_FAR.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_FAR:Make">
+        <MSBuild Projects="Exemplo\FAR\ExemplosTInjectTelegram_FAR.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_RUS">
+        <MSBuild Projects="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_RUS:Clean">
+        <MSBuild Projects="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExemplosTInjectTelegram_RUS:Make">
+        <MSBuild Projects="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CrossUrl;CrossUrl_Indy;CrossUrl_SystemNet;TInjectTelegramCollection;ExemplosTInjectTelegram;ExemplosTInjectTelegram_ENU;ExemplosTInjectTelegram_ESB;ExemplosTInjectTelegram_FRA;ExemplosTInjectTelegram_HEB;ExemplosTInjectTelegram_ITA;ExemplosTInjectTelegram_FAR;ExemplosTInjectTelegram_RUS"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CrossUrl:Clean;CrossUrl_Indy:Clean;CrossUrl_SystemNet:Clean;TInjectTelegramCollection:Clean;ExemplosTInjectTelegram:Clean;ExemplosTInjectTelegram_ENU:Clean;ExemplosTInjectTelegram_ESB:Clean;ExemplosTInjectTelegram_FRA:Clean;ExemplosTInjectTelegram_HEB:Clean;ExemplosTInjectTelegram_ITA:Clean;ExemplosTInjectTelegram_FAR:Clean;ExemplosTInjectTelegram_RUS:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CrossUrl:Make;CrossUrl_Indy:Make;CrossUrl_SystemNet:Make;TInjectTelegramCollection:Make;ExemplosTInjectTelegram:Make;ExemplosTInjectTelegram_ENU:Make;ExemplosTInjectTelegram_ESB:Make;ExemplosTInjectTelegram_FRA:Make;ExemplosTInjectTelegram_HEB:Make;ExemplosTInjectTelegram_ITA:Make;ExemplosTInjectTelegram_FAR:Make;ExemplosTInjectTelegram_RUS:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
