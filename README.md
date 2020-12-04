@@ -163,7 +163,8 @@ The following people contributed to this library:
 ---
 > **Aurino (Collaborator of Unit TelegAPI.Emoji)**
 ---
-#Contributed up to API Bot 3.0 May 18, 2017 
+#Contributed up to API Bot 3.0 May 18, 2017
+
 Renat Suleymanov (Al-muhandis);
 ---
 Bonmario;
@@ -185,5 +186,5 @@ Library to use end user network libraries.
 To use it is necessary to have CrossURL installed, available at:
 [github] ***https://github.com/ms301/CrossUrl***
 
-# To use Telegram's TDLib API see my other projects with usage examples and are also available on Telegram's official website, click in exemples for see more...
-* **[Usage](https://core.telegram.org/tdlib/docs/#usage)** , or access my direct link to the examples * **[See my TDLib examples for use with Object Pascal](https://github.com/tdlib/td/blob/master/example/README.md#object-pascal)**  
+# To use Telegram's TDLib API see my other projects with usage examples and are also available on Telegram's official website!
+***click in exemples for see more...* **[Usage](https://core.telegram.org/tdlib/docs/#usage)** , or access my direct link to the examples * **[See my TDLib examples for use with Object Pascal](https://github.com/tdlib/td/blob/master/example/README.md#object-pascal)**  
