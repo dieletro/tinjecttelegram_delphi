@@ -23,10 +23,19 @@ To get the latest updates, go here
  * **[*Whatsapp*](https://chat.whatsapp.com/KyepdH5XYw9KnuLlobGFAE)**
 
 # TInjectTelegram UPDATES for Delphi by (dieletro) LMCODE 
-
-> - [X] Updated for the latest version of the Telegram API, version 5.0 of November 24, 2020.
 ---
 * **Component version 1.2.0**
+> - [X] Updated for the latest version of the Telegram API, version 5.0 of November 24, 2020.
+
+*Run Your Own Bot API Server*
+> - [ ] Bot API source code is now available at telegram-bot-api. You can now run your own Bot API server locally, boosting your bots' performance (check this out to see if this will benefit your project).
+> - [ ] Added the method logOut, which can be used to log out from the cloud Bot API server before launching your bot locally. You must log out the bot before running it locally, otherwise there is no guarantee that the bot will receive all updates. 
+> - [ ] Added the method close, which can be used to close the bot instance before moving it from one local server to another.
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+*Transfer Bot Ownnership*
+> - [X] You can now use @BotFather to transfer your existing bots to another Telegram account.
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 *Working with Groups*
 > - [X] add in ItgChat and TtgChat
