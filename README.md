@@ -164,7 +164,7 @@ Maximum poll question length increased to 300.
     * **[instagram](https://www.instagram.com/lacerdamenezes/?hl=pt-br)**
     * **[twitter](https://twitter.com/RD_Lacerda)**
 ---
-> **Aurino (Collaborator of Unit TelegAPI.Emoji)**
+> **Aurino (Collaborator of Unit TInjectTelegram.Emoji)**
 ---
 
 * **Contributed up to API Bot 3.0 May 18, 2017**
