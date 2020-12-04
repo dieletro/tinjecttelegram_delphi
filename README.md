@@ -25,6 +25,9 @@ To get the latest updates, go here
 
 # TInjectTelegram UPDATES for Delphi by (dieletro) LMCODE 
 ---
+* **Component version 1.3.0**
+> - [X] New design for the component and a general restructuring has been carried out, so this new component will no longer have conflicts with other installed versions.
+
 * **Component version 1.2.0**
 > - [X] Updated for the latest version of the Telegram API, version 5.0 of November 24, 2020.
 
