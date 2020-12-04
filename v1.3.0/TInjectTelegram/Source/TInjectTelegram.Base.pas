@@ -35,7 +35,7 @@ begin
   inherited Create(AOwner);
   FAutor := 'ITDevCon in an collaborative project';
   FDesenvolvedor := 'Ruan Diego Lacerda Menezes';
-  FVersaoComponent := '1.2.0';
+  FVersaoComponent := '1.3.0';
   FVersaoAPI := '5.0';
   FDataVersao := '04 de Novembro de 2020';
 end;
