@@ -1,6 +1,7 @@
  ![IMG_Logo_TInjectTelegram_s_Fundo](https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png)
 
-This Component was developed by [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
+This Component was Created by *ITDevCon* in an open source **collaborative** project,
+developed by [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
 for use and consumption of the Official [*Telegram Bot*] API(https://core.telegram.org/bots/api) via Delphi
 
 #  Help maintain this project, follow the Links for donations
@@ -158,8 +159,20 @@ The following people contributed to this library:
     * **[telegram](https://t.me/diegolacerdamenezes)**  
     * **[email](https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to=diegolacerdamenezes@gmail.com)**
     * **[instagram](https://www.instagram.com/lacerdamenezes/?hl=pt-br)**
+    * **[twitter](https://twitter.com/RD_Lacerda)**
 ---
 > **Aurino (Collaborator of Unit TelegAPI.Emoji)**
+---
+#Contributed up to API Bot 3.0 May 18, 2017 
+Renat Suleymanov (Al-muhandis);
+---
+Bonmario;
+---
+@ashumkin (Alexey Shumkin);
+---
+Ilya Bukhonin (MstrVLT);
+---
+Daniele Spinetti (spinettaro);
 ---
 
 # CrossUrl
