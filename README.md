@@ -151,7 +151,7 @@ Maximum poll question length increased to 300.
 
 ![Fundo3](https://user-images.githubusercontent.com/11804577/79387409-14196880-7f42-11ea-8e7f-cb2d3270c74c.png)
 
-The following people contributed to this library:
+* **The following people contributed to this library:**
 ---
 > **Ruan Diego Lacerda Menezes (dieletro).**
 1. Contacts
@@ -163,17 +163,18 @@ The following people contributed to this library:
 ---
 > **Aurino (Collaborator of Unit TelegAPI.Emoji)**
 ---
-#Contributed up to API Bot 3.0 May 18, 2017
 
-Renat Suleymanov (Al-muhandis);
+* **Contributed up to API Bot 3.0 May 18, 2017**
+
+> **Renat Suleymanov (Al-muhandis);**
 ---
-Bonmario;
+> **Bonmario;**
 ---
-@ashumkin (Alexey Shumkin);
+> **@ashumkin (Alexey Shumkin);**
 ---
-Ilya Bukhonin (MstrVLT);
+> **Ilya Bukhonin (MstrVLT);**
 ---
-Daniele Spinetti (spinettaro);
+> **Daniele Spinetti (spinettaro);**
 ---
 
 # CrossUrl
