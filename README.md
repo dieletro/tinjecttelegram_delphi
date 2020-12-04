@@ -2,7 +2,7 @@
 
 This Component was Created by *ITDevCon* in an open source **collaborative** project,
 developed by [*Ruan Diego Lacerda Menezes*](https://github.com/dieletro/)
-for use and consumption of the Official [*Telegram Bot*] API(https://core.telegram.org/bots/api) via Delphi
+for use and consumption of the Official [*Telegram Bot API*](https://core.telegram.org/bots/api) via Delphi
 
 #  Help maintain this project, follow the Links for donations
 ---
