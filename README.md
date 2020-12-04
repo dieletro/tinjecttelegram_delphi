@@ -180,10 +180,12 @@ Daniele Spinetti (spinettaro);
 Library to use end user network libraries.
 
 ***Installation and other information see:***
+
 [wiki-page] **https://github.com/ms301/CrossUrl/wiki**
 [github]    **https://github.com/ms301/CrossUrl**
 
 To use it is necessary to have CrossURL installed, available at:
+
 [github] ***https://github.com/ms301/CrossUrl***
 
 # To use Telegram's TDLib API see my other projects with usage examples and are also available on Telegram's official website!
