@@ -4,8 +4,8 @@ object Form1: TForm1
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 
-    'Exemplo de uso do TinjectTelegram for v1.2.0 (By Ruan Diego Lace' +
-    'rda Menezes)'
+    'Exemplo de uso do TinjectTelegramBot for v1.3.0 (By Ruan Diego L' +
+    'acerda Menezes)'
   ClientHeight = 542
   ClientWidth = 740
   Color = clBtnFace
@@ -3571,6 +3571,7 @@ object Form1: TForm1
     Top = 194
     Width = 401
     Height = 21
+    PasswordChar = '*'
     TabOrder = 1
     TextHint = 'Preencha este campo com o Token do seu Bot'
   end
@@ -3879,6 +3880,7 @@ object Form1: TForm1
     Top = 240
     Width = 401
     Height = 21
+    PasswordChar = '*'
     TabOrder = 32
     TextHint = 'Preencha este campo com o Token do Banco'
   end
