@@ -177,6 +177,8 @@
         <DCCReference Include="..\Source\TinjectTelegram.Emoji.pas"/>
         <DCCReference Include="..\Source\TinjectTelegram.Bot.Impl.pas"/>
         <DCCReference Include="..\Source\TinjectTelegram.Bot.pas"/>
+        <DCCReference Include="..\Source\TInjectTelegram.Bot.Chat.pas"/>
+        <DCCReference Include="..\Source\TInjectTelegram.Bot.Manager.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

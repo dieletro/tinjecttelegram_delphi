@@ -20,7 +20,8 @@ uses
   TInjectTelegram.Bot.Impl,
   TInjectTelegram.Receiver.Service,
   TInjectTelegram.Types.Enums,
-  TInjectTelegram.Ph;
+  TInjectTelegram.Ph,
+  TInjectTelegram.Bot.Manager;
 
 {$IFDEF REG_IN_LOAD}
 {$ENDIF}
@@ -35,7 +36,8 @@ begin
     TInjectTelegramPh,
     TInjectTelegramExceptionManagerUI,
     TInjectTelegramReceiverService,
-    TInjectTelegramReceiverUI]);
+    TInjectTelegramReceiverUI,
+    TInjectTelegramBotManager]);
 end;
 
 end.

@@ -65,6 +65,8 @@ contains
   TinjectTelegram.RegisterIDE in '..\Source\TinjectTelegram.RegisterIDE.pas',
   TinjectTelegram.Emoji in '..\Source\TinjectTelegram.Emoji.pas',
   TinjectTelegram.Bot.Impl in '..\Source\TinjectTelegram.Bot.Impl.pas',
-  TinjectTelegram.Bot in '..\Source\TinjectTelegram.Bot.pas';
+  TinjectTelegram.Bot in '..\Source\TinjectTelegram.Bot.pas',
+  TInjectTelegram.Bot.Chat in '..\Source\TInjectTelegram.Bot.Chat.pas',
+  TInjectTelegram.Bot.Manager in '..\Source\TInjectTelegram.Bot.Manager.pas';
 
 end.
