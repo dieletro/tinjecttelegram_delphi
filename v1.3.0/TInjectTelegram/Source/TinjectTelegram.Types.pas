@@ -313,10 +313,17 @@ type
     function TotalAmount: Int64;
   end;
 
+  ItdOrderInfo = interface;
+
   ItdSuccessfulPayment = interface
     ['{B2BE36C2-61F9-4D4B-AB9D-75BB524661AB}']
     function Currency: string;
     function TotalAmount: Int64;
+    function InvoicePayload: string;
+    function ShippingOptionId: string;
+    function OrderInfo: ItdOrderInfo;
+    function TelegramPaymentChargeId: string;
+    function ProviderPaymentChargeId: string;
   end;
 
   ItdMessage = interface
