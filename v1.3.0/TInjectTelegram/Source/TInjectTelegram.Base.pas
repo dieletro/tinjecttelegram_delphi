@@ -33,9 +33,9 @@ implementation
 constructor TInjectTelegramAbstractComponent.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FAutor := 'ITDevCon in an collaborative project';
+  FAutor := 'Maxin Sysoev';
   FDesenvolvedor := 'Ruan Diego Lacerda Menezes';
-  FVersaoComponent := '1.3.0';
+  FVersaoComponent := '1.3.2';
   FVersaoAPI := '5.0';
   FDataVersao := '04 de Novembro de 2020';
 end;

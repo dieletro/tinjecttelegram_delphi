@@ -39,6 +39,18 @@
         <Projects Include="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\..\..\..\..\API_Signal\Testes\TesteSignal.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\..\API_Viber\TInjectViberDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\..\API_Viber\v1.0.0\Packages\TInjectViberBotAPI.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\..\API_Viber\WebServer\ViberWebServer.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -155,14 +167,50 @@
     <Target Name="ExemplosTInjectTelegram_RUS:Make">
         <MSBuild Projects="Exemplo\RUS\ExemplosTInjectTelegram_RUS.bdsproj" Targets="Make"/>
     </Target>
+    <Target Name="TesteSignal">
+        <MSBuild Projects="..\..\..\..\..\API_Signal\Testes\TesteSignal.dproj"/>
+    </Target>
+    <Target Name="TesteSignal:Clean">
+        <MSBuild Projects="..\..\..\..\..\API_Signal\Testes\TesteSignal.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TesteSignal:Make">
+        <MSBuild Projects="..\..\..\..\..\API_Signal\Testes\TesteSignal.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TInjectViberDemo">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\TInjectViberDemo.dproj"/>
+    </Target>
+    <Target Name="TInjectViberDemo:Clean">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\TInjectViberDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TInjectViberDemo:Make">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\TInjectViberDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TInjectViberBotAPI">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\v1.0.0\Packages\TInjectViberBotAPI.dproj"/>
+    </Target>
+    <Target Name="TInjectViberBotAPI:Clean">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\v1.0.0\Packages\TInjectViberBotAPI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TInjectViberBotAPI:Make">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\v1.0.0\Packages\TInjectViberBotAPI.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ViberWebServer">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\WebServer\ViberWebServer.dproj"/>
+    </Target>
+    <Target Name="ViberWebServer:Clean">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\WebServer\ViberWebServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ViberWebServer:Make">
+        <MSBuild Projects="..\..\..\..\..\API_Viber\WebServer\ViberWebServer.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="CrossUrl;CrossUrl_Indy;CrossUrl_SystemNet;TInjectTelegramBotAPI;ExemplosTInjectTelegram;ExemplosTInjectTelegram_ENU;ExemplosTInjectTelegram_ESB;ExemplosTInjectTelegram_FRA;ExemplosTInjectTelegram_HEB;ExemplosTInjectTelegram_ITA;ExemplosTInjectTelegram_FAR;ExemplosTInjectTelegram_RUS"/>
+        <CallTarget Targets="CrossUrl;CrossUrl_Indy;CrossUrl_SystemNet;TInjectTelegramBotAPI;ExemplosTInjectTelegram;ExemplosTInjectTelegram_ENU;ExemplosTInjectTelegram_ESB;ExemplosTInjectTelegram_FRA;ExemplosTInjectTelegram_HEB;ExemplosTInjectTelegram_ITA;ExemplosTInjectTelegram_FAR;ExemplosTInjectTelegram_RUS;TesteSignal;TInjectViberDemo;TInjectViberBotAPI;ViberWebServer"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="CrossUrl:Clean;CrossUrl_Indy:Clean;CrossUrl_SystemNet:Clean;TInjectTelegramBotAPI:Clean;ExemplosTInjectTelegram:Clean;ExemplosTInjectTelegram_ENU:Clean;ExemplosTInjectTelegram_ESB:Clean;ExemplosTInjectTelegram_FRA:Clean;ExemplosTInjectTelegram_HEB:Clean;ExemplosTInjectTelegram_ITA:Clean;ExemplosTInjectTelegram_FAR:Clean;ExemplosTInjectTelegram_RUS:Clean"/>
+        <CallTarget Targets="CrossUrl:Clean;CrossUrl_Indy:Clean;CrossUrl_SystemNet:Clean;TInjectTelegramBotAPI:Clean;ExemplosTInjectTelegram:Clean;ExemplosTInjectTelegram_ENU:Clean;ExemplosTInjectTelegram_ESB:Clean;ExemplosTInjectTelegram_FRA:Clean;ExemplosTInjectTelegram_HEB:Clean;ExemplosTInjectTelegram_ITA:Clean;ExemplosTInjectTelegram_FAR:Clean;ExemplosTInjectTelegram_RUS:Clean;TesteSignal:Clean;TInjectViberDemo:Clean;TInjectViberBotAPI:Clean;ViberWebServer:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="CrossUrl:Make;CrossUrl_Indy:Make;CrossUrl_SystemNet:Make;TInjectTelegramBotAPI:Make;ExemplosTInjectTelegram:Make;ExemplosTInjectTelegram_ENU:Make;ExemplosTInjectTelegram_ESB:Make;ExemplosTInjectTelegram_FRA:Make;ExemplosTInjectTelegram_HEB:Make;ExemplosTInjectTelegram_ITA:Make;ExemplosTInjectTelegram_FAR:Make;ExemplosTInjectTelegram_RUS:Make"/>
+        <CallTarget Targets="CrossUrl:Make;CrossUrl_Indy:Make;CrossUrl_SystemNet:Make;TInjectTelegramBotAPI:Make;ExemplosTInjectTelegram:Make;ExemplosTInjectTelegram_ENU:Make;ExemplosTInjectTelegram_ESB:Make;ExemplosTInjectTelegram_FRA:Make;ExemplosTInjectTelegram_HEB:Make;ExemplosTInjectTelegram_ITA:Make;ExemplosTInjectTelegram_FAR:Make;ExemplosTInjectTelegram_RUS:Make;TesteSignal:Make;TInjectViberDemo:Make;TInjectViberBotAPI:Make;ViberWebServer:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

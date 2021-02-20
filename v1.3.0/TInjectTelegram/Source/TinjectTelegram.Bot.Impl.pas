@@ -1928,15 +1928,16 @@ function TInjectTelegramBot.AnswerPreCheckoutQuery(
   const PreCheckoutQueryId: string;
   const OK: Boolean;
   const ErrorMessage: string): Boolean;
-  var
-    DefaultBol : Boolean;
+var
+  DefaultBol : Boolean;
 begin
   DefaultBol := Not OK;
+
   Logger.Enter(Self, 'AnswerPreCheckoutQuery');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, '0', True) //
-    .AddParameter('ok', OK, DefaultBol, True) //
-    .AddParameter('error_message', ErrorMessage, '', False) //
+    .AddParameter('ok', Ok.ToJSONBool , DefaultBol.ToJSONBool, True) //
+    .AddParameter('error_message', ErrorMessage, 'null', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQuery');
 end;
@@ -1947,7 +1948,7 @@ begin
   Logger.Enter(Self, 'AnswerPreCheckoutQueryBad');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, 0, True) //
-    .AddParameter('ok', True, True, True) //
+    .AddParameter('ok', False.ToJSONBool, True.ToJSONBool, True) //
     .AddParameter('error_message', ErrorMessage, '', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQueryBad');
@@ -1959,7 +1960,7 @@ begin
   Logger.Enter(Self, 'AnswerPreCheckoutQueryGood');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, 0, True) //
-    .AddParameter('ok', True, False, True) //
+    .AddParameter('ok',True.ToJSONBool, False.ToJSONBool, True) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQueryGood');
 end;
@@ -1970,7 +1971,7 @@ begin
   Logger.Enter(Self, 'AnswerShippingQueryBad');
   Result := GetRequest.SetMethod('answerShippingQuery') //
     .AddParameter('Shipping_query_id', ShippingQueryId, 0, True) //
-    .AddParameter('ok', False, False, False) //
+    .AddParameter('ok',False.ToJSONBool, True.ToJSONBool, False) //
     .AddParameter('error_message', ErrorMessage, '', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerShippingQueryBad');
@@ -1982,7 +1983,7 @@ begin
   Logger.Enter(Self, 'AnswerShippingQueryGood');
   Result := GetRequest.SetMethod('answerShippingQuery') //
     .AddParameter('Shipping_query_id', ShippingQueryId, 0, True) //
-    .AddParameter('ok', True, False, False) //
+    .AddParameter('ok', True.ToJSONBool, False.ToJSONBool, False) //
     .AddParameter('Shipping_options', TJsonUtils.ArrayToJString<
     TtdShippingOption>(ShippingOptions), '[]', True)    //
     .ExecuteAsBool;

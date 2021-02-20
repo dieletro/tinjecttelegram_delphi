@@ -41,6 +41,7 @@ type
     class function ArrayToJString2<T: class>(LArray: TArray<T>): string;
     class function ArrayToJString<T: class>(LArray: TArray<T>): string;
     class function ObjectToJString(AObj: TObject): string;
+    class function BoolToJString(ABoll: Boolean): string;
     class function FileToObject<T: class, constructor>(const AFileName: string): T;
     class procedure ObjectToFile(AObj: TObject; const AFileName: string);
   end;
@@ -162,6 +163,18 @@ begin
   Result := Result + ']';
   Result := Result.Replace('"inline_keyboard":null', '', [rfReplaceAll]);
   // barata
+end;
+
+class function TJsonUtils.BoolToJString(ABoll: Boolean): string;
+var
+  StrOut: String;
+begin
+  if ABoll then
+    StrOut := 'True'
+  else
+    StrOut := 'False';
+
+  Result := StrOut;
 end;
 
 class function TJsonUtils.FileToObject<T>(const AFileName: string): T;

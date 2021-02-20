@@ -40,6 +40,10 @@ type
     function ToString: string;
   end;
 
+  TBoolHelper = record helper for Boolean
+    function ToJSONBool: string;
+  end;
+
 implementation
 
 uses
@@ -241,6 +245,20 @@ begin
     TtdMessageEntityType.N_A:
       result := '';
   end;
+end;
+
+{ TBoolHelper }
+
+function TBoolHelper.ToJSONBool: string;
+var
+  StrOut: String;
+begin
+  if Self = True then
+    StrOut := 'True'
+  else
+    StrOut := 'False';
+
+  Result := StrOut;
 end;
 
 end.
