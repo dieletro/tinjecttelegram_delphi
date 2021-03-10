@@ -286,7 +286,8 @@ type
     function KickChatMember( //
       const ChatId: TtdUserLink; //
       const UserId: Int64; //
-      const UntilDate: TDateTime = 0): Boolean;
+      const UntilDate: TDateTime = 0;
+      const RevokeMessages: Boolean = False): Boolean;
 
     function UnbanChatMember( //
       const ChatId: TtdUserLink; //
@@ -1323,13 +1324,14 @@ begin
 end;
 
 function TInjectTelegramBot.KickChatMember(const ChatId: TtdUserLink; const UserId:
-  Int64; const UntilDate: TDateTime): Boolean;
+  Int64; const UntilDate: TDateTime; const RevokeMessages: Boolean): Boolean;
 begin
   Logger.Enter(Self, 'KickChatMember');
   Result := GetRequest.SetMethod('kickChatMember') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('user_id', UserId, 0, True) //
     .AddParameter('until_date', UntilDate, 0, False) //
+    .AddParameter('revoke_messages', RevokeMessages, False, False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'KickChatMember');
 end;

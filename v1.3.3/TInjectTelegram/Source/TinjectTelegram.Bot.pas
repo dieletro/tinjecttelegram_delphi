@@ -1034,6 +1034,12 @@ type
     /// more than 366 days or less than 30 seconds from the current time they
     /// are considered to be banned forever <br />unbanChatMember
     /// </param>
+    /// <param name="RevokeMessages">
+    /// Pass True to delete all messages from the chat for the user that is
+    /// being removed. If False, the user will be able to see messages in the
+    /// group that were sent before the user was removed. Always True for
+    /// supergroups and channels.
+    /// </param>
     /// <returns>
     /// Returns True on success.
     /// </returns>
@@ -1047,7 +1053,8 @@ type
     function KickChatMember( //
       const ChatId: TtdUserLink; //
       const UserId: Int64; //
-      const UntilDate: TDateTime = 0): Boolean;
+      const UntilDate: TDateTime = 0;
+      const RevokeMessages: Boolean = False): Boolean;
     /// <summary>
     /// Use this method to unban a previously kicked user in a supergroup.
     /// The user will not return to the group automatically, but will be able
