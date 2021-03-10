@@ -30,6 +30,10 @@ type
 
   TtdOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItdPollAnswer) of object;
 
+  TtdOnMyChatMember = procedure(ASender: TObject; AMyChatMember: ItdChatMemberUpdated) of object;
+
+  TtdOnChatMember = procedure(ASender: TObject; AChatMember: ItdChatMemberUpdated) of object;
+
   TInjectTelegramReceiverService = class(TInjectTelegramBotReceiverBase)
   private
     FOnUpdate: TtdOnUpdate;
@@ -46,8 +50,9 @@ type
     FOnEditedChannelPost: TtdOnMessage;
     FOnCallbackQuery: TtdOnCallbackQuery;
     FOnPollStatus: TtdOnPollStatus;
-
     FOnPollAnswer: TtdOnPollAnswer;
+    FOnMyChatMember: TtdOnMyChatMember;
+    FOnChatMember: TtdOnChatMember;
   protected
     procedure DoOnStart; override;
     procedure DoOnStop; override;
@@ -64,6 +69,8 @@ type
     procedure DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery); override;
     procedure DoOnPollStatus(APoll: ItdPoll); override;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); override;
+    procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); override;
+    procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); override;
   published
     property OnStart: TNotifyEvent read FOnStart write FOnStart;
     property OnStop: TNotifyEvent read FOnStop write FOnStop;
@@ -80,7 +87,9 @@ type
     property OnCallbackQuery: TtdOnCallbackQuery read FOnCallbackQuery write FOnCallbackQuery;
     property OnPollStatus: TtdOnPollStatus read FOnPollStatus write FOnPollStatus;
     property OnPollAnswer: TtdOnPollAnswer read FOnPollAnswer write FOnPollAnswer;
-  end;
+    property OnMyChatMember: TtdOnMyChatMember read FOnMyChatMember write FOnMyChatMember;
+    property OnChatMember:   TtdOnChatMember read FOnChatMember write FOnChatMember;
+ end;
 
 implementation
 
@@ -98,6 +107,14 @@ begin
   inherited;
   if Assigned(OnChannelPost) then
     OnChannelPost(Self, AChannelPost);
+end;
+
+procedure TInjectTelegramReceiverService.DoOnChatMember(
+  AChatMember: ItdChatMemberUpdated);
+begin
+  inherited;
+  if Assigned(OnChatMember) then
+    OnChatMember(Self, AChatMember);
 end;
 
 procedure TInjectTelegramReceiverService.DoOnChosenInlineResult(AChosenInlineResult: ItdChosenInlineResult);
@@ -133,6 +150,14 @@ begin
   inherited;
   if Assigned(OnMessage) then
     OnMessage(Self, AMessage);
+end;
+
+procedure TInjectTelegramReceiverService.DoOnMyChatMember(
+  AMyChatMember: ItdChatMemberUpdated);
+begin
+  inherited;
+  if Assigned(OnMyChatMember) then
+    OnMyChatMember(Self, AMyChatMember);
 end;
 
 procedure TInjectTelegramReceiverService.DoOnPollAnswer(
@@ -193,5 +218,17 @@ begin
     OnUpdates(Self, AUpdates);
 end;
 
-end.
+end.procedure TInjectTelegramReceiverService.SetOnChatMember(
+  const Value: TtdOnChatMember);
+begin
+  FOnChatMember := Value;
+end;
+
+
+procedure TInjectTelegramReceiverService.SetOnMyChatMember(
+  const Value: TtdOnMyChatMember);
+begin
+  FOnMyChatMember := Value;
+end;
+
 

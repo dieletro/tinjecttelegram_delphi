@@ -38,6 +38,10 @@ type
 
   TtdOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItdPollAnswer) of object;
 
+  TtdOnMyChatMember = procedure(ASender: TObject; AMyChatMember: ItdChatMemberUpdated) of object;
+
+  TtdOnChatMember = procedure(ASender: TObject; AChatMember: ItdChatMemberUpdated) of object;
+
   {TInjectTelegramBotReceiverManagerBase}
   TInjectTelegramBotReceiverManagerBase = class(TInjectTelegramBotUpdateParser)
   private
@@ -70,6 +74,9 @@ type
     procedure DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery); virtual; abstract;
     procedure DoOnPollStatus(APoll: ItdPoll); virtual; abstract;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); virtual; abstract;
+    procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); virtual; abstract;
+    procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); virtual; abstract;
+
     procedure Init; virtual; abstract;
   public
     constructor Create(AOwner: TComponent); overload; override;

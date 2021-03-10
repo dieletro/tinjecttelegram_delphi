@@ -25,6 +25,8 @@ type
     FOnOnCallbackQuery: TProc<ItdCallbackQuery>;
     FOnPollStatus: TProc<ItdPoll>;
     FOnPollAnswer: TProc<ItdPollAnswer>;
+    FOnMyChatMember: TProc<ItdChatMemberUpdated>;
+    FOnChatMember: TProc<ItdChatMemberUpdated>;
   protected
     procedure DoOnStart; override;
     procedure DoOnStop; override;
@@ -41,6 +43,8 @@ type
     procedure DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery); override;
     procedure DoOnPollStatus(APoll: ItdPoll); override;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); override;
+    procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); override;
+    procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); override;
   public
     property OnStart: TProc read FOnStart write FOnStart;
     property OnStop: TProc read FOnStop write FOnStop;
@@ -57,6 +61,8 @@ type
     property OnCallbackQuery: TProc<ItdCallbackQuery> read FOnOnCallbackQuery write FOnOnCallbackQuery;
     property OnPollStatus: TProc<ItdPoll> read FOnPollStatus write FOnPollStatus;
     property OnPollAnswer: TProc<ItdPollAnswer> read FOnPollAnswer write FOnPollAnswer;
+    property OnMyChatMember: TProc<ItdChatMemberUpdated> read FOnMyChatMember write FOnMyChatMember;
+    property OnChatMember:   TProc<ItdChatMemberUpdated> read FOnChatMember write FOnChatMember;
   end;
 
 implementation
@@ -75,6 +81,14 @@ begin
   inherited;
   if Assigned(OnChannelPost) then
     OnChannelPost(AChannelPost);
+end;
+
+procedure TInjectTelegramReceiverConsole.DoOnChatMember(
+  AChatMember: ItdChatMemberUpdated);
+begin
+  inherited;
+  if Assigned(OnChatMember) then
+    OnChatMember(AChatMember);
 end;
 
 procedure TInjectTelegramReceiverConsole.DoOnChosenInlineResult(AChosenInlineResult: ItdChosenInlineResult);
@@ -110,6 +124,14 @@ begin
   inherited;
   if Assigned(OnMessage) then
     OnMessage(AMessage);
+end;
+
+procedure TInjectTelegramReceiverConsole.DoOnMyChatMember(
+  AMyChatMember: ItdChatMemberUpdated);
+begin
+  inherited;
+  if Assigned(OnMyChatMember) then
+    OnMyChatMember(AMyChatMember);
 end;
 
 procedure TInjectTelegramReceiverConsole.DoOnPollAnswer(

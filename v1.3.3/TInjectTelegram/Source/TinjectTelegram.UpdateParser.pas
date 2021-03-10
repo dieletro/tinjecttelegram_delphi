@@ -31,6 +31,8 @@ type
     procedure DoOnPreCheckoutQuery(APreCheckoutQuery: ItdPreCheckoutQuery); virtual; abstract;
     procedure DoOnPollStatus(APoll: ItdPoll); virtual; abstract;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); virtual; abstract;
+    procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); virtual; abstract;
+    procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); virtual; abstract;
   public
     procedure ParseResponse(const JSON: string);
   end;
@@ -98,6 +100,12 @@ begin
 
     TtdUpdateType.PollAnswer:
       DoOnPollAnswer(AUpdate.PollAnswer);
+
+    TtdUpdateType.MyChatMember:
+      DoOnMyChatMember(AUpdate.MyChatMember);
+
+    TtdUpdateType.ChatMember:
+      DoOnChatMember(AUpdate.ChatMember);
   end;
 end;
 

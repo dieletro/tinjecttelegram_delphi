@@ -475,7 +475,7 @@ TtdEncryptedPassportElementType = (
     BankStatement, RentalAgreement, PassportRegistration, TemporaryRegistration,
     AdressDocument, PhoneNumber, Email);
 
-  TAllowedUpdate = (message,
+  TAllowedUpdate = (Message,
     Edited_message, Channel_post, Edited_channel_post,
     Inline_query, Chosen_inline_result, Callback_query,
     ShippingQuery, PreCheckoutQuery, PollState, PollAnswer,
