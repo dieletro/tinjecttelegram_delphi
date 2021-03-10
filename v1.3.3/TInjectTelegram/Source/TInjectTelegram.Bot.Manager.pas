@@ -63,6 +63,10 @@ type
 
   TtdOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItdPollAnswer) of object;
 
+  TtdOnMyChatMember = procedure(ASender: TObject; AMyChatMember: ItdChatMemberUpdated) of object;
+
+  TtdOnChatMember = procedure(ASender: TObject; AChatMember: ItdChatMemberUpdated) of object;
+
   TInjectTelegramBotManager = class(TInjectTelegramBotReceiverBase)
   private
     FOnUpdate: TtdOnUpdate;
@@ -91,6 +95,8 @@ type
 
     FTimeNow, FLimit: TTime;
     FOnTimerSleepExecute: TOnTimerSleepExecute;
+    FOnMyChatMember: TtdOnMyChatMember;
+    FOnChatMember: TtdOnChatMember;
 
   protected
     procedure DoOnStart; override;
@@ -108,6 +114,8 @@ type
     procedure DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery); override;
     procedure DoOnPollStatus(APoll: ItdPoll); override;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); override;
+    procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); override;
+    procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); override;
     procedure Init;
   public
     constructor Create(AOwner: TComponent); override;
@@ -149,6 +157,8 @@ type
     property OnPollStatus: TtdOnPollStatus read FOnPollStatus write FOnPollStatus;
     property OnPollAnswer: TtdOnPollAnswer read FOnPollAnswer write FOnPollAnswer;
     property OnTimerSleepExecute: TOnTimerSleepExecute read FOnTimerSleepExecute write FOnTimerSleepExecute;
+    property OnMyChatMember: TtdOnMyChatMember read FOnMyChatMember write FOnMyChatMember;
+    property OnChatMember:   TtdOnChatMember read FOnChatMember write FOnChatMember;
   end;
 
 implementation
@@ -484,6 +494,14 @@ begin
     OnChannelPost(Self, AChannelPost);
 end;
 
+procedure TInjectTelegramBotManager.DoOnChatMember(
+  AChatMember: ItdChatMemberUpdated);
+begin
+  inherited;
+  if Assigned(OnChatMember) then
+    OnChatMember(Self, AChatMember);
+end;
+
 procedure TInjectTelegramBotManager.DoOnChosenInlineResult(AChosenInlineResult: ItdChosenInlineResult);
 begin
   inherited;
@@ -521,6 +539,14 @@ begin
     OnMessage(Self, AMessage);
   End;
 
+end;
+
+procedure TInjectTelegramBotManager.DoOnMyChatMember(
+  AMyChatMember: ItdChatMemberUpdated);
+begin
+  inherited;
+  if Assigned(OnMyChatMember) then
+    OnMyChatMember(Self, AMyChatMember);
 end;
 
 procedure TInjectTelegramBotManager.DoOnPollAnswer(APollAnswer: ItdPollAnswer);
