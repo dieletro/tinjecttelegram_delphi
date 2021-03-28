@@ -386,7 +386,7 @@ LMarkup := TtdReplyKeyboardRemove.Create;
   Begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendMessage(StrToint(txtID.Text),VRes_Ex_Remover_BT, LParseMode, False, False, 0, False, LMarkup)
+      InjectTelegramBot1.SendMessage(StrToInt64(txtID.Text),VRes_Ex_Remover_BT, LParseMode, False, False, 0, False, LMarkup)
     except on E: Exception do
       memConsole.Lines.Add(VRes_Falha_Envio_Destinatario + E.Message);
     end;
@@ -413,7 +413,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendAudio(StrToInt(txtID.Text), MyFile,VRes_Texto_Audio, LParseMode, 0,'Titulo Sobreescrito',False, 0, False, LMarkup);
+      InjectTelegramBot1.SendAudio(StrToInt64(txtID.Text), MyFile,VRes_Texto_Audio, LParseMode, 0,'Titulo Sobreescrito',False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Audio);
@@ -437,7 +437,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendPhoto(StrToInt(txtID.Text), MyFile,VRes_Texto_Foto, LParseMode, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendPhoto(StrToInt64(txtID.Text), MyFile,VRes_Texto_Foto, LParseMode, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Imagem);
@@ -465,7 +465,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+      MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
       InjectTelegramBot1.SendChatAction(MyChatId, MyAction);
       except on e:exception do
       begin
@@ -495,7 +495,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendAnimation(StrToInt(txtID.Text), MyFile,30,0,0,MyThumb,
+      InjectTelegramBot1.SendAnimation(StrToInt64(txtID.Text), MyFile,30,0,0,MyThumb,
         VRes_Texto_Animacao, LParseMode, False, 0, False, LMarkup);
       except on e:exception do
       begin
@@ -516,7 +516,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendContact(StrToInt(txtID.Text), MyContact, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendContact(StrToInt64(txtID.Text), MyContact, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Contato);
@@ -538,7 +538,7 @@ begin
   begin
     if txtID.Text <> '' then
     try                                                        //Thumb
-      InjectTelegramBot1.SendDocument(StrToInt(txtID.Text), MyFile, MyFile , VRes_Texto_Documento, LParseMode, Nil, False, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendDocument(StrToInt64(txtID.Text), MyFile, MyFile , VRes_Texto_Documento, LParseMode, Nil, False, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Documento);
@@ -558,7 +558,7 @@ Begin
   begin
     if txtID.Text <> '' then
     try
-      MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+      MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
       if Assigned(MyMedia) then
         try
           InjectTelegramBot1.sendMediaGroup(MyChatId.ID, MyMedia, False, 0, False);
@@ -608,7 +608,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+      MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
                                  //ID          //TITULO   //DESC               //PLayload      //Token  //Param //Curr  //Prices //ProvData    //Foto
       InjectTelegramBot1.SendInvoice(MyChatId.ID,
           VRes_Titulo_PG,
@@ -639,7 +639,7 @@ begin
       nome do game que sera enviado }
       if txtNomeJogo.Text <> '' then
       Begin
-        MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+        MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
         InjectTelegramBot1.SendGame(MyChatId.ID, txtNomeJogo.Text);
       End Else
         memConsole.Lines.Add(VRes_Informe_Jogo_Valido);
@@ -667,7 +667,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendLocation(StrToInt(txtID.Text), MyLocation, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendLocation(StrToInt64(txtID.Text), MyLocation, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Localizacao);
@@ -689,7 +689,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendVideoNote(StrToInt(txtID.Text), MyFile, 0, 0, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendVideoNote(StrToInt64(txtID.Text), MyFile, 0, 0, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Nota_Video);
@@ -711,7 +711,7 @@ begin
   'Pedro Alvares Cabral'];
 
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -742,7 +742,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendSticker(StrToInt(txtID.Text), MyFile, False, 0, LMarkup);
+      InjectTelegramBot1.SendSticker(StrToInt64(txtID.Text), MyFile, False, 0, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Stiker);
@@ -772,10 +772,10 @@ begin
     if txtID.Text <> '' then
     try
       //A Função SendVenue depende do Mylocation
-      //InjectTelegramBot1.SendVenue(StrToInt(txtID.Text), MyVenue, MyLocation, False, 0, LMarkup);
+      //InjectTelegramBot1.SendVenue(StrToInt64(txtID.Text), MyVenue, MyLocation, False, 0, LMarkup);
 
       //A Função SendVenue2 NÃO depende do Mylocation
-      InjectTelegramBot1.SendVenue2(StrToInt(txtID.Text), MyVenue, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendVenue2(StrToInt64(txtID.Text), MyVenue, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Localizacao);
@@ -797,7 +797,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendVideo(StrToInt(txtID.Text), MyFile,VRes_TExto_Video, LParseMode, True, 0, 0, 0, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendVideo(StrToInt64(txtID.Text), MyFile,VRes_TExto_Video, LParseMode, True, 0, 0, 0, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Video);
@@ -819,7 +819,7 @@ begin
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendVoice(StrToInt(txtID.Text), MyFile,VRes_Texto_Voz, LParseMode, 0, False, 0, False, LMarkup);
+      InjectTelegramBot1.SendVoice(StrToInt64(txtID.Text), MyFile,VRes_Texto_Voz, LParseMode, 0, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Grav_Voz);
@@ -837,7 +837,7 @@ begin
   Begin
     if txtID.Text <> '' then
     try
-      MyChatId := TtdUserLink.FromID(StrToInt(txtID.Text));
+      MyChatId := TtdUserLink.FromID(StrToInt64(txtID.Text));
       InjectTelegramBot1.SendMessage(MyChatId.ID, VRes_Este_Seu_ID + MyChatId.ID.ToString, LParseMode, False, False, 0, False, LMarkup)
     except on E: Exception do
       memConsole.Lines.Add(VRes_Falha_Envio_Destinatario + E.Message);
@@ -858,7 +858,7 @@ LMarkup := TtdReplyKeyboardMarkup.Create([
   Begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendMessage(StrToint(txtID.Text),
+      InjectTelegramBot1.SendMessage(StrToInt64(txtID.Text),
         VRes_Ola_Me_Passe_Contato,
         LParseMode, False, False, 0, False, LMarkup)
     except on E: Exception do
@@ -880,7 +880,7 @@ LMarkup := TtdReplyKeyboardMarkup.Create([
     if txtID.Text <> '' then
     try
       memConsole.Lines.Add(VRes_Solicitacao_Env_Mas_Incomp_Teleg_Descktop);
-      InjectTelegramBot1.SendMessage(StrToint(txtID.Text),
+      InjectTelegramBot1.SendMessage(StrToInt64(txtID.Text),
         VRes_Ola_Me_Passe_Localizacao,
         LParseMode, False, False, 0, False, LMarkup)
     except on E: Exception do
@@ -894,7 +894,7 @@ end;
 procedure TForm1.btnEnviarDadoClick(Sender: TObject);
 begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -915,7 +915,7 @@ end;
 procedure TForm1.btnEnviarDardoClick(Sender: TObject);
 begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -949,7 +949,7 @@ LMarkup := TtdReplyKeyboardMarkup.Create([
   Begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendMessage(StrToint(txtID.Text),
+      InjectTelegramBot1.SendMessage(StrToInt64(txtID.Text),
         VRes_MSG_Exemplo_Envio_BT,
         LParseMode, False, False, 0, False, LMarkup)
     except on E: Exception do
@@ -963,7 +963,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -1001,7 +1001,7 @@ end;
 procedure TForm1.Button4Click(Sender: TObject);
 begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -1021,7 +1021,7 @@ end;
 procedure TForm1.Button5Click(Sender: TObject);
 begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt(txtID.Text));
+  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -1056,7 +1056,7 @@ LMarkup := TtdInlineKeyboardMarkup.Create([
   Begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendMessage(StrToint(txtID.Text),VRes_MSG_Exemplo_Envio_BT, LParseMode, False, False, 0, False, LMarkup)
+      InjectTelegramBot1.SendMessage(StrToInt64(txtID.Text),VRes_MSG_Exemplo_Envio_BT, LParseMode, False, False, 0, False, LMarkup)
     except on E: Exception do
       memConsole.Lines.Add(VRes_Falha_Envio_Destinatario + E.Message);
     end;

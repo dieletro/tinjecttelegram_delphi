@@ -326,6 +326,8 @@ type
       AFoursquareId, AFoursquareType : String); reintroduce; overload;
     constructor Create(const ALatitude, ALongitude: Single; ATitle, AAddress,
       AFoursquareId, AFoursquareType : String); reintroduce; overload;
+    constructor Create(const ALatitude, ALongitude: Single; ATitle, AAddress,
+      AFoursquareId, AFoursquareType, AGooglePlaceId, AGooglePlaceType : String); reintroduce; overload;
     constructor Create(const AJson: string); overload; override;
     destructor Destroy; override;
   end;
@@ -2396,6 +2398,23 @@ end;
 constructor TtdVenue.Create(const AJson: string);
 begin
   inherited Create(AJson);
+end;
+
+constructor TtdVenue.Create(const ALatitude, ALongitude: Single; ATitle,
+  AAddress, AFoursquareId, AFoursquareType, AGooglePlaceId,
+  AGooglePlaceType: String);
+begin
+  SetLongitude(ALongitude);
+  SetLatitude(ALatitude);
+  SetTitle(ATitle);
+  SetAddress(AAddress);
+  SetFoursquareId(AFoursquareId);
+  SetFoursquareType(AFoursquareType);
+  SetGooglePlaceId(AGooglePlaceId);
+  SetGooglePlaceType(AGooglePlaceType);
+
+  if Not Assigned(FLocation) then
+    FLocation := TtdLocation.Create(ALatitude, ALongitude);
 end;
 
 destructor TtdVenue.Destroy;

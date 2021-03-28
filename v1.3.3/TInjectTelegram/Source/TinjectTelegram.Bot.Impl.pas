@@ -1974,14 +1974,14 @@ begin
     .AddParameter('photo_size', PhotoSize, 0, False) //
     .AddParameter('photo_width', PhotoWidth, 0, False) //
     .AddParameter('photo_height', PhotoHeight, 0, False) //
-    .AddParameter('need_name', NeedName, False, False) //
-    .AddParameter('need_phone_number', NeedPhoneNumber, False, False) //
-    .AddParameter('need_email', NeedEmail, False, False) //
-    .AddParameter('need_shipping_address', NeedShippingAddress, False, False) //
-    .AddParameter('send_phone_number_to_provider', SendPhoneNumberToProvider, False, False) //
-    .AddParameter('send_email_to_provider', SendRmailToProvider, False, False) //
-    .AddParameter('is_flexible', IsFlexible, False, False) //
-    .AddParameter('disable_notification', DisableNotification, False, False) //
+    .AddParameter('need_name', NeedName.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('need_phone_number', NeedPhoneNumber.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('need_email', NeedEmail.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('need_shipping_address', NeedShippingAddress.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('send_phone_number_to_provider', SendPhoneNumberToProvider.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('send_email_to_provider', SendRmailToProvider.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('is_flexible', IsFlexible.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('disable_notification', DisableNotification.ToJSONBool, False.ToJSONBool, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
     .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
     .Execute);
