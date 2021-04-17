@@ -1957,7 +1957,6 @@ Var
   LTmpJson : string;
 begin
   LTmpJson := TJsonUtils.ArrayToJString<TtdLabeledPrice>(Prices);
- // LTmpJson := TJsonUtils.ArrayLebeledPriceToJString<TtdLabeledPrice>(Prices);
 
   Logger.Enter(Self, 'SendInvoice');
   Result := TtdMessage.Create(GetRequest.SetMethod('sendInvoice') //

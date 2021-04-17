@@ -156,13 +156,13 @@ begin
   for I := Low(LArray) to High(LArray) do
     if Assigned(LArray[I]) then
     begin
-      Result := Result + TJson.ObjectToJsonString(LArray[I]);
-      if I <> High(LArray) then
-        Result := Result + ',';
+      if (I = Low(LArray)) then
+        Result := Result + TJson.ObjectToJsonString(LArray[I])
+      Else
+        Result := Result + ',' + TJson.ObjectToJsonString(LArray[I]);
     end;
   Result := Result + ']';
   Result := Result.Replace('"inline_keyboard":null', '', [rfReplaceAll]);
-  // barata
 end;
 
 class function TJsonUtils.BoolToJString(ABoll: Boolean): string;
