@@ -1696,6 +1696,7 @@ type
       const DisableNotification: Boolean = False; //
       const ReplyToMessageId: Int64 = 0; //
       ReplyMarkup: IReplyMarkup = nil): ItdMessage;
+
     /// <summary>
     /// If you sent an invoice requesting a shipping address and the
     /// parameter is_flexible was specified, the Bot API will send an Update

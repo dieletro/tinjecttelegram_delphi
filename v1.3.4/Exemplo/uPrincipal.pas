@@ -614,7 +614,11 @@ begin
           VRes_Titulo_PG,
           VRes_Descricao_PG,
           VRes_PlayLoad_PG,
-          pvToken, pgMetod ,'USD', MyPrices, '' , FotoUrl, 300, 100, 100,
+          pvToken, pgMetod ,'USD', MyPrices,
+          5478750, //MaxTipAmount
+          [],  //SuggestedTipAmounts = Array of Integer
+          '', //ProviderData
+          FotoUrl, 300, 100, 100,
           FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0, nil);
       except on e:exception do
       begin
