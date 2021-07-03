@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\TInjectTelegram"/>
+    <File Path="..\Source"/>
+    <File Path="..\Source\TInjectTelegram.Base.pas"/>
+    <File Path="..\Source\TInjectTelegram.Bot.Chat.pas"/>
+    <File Path="..\Source\TinjectTelegram.Bot.Impl.pas"/>
+    <File Path="..\Source\TInjectTelegram.Bot.Manager.pas"/>
+    <File Path="..\Source\TinjectTelegram.Bot.pas"/>
+    <File Path="..\Source\TinjectTelegram.Core.pas"/>
+    <File Path="..\Source\TinjectTelegram.Emoji.pas"/>
+    <File Path="..\Source\TinjectTelegram.Ext.Sessions.pas"/>
+    <File Path="..\Source\TinjectTelegram.Helpers.pas"/>
+    <File Path="..\Source\TinjectTelegram.Logger.Old.pas"/>
+    <File Path="..\Source\TinjectTelegram.Logger.pas"/>
+    <File Path="..\Source\TinjectTelegram.Ph.pas"/>
+    <File Path="..\Source\TinjectTelegram.Ph.Types.pas"/>
+    <File Path="..\Source\TinjectTelegram.Receiver.Base.pas"/>
+    <File Path="..\Source\TinjectTelegram.Receiver.Console.pas"/>
+    <File Path="..\Source\TinjectTelegram.Receiver.Manager.Base.pas"/>
+    <File Path="..\Source\TinjectTelegram.Receiver.Service.pas"/>
+    <File Path="..\Source\TinjectTelegram.Receiver.UI.pas"/>
+    <File Path="..\Source\TinjectTelegram.RegisterIDE.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.Enums.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.Impl.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.InlineQueryResults.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.InputMessageContents.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.Passport.pas"/>
+    <File Path="..\Source\TinjectTelegram.Types.ReplyMarkups.pas"/>
+    <File Path="..\Source\TinjectTelegram.UpdateParser.pas"/>
+    <File Path="..\Source\TinjectTelegram.Utils.Json.pas"/>
+    <File Path="CrossUrl.dcp"/>
+    <File Path="FireDAC.dcp"/>
+    <File Path="FireDACCommon.dcp"/>
+    <File Path="FireDACCommonDriver.dcp"/>
+    <File Path="IndyCore.dcp"/>
+    <File Path="IndyProtocols.dcp"/>
+    <File Path="IndySystem.dcp"/>
+    <File Path="RESTComponents.dcp"/>
+    <File Path="rtl.dcp"/>
+    <File Path="vcl.dcp"/>
+  </ProjectSortOrder>
+</BorlandProject>

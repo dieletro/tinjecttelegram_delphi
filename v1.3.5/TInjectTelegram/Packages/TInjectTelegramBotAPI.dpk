@@ -1,0 +1,73 @@
+﻿package TInjectTelegramBotAPI;
+
+{$R *.res}
+{$R *.dcr}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  RESTComponents,
+  vcl,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  CrossUrl;
+
+contains
+  TinjectTelegram.Core in '..\Source\TinjectTelegram.Core.pas',
+  TInjectTelegram.Base in '..\Source\TInjectTelegram.Base.pas',
+  TinjectTelegram.Ext.Sessions in '..\Source\TinjectTelegram.Ext.Sessions.pas',
+  TinjectTelegram.Helpers in '..\Source\TinjectTelegram.Helpers.pas',
+  TinjectTelegram.Logger.Old in '..\Source\TinjectTelegram.Logger.Old.pas',
+  TinjectTelegram.Logger in '..\Source\TinjectTelegram.Logger.pas',
+  TinjectTelegram.Receiver.Base in '..\Source\TinjectTelegram.Receiver.Base.pas',
+  TinjectTelegram.Receiver.Console in '..\Source\TinjectTelegram.Receiver.Console.pas',
+  TinjectTelegram.Receiver.Service in '..\Source\TinjectTelegram.Receiver.Service.pas',
+  TinjectTelegram.Receiver.UI in '..\Source\TinjectTelegram.Receiver.UI.pas',
+  TinjectTelegram.Types.Enums in '..\Source\TinjectTelegram.Types.Enums.pas',
+  TinjectTelegram.Types.Impl in '..\Source\TinjectTelegram.Types.Impl.pas',
+  TinjectTelegram.Types.InlineQueryResults in '..\Source\TinjectTelegram.Types.InlineQueryResults.pas',
+  TinjectTelegram.Types.InputMessageContents in '..\Source\TinjectTelegram.Types.InputMessageContents.pas',
+  TinjectTelegram.Types in '..\Source\TinjectTelegram.Types.pas',
+  TinjectTelegram.Types.Passport in '..\Source\TinjectTelegram.Types.Passport.pas',
+  TinjectTelegram.Types.ReplyMarkups in '..\Source\TinjectTelegram.Types.ReplyMarkups.pas',
+  TinjectTelegram.UpdateParser in '..\Source\TinjectTelegram.UpdateParser.pas',
+  TinjectTelegram.Utils.Json in '..\Source\TinjectTelegram.Utils.Json.pas',
+  TinjectTelegram.Ph in '..\Source\TinjectTelegram.Ph.pas',
+  TinjectTelegram.Ph.Types in '..\Source\TinjectTelegram.Ph.Types.pas',
+  TinjectTelegram.RegisterIDE in '..\Source\TinjectTelegram.RegisterIDE.pas',
+  TinjectTelegram.Emoji in '..\Source\TinjectTelegram.Emoji.pas',
+  TinjectTelegram.Bot.Impl in '..\Source\TinjectTelegram.Bot.Impl.pas',
+  TinjectTelegram.Bot in '..\Source\TinjectTelegram.Bot.pas',
+  TInjectTelegram.Bot.Chat in '..\Source\TInjectTelegram.Bot.Chat.pas',
+  TInjectTelegram.Bot.Manager in '..\Source\TInjectTelegram.Bot.Manager.pas',
+  TinjectTelegram.Receiver.Manager.Base in '..\Source\TinjectTelegram.Receiver.Manager.Base.pas';
+
+end.
