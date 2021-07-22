@@ -75,7 +75,6 @@ type
     procedure Error(const fmt: string; const args: array of const; const e:
       Exception); overload;
 {$ENDREGION}
-
 {$REGION 'Enter'}
     procedure Enter(const methodName: string); overload;
     procedure Enter(const instance: TObject; const methodName: string); overload;
@@ -167,7 +166,7 @@ begin
   Error(string.Format(fmt, args), e);
 end;
 {$ENDREGION}
-{$REGION 'Leave'}
+{$REGION 'Enter'}
 
 procedure TLogAbstract.Enter(const methodName: string);
 begin

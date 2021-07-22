@@ -100,6 +100,9 @@ type
     /// </summary>
   qtQuiz);
   /// Criado por Ruan Diego Lacerda Menezes
+  { TODO 3 -oRuan Diego -cEmojis :
+adicionar os novos
+⚰️ 🎃 🧛‍♀️ 🧟‍♂️ 🦇 🕷 🕸 🌜 🌛 or 🗿 }
   TtdEmojiType = (
     /// <summary>
     ///   Define o emoji dice <see cref="Dice" />

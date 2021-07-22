@@ -3974,6 +3974,7 @@ object Form1: TForm1
     HttpCore = cuHttpClientSysNet1
     OnReceiveRawData = InjectTelegramBot1ReceiveRawData
     OnSendData = InjectTelegramBot1SendData
+    OnDisconect = InjectTelegramBot1Disconect
     Left = 56
     Top = 470
   end

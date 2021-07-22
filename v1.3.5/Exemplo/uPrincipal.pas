@@ -131,6 +131,8 @@ type
       AData: string);
     procedure btnGetCMDClick(Sender: TObject);
     procedure btnDeleteCommandsClick(Sender: TObject);
+    procedure InjectTelegramBot1Disconect(ASender: TObject;
+      const AErrorCode: string);
 
   private
 
@@ -479,9 +481,10 @@ begin
 
   AbrirArquivo.Filter := VRes_Filtro_Fotos;
   if AbrirArquivo.Execute then
-      ImgLoad.Picture.LoadFromFile(AbrirArquivo.FileName);
+      ImgLoad.Picture.WICImage.LoadFromFile(AbrirArquivo.FileName);
 
-  MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+  MyFile := Nil;
+  MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName, Nil);
 
   if InjectTelegramReceiverService1.IsActive then
   begin
@@ -579,19 +582,20 @@ end;
 
 procedure TForm1.btnEnviarDocumentoClick(Sender: TObject);
 begin
-
+  MyFile := Nil;
   AbrirArquivo.Filter := VRes_Filtro_Todos;
   if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+    MyFile := TtdFileToSend.FromFile(AbrirArquivo.FileName);
 
   if InjectTelegramReceiverService1.IsActive then
   begin
     if txtID.Text <> '' then
-    try                                                        //Thumb
-      InjectTelegramBot1.SendDocument(StrToInt64(txtID.Text), MyFile, MyFile , VRes_Texto_Documento, LParseMode, Nil, False, False, 0, False, LMarkup);
+    try                                                           //Thumb 320x320 px até 200k
+      InjectTelegramBot1.SendDocument(StrToInt64(txtID.Text), MyFile, nil , VRes_Texto_Documento, LParseMode, [], False, False, 0, False, LMarkup);
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+VRes_Documento);
+        memConsole.Lines.Add(e.Message);
       end;
     end;
   end
@@ -903,11 +907,21 @@ begin
 end;
 
 procedure TForm1.btnGetCMDClick(Sender: TObject);
+var
+  MyCommands: TArray<ItdBotCommand>;
+  I: Integer;
 begin
   if InjectTelegramReceiverService1.IsActive then
   begin
     try
-      InjectTelegramBot1.GetMyCommands(TtdBotCommandScope.BotCommandScopeDefault);
+      MyCommands := InjectTelegramBot1.GetMyCommands(TtdBotCommandScope.BotCommandScopeDefault);
+      memConsole.Lines.Add('Command List...');
+      for I := 0 to High(MyCommands) do
+      Begin
+        memConsole.Lines.Add('Command'+IntToStr(I)+' : '+MyCommands[I].Command);
+        memConsole.Lines.Add('Description'+IntToStr(I)+' : '+MyCommands[I].Description);
+        memConsole.Lines.Add('-----------------');
+      End;
       except on e:exception do
       begin
         memConsole.Lines.Add(VRes_Falha+' ao obter a lista de comandos!');
@@ -1164,29 +1178,41 @@ begin
   AplicarResource;
 end;
 
+procedure TForm1.InjectTelegramBot1Disconect(ASender: TObject;
+  const AErrorCode: string);
+begin
+  InjectTelegramReceiverService1.Stop;
+  memConsole.Lines.Add('PAUSE');
+  Sleep(1000);
+  InjectTelegramReceiverService1.Start;
+  memConsole.Lines.Add('CONTINUE');
+end;
+
 procedure TForm1.InjectTelegramBot1ReceiveRawData(ASender: TObject;
   const AData: string);
 begin
-  memConsole.Lines.Add('RECEIVING : '+AData);
+ // memConsole.Lines.Add('RECEIVING : '+AData);
 end;
 
 procedure TForm1.InjectTelegramBot1SendData(ASender: TObject; const AUrl,
   AData: string);
 begin
-  memConsole.Lines.Add('SENDING URL: '+AUrl);
-  memConsole.Lines.Add('SENDING DATA: '+AData);
+//  memConsole.Lines.Add('SENDING URL: '+AUrl);
+//  memConsole.Lines.Add('SENDING DATA: '+AData);
 end;
 
 procedure TForm1.InjectTelegramExceptionManagerUI1Log(ASender: TObject;
   const Level: TLogLevel; const Msg: string; E: Exception);
+  var Texto: String;
 begin
-  //Aqui você tem um modo de tratar as mensagens e os erros por meio de log
   if level >= TLogLevel.Error then
   begin
     if Assigned(e) then
-     memConsole.Lines.Add('[' + e.ToString + '] ' + msg)
+    Begin
+      memConsole.Lines.Add(msg + ' [ '+Texto + ' '+ e.ToString + '] ' );
+    End
     else
-     memConsole.Lines.Add(msg);
+      memConsole.Lines.Add(msg);
   end;
 end;
 

@@ -25,6 +25,8 @@ type
 
   TtdOnReceiveRawData = procedure(ASender: TObject; const AData: string) of object;
   TtdOnSendData = procedure(ASender: TObject; const AUrl, AData: string) of object;
+  TtdOnDisconect = procedure(ASender: TObject; const AErrorCode: string) of object;
+
   {TInjectTelegramBotBase}
   TInjectTelegramBotBase = class(TInjectTelegramAbstractComponent)
   strict private
@@ -32,6 +34,7 @@ type
     FRequest: ItdRequestAPI;
     FOnRawData: TtdOnReceiveRawData;
     FOnSendData: TtdOnSendData;
+    FOnDisconect: TtdOnDisconect;
   private
     function GetLogger: ILogger;
     procedure SetLogger(const Value: ILogger);
@@ -57,6 +60,7 @@ type
     {$REGION 'Eventos|Events|События'}
     property OnReceiveRawData: TtdOnReceiveRawData read FOnRawData write FOnRawData;
     property OnSendData: TtdOnSendData read FOnSendData write FOnSendData;
+    property OnDisconect: TtdOnDisconect read FOnDisconect write FOnDisconect;
     {$ENDREGION}
   end;
   {TInjectTelegramBot}
@@ -539,6 +543,7 @@ type
     {$REGION 'Eventos|Events|События'}
     property OnReceiveRawData;
     property OnSendData;
+    property OnDisconect;
     {$ENDREGION}
   end;
   TTelegramBotHelper = class helper for TInjectTelegramBot
@@ -554,11 +559,20 @@ begin
   DoInitApiCore;
 end;
 procedure TInjectTelegramBotBase.DoInitApiCore;
+var
+  StrCodeError: String;
 begin
   FRequest := TtdCoreApi.Create;
   GetRequest.OnError :=
     procedure(E: Exception)
     begin
+      if Assigned(E) then
+      Begin
+        StrCodeError := Copy(E.ToString, POS('(', E.ToString)+1, 5);
+        if (StrCodeError = '12007') or (StrCodeError = '12002') then
+          if Assigned(OnDisconect) then
+            OnDisconect(Self, StrCodeError);
+      End;
       Logger.Error('RequestAPI', E);
     end;
   GetRequest.OnReceive :=
@@ -671,6 +685,7 @@ begin
   (Dest as TInjectTelegramBot).Logger := Self.Logger;
   (Dest as TInjectTelegramBot).OnReceiveRawData := Self.OnReceiveRawData;
   (Dest as TInjectTelegramBot).OnSendData := Self.OnSendData;
+  (Dest as TInjectTelegramBot).OnDisconect := Self.OnDisconect;
   // inherited AssignTo(Dest);
 end;
 constructor TInjectTelegramBot.Create(AOwner: TComponent);
@@ -1183,7 +1198,8 @@ begin
   Result := TtdMessage.Create(GetRequest.SetMethod('sendDocument') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('document', Document, nil, True) //
-    .AddParameter('thumb', Thumb, nil, False) //
+{ TODO 5 -oRuan Diego -csendDocument : Bug Fix 00123 }
+//    .AddParameter('thumb', Thumb, nil, False) //
     .AddParameter('caption', Caption, '', False) //
     .AddParameter('parse_mode', ParseMode.ToString, '', False) //
     .AddParameter('caption_entities', LTmpJson, '[]', False) //

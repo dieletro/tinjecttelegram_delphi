@@ -170,6 +170,9 @@ begin
         Result  := '🎰';
     TtdEmojiType.etBowling:
         Result  := '🎳';
+  { TODO 3 -oRuan Diego -cEmojis :
+adicionar os novos
+⚰️ 🎃 🧛‍♀️ 🧟‍♂️ 🦇 🕷 🕸 🌜 🌛 or 🗿 }
   end;
 end;
 
