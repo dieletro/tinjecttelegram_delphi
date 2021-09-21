@@ -569,9 +569,10 @@ begin
       if Assigned(E) then
       Begin
         StrCodeError := Copy(E.ToString, POS('(', E.ToString)+1, 5);
-        if (StrCodeError = '12007') or (StrCodeError = '12002') then
+        if (StrCodeError = '12007') or (StrCodeError = '12002') or (StrCodeError = '12030') then
           if Assigned(OnDisconect) then
             OnDisconect(Self, StrCodeError);
+
       End;
       Logger.Error('RequestAPI', E);
     end;
