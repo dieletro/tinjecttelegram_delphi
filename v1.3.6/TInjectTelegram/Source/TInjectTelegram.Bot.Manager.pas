@@ -44,29 +44,18 @@ type
   TtdOnUpdate = procedure(ASender: TObject; AUpdate: ItdUpdate) of object;
 
   TtdOnUpdates = procedure(ASender: TObject; AUpdates: TArray<ItdUpdate>) of object;
-
   TtdOnMessage = procedure(ASender: TObject; AMessage: ItdMessage) of object;
-
   TtdOnInlineQuery = procedure(ASender: TObject; AInlineQuery: ItdInlineQuery) of object;
-
   TtdOnInlineResultChosen = procedure(ASender: TObject; AChosenInlineResult: ItdChosenInlineResult) of object;
-
   TtdOnCallbackQuery = procedure(ASender: TObject; ACallbackQuery: ItdCallbackQuery) of object;
-
   TtdOnChannelPost = procedure(ASender: TObject; AChanelPost: ItdMessage) of object;
-
   TtdOnShippingQuery = procedure(ASender: TObject; AShippingQuery: ItdShippingQuery) of object;
-
   TtdOnPreCheckoutQuery = procedure(ASender: TObject; APreCheckoutQuery: ItdPreCheckoutQuery) of object;
-
   TtdOnPollStatus = procedure(ASender: TObject; APoll: ItdPoll) of object;
-
   TtdOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItdPollAnswer) of object;
 
   TtdOnMyChatMember = procedure(ASender: TObject; AMyChatMember: ItdChatMemberUpdated) of object;
-
   TtdOnChatMember = procedure(ASender: TObject; AChatMember: ItdChatMemberUpdated) of object;
-
   TInjectTelegramBotManager = class(TInjectTelegramBotReceiverBase)
   private
     FOnUpdate: TtdOnUpdate;
@@ -82,7 +71,8 @@ type
     FOnChosenInlineResult: TtdOnInlineResultChosen;
     FOnEditedChannelPost: TtdOnMessage;
     FOnCallbackQuery: TtdOnCallbackQuery;
-    FOnPollStatus: TtdOnPollStatus;
+
+    FOnPollStatus: TtdOnPollStatus;
     FOnPollAnswer: TtdOnPollAnswer;
 
     FSenhaADM: String;
@@ -97,6 +87,7 @@ type
     FOnTimerSleepExecute: TOnTimerSleepExecute;
     FOnMyChatMember: TtdOnMyChatMember;
     FOnChatMember: TtdOnChatMember;
+    FOnChatJoinRequest: TtdOnChatJoinRequest;
 
   protected
     procedure DoOnStart; override;
@@ -114,6 +105,7 @@ type
     procedure DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery); override;
     procedure DoOnPollStatus(APoll: ItdPoll); override;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); override;
+    procedure DoOnChatJoinRequest(AChatJoinRequest: ItdChatJoinRequest); override;
     procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); override;
     procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); override;
     procedure Init;
@@ -154,8 +146,10 @@ type
     property OnShippingQuery: TtdOnShippingQuery read FOnShippingQuery write FOnShippingQuery;
     property OnPreCheckoutQuery: TtdOnPreCheckoutQuery read FOnPreCheckoutQuery write FOnPreCheckoutQuery;
     property OnCallbackQuery: TtdOnCallbackQuery read FOnCallbackQuery write FOnCallbackQuery;
-    property OnPollStatus: TtdOnPollStatus read FOnPollStatus write FOnPollStatus;
+
+    property OnPollStatus: TtdOnPollStatus read FOnPollStatus write FOnPollStatus;
     property OnPollAnswer: TtdOnPollAnswer read FOnPollAnswer write FOnPollAnswer;
+    property OnChatJoinRequest: TtdOnChatJoinRequest read FOnChatJoinRequest write FOnChatJoinRequest;
     property OnTimerSleepExecute: TOnTimerSleepExecute read FOnTimerSleepExecute write FOnTimerSleepExecute;
     property OnMyChatMember: TtdOnMyChatMember read FOnMyChatMember write FOnMyChatMember;
     property OnChatMember:   TtdOnChatMember read FOnChatMember write FOnChatMember;
@@ -490,16 +484,21 @@ begin
   inherited;
   //Teste
 //  ProcessarResposta(ACallbackQuery.message);
-
   if Assigned(OnCallbackQuery) then
     OnCallbackQuery(Self, ACallbackQuery);
 end;
-
 procedure TInjectTelegramBotManager.DoOnChannelPost(AChannelPost: ItdMessage);
 begin
   inherited;
   if Assigned(OnChannelPost) then
     OnChannelPost(Self, AChannelPost);
+end;
+procedure TInjectTelegramBotManager.DoOnChatJoinRequest(
+  AChatJoinRequest: ItdChatJoinRequest);
+begin
+  inherited;
+  if Assigned(OnChatJoinRequest) then
+    OnChatJoinRequest(Self, AChatJoinRequest);
 end;
 
 procedure TInjectTelegramBotManager.DoOnChatMember(
@@ -516,28 +515,24 @@ begin
   if Assigned(OnChosenInlineResult) then
     OnChosenInlineResult(Self, AChosenInlineResult);
 end;
-
 procedure TInjectTelegramBotManager.DoOnEditedChannelPost(AEditedChannelPost: ItdMessage);
 begin
   inherited;
   if Assigned(OnEditedChannelPost) then
     OnEditedChannelPost(Self, AEditedChannelPost);
 end;
-
 procedure TInjectTelegramBotManager.DoOnEditedMessage(AEditedMessage: ItdMessage);
 begin
   inherited;
   if Assigned(OnEditedMessage) then
     OnEditedMessage(Self, AEditedMessage);
 end;
-
 procedure TInjectTelegramBotManager.DoOnInlineQuery(AInlineQuery: ItdInlineQuery);
 begin
   inherited;
   if Assigned(OnInlineQuery) then
     OnInlineQuery(Self, AInlineQuery);
 end;
-
 procedure TInjectTelegramBotManager.DoOnMessage(AMessage: ItdMessage);
 begin
   inherited;
@@ -546,9 +541,7 @@ begin
     ProcessarResposta(AMessage);
     OnMessage(Self, AMessage);
   End;
-
 end;
-
 procedure TInjectTelegramBotManager.DoOnMyChatMember(
   AMyChatMember: ItdChatMemberUpdated);
 begin
@@ -577,14 +570,12 @@ begin
   if Assigned(OnPreCheckoutQuery) then
     OnPreCheckoutQuery(Self, APreCheckoutQuery);
 end;
-
 procedure TInjectTelegramBotManager.DoOnShippingQuery(AShippingQuery: ItdShippingQuery);
 begin
   inherited;
   if Assigned(OnShippingQuery) then
     OnShippingQuery(Self, AShippingQuery);
 end;
-
 procedure TInjectTelegramBotManager.DoOnStart;
 begin
   inherited;
@@ -592,7 +583,6 @@ begin
   if Assigned(OnStart) then
     OnStart(Self);
 end;
-
 procedure TInjectTelegramBotManager.DoOnStop;
 begin
   inherited;
@@ -601,7 +591,6 @@ begin
   if Assigned(FConversas) then
     FreeAndNil(FConversas);
 end;
-
 procedure TInjectTelegramBotManager.DoOnUpdate(AUpdate: ItdUpdate);
 begin
   inherited;
@@ -611,14 +600,12 @@ begin
     OnUpdate(Self, AUpdate);
   End;
 end;
-
 procedure TInjectTelegramBotManager.DoOnUpdates(AUpdates: TArray<ItdUpdate>);
 begin
   inherited;
   if Assigned(OnUpdates) then
     OnUpdates(Self, AUpdates);
 end;
-
 procedure TInjectTelegramBotManager.Init;
 begin
   LParseMode := TtdParseMode.Markdown;

@@ -1,12 +1,9 @@
 unit TinjectTelegram.Receiver.Console;
-
 interface
-
 uses
   TInjectTelegram.Receiver.Base,
   TInjectTelegram.Types,
   System.SysUtils;
-
 type
   TInjectTelegramReceiverConsole = class(TInjectTelegramBotReceiverBase)
   private
@@ -64,25 +61,20 @@ type
     property OnMyChatMember: TProc<ItdChatMemberUpdated> read FOnMyChatMember write FOnMyChatMember;
     property OnChatMember:   TProc<ItdChatMemberUpdated> read FOnChatMember write FOnChatMember;
   end;
-
 implementation
-
 { TInjectTelegramReceiverConsole }
-
 procedure TInjectTelegramReceiverConsole.DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery);
 begin
   inherited;
   if Assigned(OnCallbackQuery) then
     OnCallbackQuery(ACallbackQuery);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnChannelPost(AChannelPost: ItdMessage);
 begin
   inherited;
   if Assigned(OnChannelPost) then
     OnChannelPost(AChannelPost);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnChatMember(
   AChatMember: ItdChatMemberUpdated);
 begin
@@ -97,35 +89,30 @@ begin
   if Assigned(OnChosenInlineResult) then
     OnChosenInlineResult(AChosenInlineResult);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnEditedChannelPost(AEditedChannelPost: ItdMessage);
 begin
   inherited;
   if Assigned(OnEditedChannelPost) then
     OnEditedChannelPost(AEditedChannelPost);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnEditedMessage(AEditedMessage: ItdMessage);
 begin
   inherited;
   if Assigned(OnEditedMessage) then
     OnEditedMessage(AEditedMessage);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnInlineQuery(AInlineQuery: ItdInlineQuery);
 begin
   inherited;
   if Assigned(OnInlineQuery) then
     OnInlineQuery(AInlineQuery);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnMessage(AMessage: ItdMessage);
 begin
   inherited;
   if Assigned(OnMessage) then
     OnMessage(AMessage);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnMyChatMember(
   AMyChatMember: ItdChatMemberUpdated);
 begin
@@ -156,41 +143,34 @@ begin
   if Assigned(OnPreCheckoutQuery) then
     OnPreCheckoutQuery(APreCheckoutQuery);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnShippingQuery(AShippingQuery: ItdShippingQuery);
 begin
   inherited;
   if Assigned(OnShippingQuery) then
     OnShippingQuery(AShippingQuery);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnStart;
 begin
   inherited;
   if Assigned(OnStart) then
     OnStart();
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnStop;
 begin
   inherited;
   if Assigned(OnStop) then
     OnStop();
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnUpdate(AUpdate: ItdUpdate);
 begin
   inherited;
   if Assigned(OnUpdate) then
     OnUpdate(AUpdate);
 end;
-
 procedure TInjectTelegramReceiverConsole.DoOnUpdates(AUpdates: TArray<ItdUpdate>);
 begin
   inherited;
   if Assigned(OnUpdates) then
     OnUpdates(AUpdates);
 end;
-
 end.
-

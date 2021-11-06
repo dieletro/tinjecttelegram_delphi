@@ -31,6 +31,7 @@ type
     procedure DoOnPreCheckoutQuery(APreCheckoutQuery: ItdPreCheckoutQuery); virtual; abstract;
     procedure DoOnPollStatus(APoll: ItdPoll); virtual; abstract;
     procedure DoOnPollAnswer(APollAnswer: ItdPollAnswer); virtual; abstract;
+    procedure DoOnChatJoinRequest(AChatJoinRequest: ItdChatJoinRequest); virtual; abstract;
     procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); virtual; abstract;
     procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); virtual; abstract;
   public
@@ -106,6 +107,9 @@ begin
 
     TtdUpdateType.ChatMember:
       DoOnChatMember(AUpdate.ChatMember);
+
+    TtdUpdateType.ChatJoinRequest:
+      DoOnChatJoinRequest(AUpdate.ChatJoinRequest);
   end;
 end;
 
