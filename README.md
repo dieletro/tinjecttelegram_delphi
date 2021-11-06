@@ -25,6 +25,15 @@ To get the latest updates, go here
 
 # TInjectTelegram UPDATES for Delphi by (dieletro) LMCODE 
 ---
+* **Component version 1.3.6**
+> - [X] Updated for the latest version of the Telegram Bot API, version 5.4 of Nevember 05, 2021.
+
+* **Component version 1.3.5**
+> - [X] Updated for the latest version of the Telegram Bot API, version 5.3 2021.
+
+* **Component version 1.3.4**
+> - [X] Updated for the latest version of the Telegram Bot API, version 5.2 2021.
+
 * **Component version 1.3.3**
 > - [X] Updated for the latest version of the Telegram Bot API, version 5.1 of March 09, 2021.
 
