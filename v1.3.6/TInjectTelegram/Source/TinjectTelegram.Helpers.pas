@@ -3,7 +3,8 @@ interface
 uses
  // TInjectTelegram.Bot.Impl,
   TInjectTelegram.Types,
-  TInjectTelegram.Types.Enums;
+  TInjectTelegram.Types.Enums,
+  System.DateUtils;
 type
   TtdParseModeHelper = record helper for TtdParseMode
     function ToString: string;
@@ -35,6 +36,9 @@ type
   TtdBotCommandScopeHelper = record helper for TtdBotCommandScope
     function ToJsonObject: string;
   end;
+  TTDateTimerHelper = record helper for TDateTime
+    function ToUnix: Integer;
+  End;
 implementation
 uses
   System.SysUtils,
@@ -282,6 +286,13 @@ begin
     TtdBotCommandScope.BotCommandScopeChatMember:
       Result := '{"type":"chat_member"}';
   end;
+end;
+
+{ TTDateTimerHelper }
+
+function TTDateTimerHelper.ToUnix: Integer;
+begin
+  Result := DateTimeToUnix(TDateTime(Self));
 end;
 
 end.
