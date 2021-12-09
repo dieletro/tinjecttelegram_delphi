@@ -292,7 +292,7 @@ end;
 
 function TTDateTimerHelper.ToUnix: Integer;
 begin
-  Result := DateTimeToUnix(TDateTime(Self));
+  Result := DateTimeToUnix(Self);
 end;
 
 end.

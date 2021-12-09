@@ -786,7 +786,7 @@ function TInjectTelegramBot.editChatInviteLink(const ChatId: TtdUserLink;
   const name: String; const member_limit: Integer;
   const creates_join_request: boolean): ItdChatInviteLink;
 begin
-  Logger.Enter(Self, 'editChatInviteLink');
+  Logger.Enter(Self, 'EditChatInviteLink');
   Result := TtdChatInviteLink.Create(GetRequest.SetMethod('editChatInviteLink') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('expire_date', expire_date, 0, False) //
@@ -795,7 +795,7 @@ begin
     .AddParameter('member_limit', member_limit, 0, False) //
     .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
     .Execute);
-  Logger.Leave(Self, 'editChatInviteLink');
+  Logger.Leave(Self, 'EditChatInviteLink');
 end;
 
 function TInjectTelegramBot.revokeChatInviteLink(const ChatId: TtdUserLink;
@@ -1568,7 +1568,7 @@ end;
 function TInjectTelegramBot.ExportChatInviteLink(const ChatId: TtdUserLink): string;
 begin
   Logger.Enter(Self, 'ExportChatInviteLink');
-  Result := GetRequest.SetMethod('deleteChatStickerSet') //
+  Result := GetRequest.SetMethod('exportChatInviteLink') //
     .AddParameter('chat_id', ChatId, 0, True).ExecuteAndReadValue;
   Logger.Leave(Self, 'ExportChatInviteLink');
 end;
@@ -1715,7 +1715,7 @@ function TInjectTelegramBot.createChatInviteLink(const ChatId: TtdUserLink;
   const name: String; const expire_date: TDateTime; const member_limit: Integer;
   const creates_join_request: boolean): ItdChatInviteLink;
 begin
-  Logger.Enter(Self, 'createChatInviteLink');
+  Logger.Enter(Self, 'CreateChatInviteLink');
   Result := TtdChatInviteLink.Create(GetRequest.SetMethod('createChatInviteLink') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('name', name, '', False) //
@@ -1723,7 +1723,7 @@ begin
     .AddParameter('member_limit', member_limit, 0, False) //
     .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
     .Execute);
-  Logger.Leave(Self, 'createChatInviteLink');
+  Logger.Leave(Self, 'CreateChatInviteLink');
 end;
 
 function TInjectTelegramBot.createNewStickerSet(const UserId: Int64; const Name, Title:

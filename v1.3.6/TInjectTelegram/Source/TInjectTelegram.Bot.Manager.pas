@@ -167,7 +167,7 @@ var
   AConversa: TInjectTelegramChatBot;
 begin
   AConversa := BuscarConversaEmEspera;
-  if Assigned( AConversa ) then
+  if AConversa <> Nil then
   begin
     if AConversa.Situacao <> saInativa then
     Begin
@@ -211,7 +211,7 @@ function TInjectTelegramBotManager.BuscarConversaEmEspera: TInjectTelegramChatBo
 var
   AConversa: TInjectTelegramChatBot;
 begin
- // Result := nil;
+  Result := nil;
   for AConversa in FConversas do
   begin
     if AConversa.Situacao = saEmEspera then
@@ -468,6 +468,7 @@ begin
       Begin
         //Atribuido para solução temporaria da falha na autofinalização
         FConversa.SetSituacao(saInativa);
+        DoOnMessage(AMessage);
       End
       Else
         FConversa.ReiniciarTimer;

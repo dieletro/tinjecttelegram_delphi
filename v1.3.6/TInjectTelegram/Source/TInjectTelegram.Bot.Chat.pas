@@ -436,17 +436,17 @@ end;
 procedure TInjectTelegramChatBot.SetSituacao(const Value: TtdSituacaoAtendimento);
 begin
   //DoChange
-  if FSituacao <> Value then
-  begin
-    FSituacao := Value;
-    FTimerSleep.Enabled := FSituacao in [saNova, saEmAtendimento];//((FSituacao = saNova) or (FSituacao = saEmAtendimento));  //Habilita Time se situacao ativa.
+    if FSituacao <> Value then
+    begin
+      FSituacao := Value;
+      FTimerSleep.Enabled := FSituacao in [saNova, saEmAtendimento];//((FSituacao = saNova) or (FSituacao = saEmAtendimento));  //Habilita Time se situacao ativa.
 
-//    if Value = saInativa then
-//      DoOnTimerSleepExecute(Self);
+  //    if Value = saInativa then
+  //      DoOnTimerSleepExecute(Self);
 
-    if Assigned( OnSituacaoAlterada ) then
-       OnSituacaoAlterada(Self, FMessage);
-  end;
+      if Assigned( OnSituacaoAlterada ) then
+         OnSituacaoAlterada(Self, FMessage);
+    end;
 end;
 
 procedure TInjectTelegramChatBot.SetTempoInatividade(const Value: Integer);
