@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-	<Transactions/>
+	<Transactions>
+    <Transaction>2021/12/13 13:20:51.646,=E:\Componentes Delphi\00 - API\TInject\API_Telegram\Dev\tinjecttelegram_delphi\v1.3.7\Exemplo\ExemplosTInjectTelegram.dpr</Transaction>
+  </Transactions>
 </BorlandProject>

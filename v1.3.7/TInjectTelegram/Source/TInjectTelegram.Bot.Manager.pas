@@ -212,15 +212,16 @@ var
   AConversa: TInjectTelegramChatBot;
 begin
  // Result := nil;
-  for AConversa in FConversas do
-  begin
-    if AConversa.Situacao = saEmEspera then
+  if FConversas.Count > 0 then
+    for AConversa in FConversas do
     begin
-      Result := AConversa;
-      FConversa := AConversa;
-      Break;
+      if AConversa.Situacao = saEmEspera then
+      begin
+        Result := AConversa;
+        FConversa := AConversa;
+        Break;
+      end;
     end;
-  end;
 end;
 
 procedure TInjectTelegramBotManager.ConversaSituacaoAlterada(

@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{3F3B4088-78E3-456E-8B27-FEF37FD14424}</ProjectGuid>
+        <ProjectGuid>{260D7461-15C5-47E3-A3F4-3834D5F69CB9}</ProjectGuid>
         <ProjectVersion>19.3</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <MainSource>ExemplosTInjectTelegram.dpr</MainSource>
@@ -108,6 +108,7 @@
         <None Include="PTB\ExemplosTInjectTelegram_PTB.bdsproj"/>
         <None Include="ITA\ExemplosTInjectTelegram_ITA.bdsproj"/>
         <None Include="HEB\ExemplosTInjectTelegram_HEB.bdsproj"/>
+        <None Include="..\..\v1.3.7\Exemplo\ExemplosTInjectTelegram.dpr"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -148,13 +149,19 @@
                 </RDP_Source_Files>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="PTB\ExemplosTInjectTelegram_PTB.bdsproj" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ITA\ExemplosTInjectTelegram_ITA.bdsproj" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ENU\ExemplosTInjectTelegram_ENU.bdsproj" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="HEB\ExemplosTInjectTelegram_HEB.bdsproj" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\v1.3.7\Exemplo\ExemplosTInjectTelegram.dpr" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -166,13 +173,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ITA\ExemplosTInjectTelegram_ITA.bdsproj" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="PTB\ExemplosTInjectTelegram_PTB.bdsproj" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="HEB\ExemplosTInjectTelegram_HEB.bdsproj" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ENU\ExemplosTInjectTelegram_ENU.bdsproj" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
