@@ -169,7 +169,7 @@ begin
   AConversa := BuscarConversaEmEspera;
   if Assigned( AConversa ) then
   begin
-    if AConversa.Situacao <> saInativa then
+    if AConversa.Situacao = saEmEspera then
     Begin
       AConversa.Situacao := saNova;
       AConversa.ReiniciarTimer;

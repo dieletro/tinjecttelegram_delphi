@@ -22,11 +22,9 @@ uses
   CrossUrl.HttpClient,
   System.RegularExpressions;
 type
-
   TtdOnReceiveRawData = procedure(ASender: TObject; const AData: string) of object;
   TtdOnSendData = procedure(ASender: TObject; const AUrl, AData: string) of object;
   TtdOnDisconect = procedure(ASender: TObject; const AErrorCode: string) of object;
-
   {TInjectTelegramBotBase}
   TInjectTelegramBotBase = class(TInjectTelegramAbstractComponent)
   strict private
@@ -63,7 +61,6 @@ type
     property OnDisconect: TtdOnDisconect read FOnDisconect write FOnDisconect;
     {$ENDREGION}
   end;
-
   {TInjectTelegramBot}
   TInjectTelegramBot = class(TInjectTelegramBotBase, IInjectTelegramBot)
   private
@@ -587,7 +584,6 @@ begin
         if (StrCodeError = '12007') or (StrCodeError = '12002') or (StrCodeError = '12030') then
           if Assigned(OnDisconect) then
             OnDisconect(Self, StrCodeError);
-
       End;
       Logger.Error('RequestAPI', E);
     end;
@@ -802,7 +798,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'editChatInviteLink');
 end;
-
 function TInjectTelegramBot.revokeChatInviteLink(const ChatId: TtdUserLink;
   const invite_link: String): ItdChatInviteLink;
 begin
@@ -813,7 +808,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'revokeChatInviteLink');
 end;
-
 {$ENDREGION}
 {$REGION 'Basic methods'}
 function TInjectTelegramBot.stopMessageLiveLocation(const ChatId: TtdUserLink; const
@@ -957,7 +951,6 @@ function TInjectTelegramBot.SendPoll( ////Add By Ruan Diego Lacerda Menezes 13/0
 var
   LTmpJson: string;
 begin
-
   Logger.Enter(Self, 'SendPoll');
   LTmpJson := TJsonUtils.ArrayStringToJString(Options);
   Result := TtdMessage.Create(GetRequest.SetMethod('sendPoll') //
@@ -980,7 +973,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'SendPoll');
 end;
-
 function TInjectTelegramBot.SendMessage(const ChatId: TtdUserLink; const Text: string;
   const ParseMode: TtdParseMode; const DisableWebPagePreview,
   DisableNotification: Boolean; const ReplyToMessageId: Int64;
@@ -1043,7 +1035,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'SendVenue');
 end;
-
 function TInjectTelegramBot.SendVideo(const ChatId: TtdUserLink; const Video:
   TtdFileToSend; const Caption: string; const ParseMode: TtdParseMode; const
   SupportsStreaming: Boolean; const Duration, Width, Height: Int64; const
@@ -1137,7 +1128,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'SendAnimation');
 end;
-
 function TInjectTelegramBot.SendAudio(const ChatId: TtdUserLink; const Audio:
   TtdFileToSend; const Caption: string; const ParseMode: TtdParseMode; const
   Duration: Int64; const Performer: string; const DisableNotification: Boolean;
@@ -1207,7 +1197,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'SendDice');
 end;
-
 function TInjectTelegramBot.SendDocument(
   const ChatId: TtdUserLink;
   const Document: TtdFileToSend;
@@ -1253,7 +1242,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'BanChatMember');
 end;
-
 function TInjectTelegramBot.banChatSenderChat(const ChatId: TtdUserLink;
   const SenderChatId: Int64): boolean;
 begin
@@ -1290,7 +1278,6 @@ begin
   Result := TtdUser.Create(GetRequest.SetMethod('getMe').Execute);
   Logger.Leave(Self, 'GetMe');
 end;
-
 function TInjectTelegramBot.SetMyCommands(
     const Command: TArray<TtdBotCommand>;
     const scope: TtdBotCommandScope;
@@ -1307,7 +1294,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'SetMyCommands');
 end;
-
 function TInjectTelegramBot.GetMyCommands(
     const scope: TtdBotCommandScope;
     const language_code: string
@@ -1321,7 +1307,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'GetMyCommands');
 end;
-
 function TInjectTelegramBot.DeleteMyCommands(
         const scope: TtdBotCommandScope;
         const language_code: string
@@ -1334,14 +1319,12 @@ Begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'DeleteMyCommands');
 End;
-
 function TInjectTelegramBot.Close: Boolean;
 begin
   Logger.Enter(Self, 'Close');
   Result := GetRequest.SetMethod('close').ExecuteAsBool;
   Logger.Leave(Self, 'Close');
 end;
-
 function TInjectTelegramBot.CopyMessage(const ChatId, FromChatId: TtdUserLink;
   const MessageId: Int64; const Caption: string; const ParseMode: TtdParseMode;
   const CaptionEntities: TArray<TtdMessageEntity>; const DisableWebPagePreview,
@@ -1350,9 +1333,7 @@ function TInjectTelegramBot.CopyMessage(const ChatId, FromChatId: TtdUserLink;
 Var
   LTmpJson: String;
 begin
-
   Logger.Enter(Self, 'CopyMessage');
-
   LTmpJson := TJsonUtils.ArrayToJString<TtdMessageEntity>(CaptionEntities);
   Result := GetRequest.SetMethod('copyMessage') //
     .AddParameter('chat_id', ChatId, 0, True) //
@@ -1369,7 +1350,6 @@ begin
     .Execute.ToInt64;
   Logger.Leave(Self, 'CopyMessage');
 end;
-
 function TInjectTelegramBot.LogOut: Boolean;
 begin
   Logger.Enter(Self, 'LogOut');
@@ -1389,7 +1369,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'SetPassportDataErrors');
 end;
-
 function TInjectTelegramBot.ForwardMessage(const ChatId, FromChatId: TtdUserLink;
   const MessageId: Int64; const DisableNotification: Boolean): ItdMessage;
 begin
@@ -1660,7 +1639,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'UnPinAllChatMessages');
 end;
-
 function TInjectTelegramBot.UnPinChatMessage(const ChatId: TtdUserLink;
   const MessageId: Int64): Boolean;
 begin
@@ -1753,7 +1731,6 @@ begin
     .Execute);
   Logger.Leave(Self, 'createChatInviteLink');
 end;
-
 function TInjectTelegramBot.createNewStickerSet(const UserId: Int64; const Name, Title:
   string; const PngSticker: TtdFileToSend; const TgsSticker: TtdFileToSend;
   const Emojis: string; const ContainsMasks: Boolean;
@@ -1781,7 +1758,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'DeclineChatJoinRequest');
 end;
-
 function TInjectTelegramBot.deleteStickerFromSet(const Sticker: string): Boolean;
 begin
   Logger.Enter(Self, 'deleteStickerFromSet');
@@ -1831,7 +1807,6 @@ begin
     .AddParameter('thumb', Thumb, '', False).ExecuteAsBool;
   Logger.Leave(Self, 'SetStickerSetThumb');
 end;
-
 function TInjectTelegramBot.uploadStickerFile(const UserId: Int64; const PngSticker:
   TtdFileToSend): ItdFile;
 begin
@@ -1934,7 +1909,6 @@ var
   DefaultBol : Boolean;
 begin
   DefaultBol := Not OK;
-
   Logger.Enter(Self, 'AnswerPreCheckoutQuery');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, '0', True) //
@@ -1943,7 +1917,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQuery');
 end;
-
 function TInjectTelegramBot.AnswerPreCheckoutQueryBad(const PreCheckoutQueryId,
   ErrorMessage: string): Boolean;
 begin
@@ -1998,7 +1971,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'ApproveChatJoinRequest');
 end;
-
 {$ENDREGION}
 {$REGION 'Games'}
 function TInjectTelegramBot.GetGameHighScores(const UserId: Int64; const
@@ -2068,14 +2040,10 @@ end;
 {$ENDREGION}
 { TTelegramBotHelper }
 
-
 function TTelegramBotHelper.IsValidToken: Boolean;
-
 const
   TOKEN_CORRECT = '\d*:[\w\d-_]{35}';
 begin
   Result := TRegEx.IsMatch(Token, TOKEN_CORRECT, [roIgnoreCase]);
 end;
-
 end.
-

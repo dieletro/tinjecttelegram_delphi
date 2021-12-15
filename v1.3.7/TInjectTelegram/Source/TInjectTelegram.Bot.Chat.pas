@@ -147,10 +147,6 @@ type
   public
     FTimerSleep: TTimer;
     FMessage : ItdMessage;
-    function CarregarBotoes(AQuery: TFDQuery; AFieldName: String;
-      AInitZero: Boolean = True) : IReplyMarkup;
-    function CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
-      AInlineMode: Boolean = false) : IReplyMarkup;
     procedure SetSituacao(const Value: TtdSituacaoAtendimento);
     procedure SetTempoInatividade(const Value: Integer);
     procedure DoOnTimerSleepExecute(Sender: TObject);
@@ -161,6 +157,10 @@ type
     procedure ReiniciarTimer;
 
   published
+    function CarregarBotoes(AQuery: TFDQuery; AFieldName: String;
+      AInitZero: Boolean = True) : IReplyMarkup;
+    function CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
+      AInlineMode: Boolean = false) : IReplyMarkup;
     //Proprieades
     [Default(0)]
     property  TipoUsuario      : TtdTipoUsuario          read FTipoUsuario       write FTipoUsuario {default tpCliente};
@@ -412,8 +412,6 @@ begin
   FTimerSleep.Enabled  := False;
   FTimerSleep.Interval := FTempoInatividade*60000; //*60.000 = 1 min
   FTimerSleep.OnTimer  := DoOnTimerSleepExecute;
-//  FTimerSleep.Enabled  := True;
-
 end;
 
 destructor TInjectTelegramChatBot.Destroy;
@@ -439,10 +437,7 @@ begin
   if FSituacao <> Value then
   begin
     FSituacao := Value;
-    FTimerSleep.Enabled := FSituacao in [saNova, saEmAtendimento];//((FSituacao = saNova) or (FSituacao = saEmAtendimento));  //Habilita Time se situacao ativa.
-
-//    if Value = saInativa then
-//      DoOnTimerSleepExecute(Self);
+    FTimerSleep.Enabled := FSituacao in [saNova, saEmAtendimento]; //Habilita Time se situacao ativa.
 
     if Assigned( OnSituacaoAlterada ) then
        OnSituacaoAlterada(Self, FMessage);
@@ -451,14 +446,13 @@ end;
 
 procedure TInjectTelegramChatBot.SetTempoInatividade(const Value: Integer);
 begin
-  FTempoInatividade := Value;
+  FTempoInatividade := Value*60000;
   FTimerSleep.Interval := FTempoInatividade;
 end;
 
 procedure TInjectTelegramChatBot.DoOnTimerSleepExecute(Sender: TObject);
 begin
   FSituacao := saInativa;
-  //Showmessage('Achei!');
   FTimerSleep.Enabled := False;
 
   if Assigned(OnTimerSleepExecute) then
