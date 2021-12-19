@@ -33,7 +33,7 @@ type
     function AddParameter(const AKey: string; const AValue, ADefaultValue:
       string; const ARequired: Boolean = False): ItdRequestAPI; overload;
     function AddParameter(const AKey: string; const AValue, ADefaultValue:
-      Integer; const ARequired: Boolean = False): ItdRequestAPI; overload;
+      Int64{Integer}; const ARequired: Boolean = False): ItdRequestAPI; overload;
     function AddParameter(const AKey: string; const AValue, ADefaultValue:
       TDateTime; const ARequired: Boolean = False): ItdRequestAPI; overload;
     function AddParameter(const AKey: string; AValue, ADefaultValue:
@@ -103,7 +103,7 @@ type
     function AddParameter(const AKey: string; const AValue, ADefaultValue:
       string; const ARequired: Boolean = False): ItdRequestAPI; overload;
     function AddParameter(const AKey: string; const AValue, ADefaultValue:
-      Integer; const ARequired: Boolean = False): ItdRequestAPI; overload;
+      Int64{Integer}; const ARequired: Boolean = False): ItdRequestAPI; overload;
     function AddParameter(const AKey: string; const AValue, ADefaultValue:
       TDateTime; const ARequired: Boolean = False): ItdRequestAPI; overload;
     function AddParameter(const AKey: string; AValue, ADefaultValue:
@@ -165,7 +165,7 @@ begin
   Result := Self;
 end;
 function TtdCoreApiBase.AddParameter(const AKey: string; const AValue,
-  ADefaultValue: Integer; const ARequired: Boolean): ItdRequestAPI;
+  ADefaultValue: Int64{Integer}; const ARequired: Boolean): ItdRequestAPI;
 begin
   Result := AddParameter(AKey, AValue.ToString, ADefaultValue.ToString, ARequired);
 end;

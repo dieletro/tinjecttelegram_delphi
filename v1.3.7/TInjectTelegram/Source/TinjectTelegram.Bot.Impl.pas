@@ -368,6 +368,7 @@ type
     function declineChatJoinRequest(
       const ChatId: TtdUserLink; //
       const UserId: TtdUserLink): Boolean;
+    function ExportChatInviteLink(const ChatId: TtdUserLink): string;
 {$ENDREGION 'ChatInviteLink'}
 {$REGION 'Inline mode'}
     function AnswerInlineQuery( //
@@ -457,7 +458,6 @@ type
 {$ENDREGION}
 {$REGION 'Manage groups and channels'}
     function DeleteChatPhoto(const ChatId: TtdUserLink): Boolean;
-    function ExportChatInviteLink(const ChatId: TtdUserLink): string;
     function PinChatMessage( //
       const ChatId: TtdUserLink; //
       const MessageId: Int64; //
@@ -782,6 +782,20 @@ begin
   inherited;
   GetRequest.UrlAPI := SERVER;
 end;
+function TInjectTelegramBot.createChatInviteLink(const ChatId: TtdUserLink;
+  const name: String; const expire_date: TDateTime; const member_limit: Integer;
+  const creates_join_request: boolean): ItdChatInviteLink;
+begin
+  Logger.Enter(Self, 'createChatInviteLink');
+  Result := TtdChatInviteLink.Create(GetRequest.SetMethod('createChatInviteLink') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('name', name, '', False) //
+    .AddParameter('expire_date', expire_date, 0, False) //
+    .AddParameter('member_limit', member_limit, 0, False) //
+    .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
+    .Execute);
+  Logger.Leave(Self, 'createChatInviteLink');
+end;
 function TInjectTelegramBot.editChatInviteLink(const ChatId: TtdUserLink;
   const expire_date: TDateTime; const invite_link: String;
   const name: String; const member_limit: Integer;
@@ -807,6 +821,33 @@ begin
     .AddParameter('invite_link', invite_link, '', False) //
     .Execute);
   Logger.Leave(Self, 'revokeChatInviteLink');
+end;
+function TInjectTelegramBot.approveChatJoinRequest(const ChatId,
+  UserId: TtdUserLink): Boolean;
+begin
+  Logger.Enter(Self, 'ApproveChatJoinRequest');
+  Result := GetRequest.SetMethod('approveChatJoinRequest') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('user_id', UserId, 0, True) //
+    .ExecuteAsBool;
+  Logger.Leave(Self, 'ApproveChatJoinRequest');
+end;
+function TInjectTelegramBot.declineChatJoinRequest(const ChatId,
+  UserId: TtdUserLink): Boolean;
+begin
+  Logger.Enter(Self, 'DeclineChatJoinRequest');
+  Result := GetRequest.SetMethod('declineChatJoinRequest') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('user_id', UserId, 0, True) //
+    .ExecuteAsBool;
+  Logger.Leave(Self, 'DeclineChatJoinRequest');
+end;
+function TInjectTelegramBot.ExportChatInviteLink(const ChatId: TtdUserLink): string;
+begin
+  Logger.Enter(Self, 'ExportChatInviteLink');
+  Result := GetRequest.SetMethod('exportChatInviteLink') //
+    .AddParameter('chat_id', ChatId, 0, True).ExecuteAndReadValue;
+  Logger.Leave(Self, 'ExportChatInviteLink');
 end;
 {$ENDREGION}
 {$REGION 'Basic methods'}
@@ -1572,13 +1613,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'deleteChatStickerSet');
 end;
-function TInjectTelegramBot.ExportChatInviteLink(const ChatId: TtdUserLink): string;
-begin
-  Logger.Enter(Self, 'ExportChatInviteLink');
-  Result := GetRequest.SetMethod('deleteChatStickerSet') //
-    .AddParameter('chat_id', ChatId, 0, True).ExecuteAndReadValue;
-  Logger.Leave(Self, 'ExportChatInviteLink');
-end;
 function TInjectTelegramBot.PinChatMessage(const ChatId: TtdUserLink; const MessageId:
   Int64; const DisableNotification: Boolean): Boolean;
 begin
@@ -1717,20 +1751,6 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'addStickerToSet');
 end;
-function TInjectTelegramBot.createChatInviteLink(const ChatId: TtdUserLink;
-  const name: String; const expire_date: TDateTime; const member_limit: Integer;
-  const creates_join_request: boolean): ItdChatInviteLink;
-begin
-  Logger.Enter(Self, 'createChatInviteLink');
-  Result := TtdChatInviteLink.Create(GetRequest.SetMethod('createChatInviteLink') //
-    .AddParameter('chat_id', ChatId, 0, True) //
-    .AddParameter('name', name, '', False) //
-    .AddParameter('expire_date', expire_date, 0, False) //
-    .AddParameter('member_limit', member_limit, 0, False) //
-    .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
-    .Execute);
-  Logger.Leave(Self, 'createChatInviteLink');
-end;
 function TInjectTelegramBot.createNewStickerSet(const UserId: Int64; const Name, Title:
   string; const PngSticker: TtdFileToSend; const TgsSticker: TtdFileToSend;
   const Emojis: string; const ContainsMasks: Boolean;
@@ -1747,16 +1767,6 @@ begin
     .AddParameter('mask_position', TtdMaskPosition(MaskPosition), nil, False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'createNewStickerSet');
-end;
-function TInjectTelegramBot.declineChatJoinRequest(const ChatId,
-  UserId: TtdUserLink): Boolean;
-begin
-  Logger.Enter(Self, 'DeclineChatJoinRequest');
-  Result := GetRequest.SetMethod('declineChatJoinRequest') //
-    .AddParameter('chat_id', ChatId, 0, True) //
-    .AddParameter('user_id', UserId, 0, True) //
-    .ExecuteAsBool;
-  Logger.Leave(Self, 'DeclineChatJoinRequest');
 end;
 function TInjectTelegramBot.deleteStickerFromSet(const Sticker: string): Boolean;
 begin
@@ -1960,16 +1970,6 @@ begin
     TtdShippingOption>(ShippingOptions), '[]', True)    //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerShippingQueryGood');
-end;
-function TInjectTelegramBot.approveChatJoinRequest(const ChatId,
-  UserId: TtdUserLink): Boolean;
-begin
-  Logger.Enter(Self, 'ApproveChatJoinRequest');
-  Result := GetRequest.SetMethod('approveChatJoinRequest') //
-    .AddParameter('chat_id', ChatId, 0, True) //
-    .AddParameter('user_id', UserId, 0, True) //
-    .ExecuteAsBool;
-  Logger.Leave(Self, 'ApproveChatJoinRequest');
 end;
 {$ENDREGION}
 {$REGION 'Games'}
