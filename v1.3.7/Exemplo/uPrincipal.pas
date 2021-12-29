@@ -35,7 +35,6 @@ type
     InjectTelegramExceptionManagerUI1: TInjectTelegramExceptionManagerUI;
     Button2: TButton;
     Button3: TButton;
-    InjectTelegramReceiverService1: TInjectTelegramReceiverService;
     cuHttpClientSysNet1: TcuHttpClientSysNet;
     memConsole: TMemo;
     btnEnviaFoto: TButton;
@@ -401,7 +400,7 @@ Aqui você Remove botoes do destinatario,apenas seguindo a mensagem
 //Necessario declarar TelegAPI.Types.ReplyMarkups    //TtdReplyKeyboardRemove
 LMarkup := TtdReplyKeyboardRemove.Create;
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   Begin
     if txtID.Text <> '' then
     try
@@ -424,7 +423,7 @@ begin
                 TtdBotCommand.Create('command4','Testando4'),
                 TtdBotCommand.Create('command5','Testando5')];
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     try
       InjectTelegramBot1.SetMyCommands(botcmdArr, TtdBotCommandScope.BotCommandScopeDefault);
@@ -447,7 +446,7 @@ end;
 
 procedure TForm1.btnDeleteCommandsClick(Sender: TObject);
 begin
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     try
       InjectTelegramBot1.DeleteMyCommands(TtdBotCommandScope.BotCommandScopeDefault);
@@ -468,7 +467,7 @@ begin
   if AbrirArquivo.Execute then
     MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -493,7 +492,7 @@ begin
   MyFile := Nil;
   MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName, Nil);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -521,7 +520,7 @@ begin
   //Neste caso irei enviar a ação Escrevendo...  (Typing)
   MyAction := TtdSendChatAction.Typing;
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -551,7 +550,7 @@ begin
   if AbrirArquivo.Execute then
     MyThumb := TtdFileToSend.Create(TtdFileToSendTag.FromFile, AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -572,7 +571,7 @@ procedure TForm1.btnEnviarContatoClick(Sender: TObject);
 begin
   MyContact := TtdContact.Create('5521997196000','Ruan Diego','Lacerda Menezes');
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -594,7 +593,7 @@ begin
   if AbrirArquivo.Execute then
     MyFile := TtdFileToSend.FromFile(AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try                                                           //Thumb 320x320 px até 200k
@@ -615,7 +614,7 @@ var
   I: integer;
 Begin
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -664,7 +663,7 @@ begin
   MyPrices[1] :=  TtdLabeledPrice.Create(VRes_ProdutoB, 300);
 
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -695,7 +694,7 @@ procedure TForm1.btnEnviarJogoClick(Sender: TObject);
 var
   MyChatId: TtdUserLink; //Uses TelegAPI.Bot
 begin
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -726,7 +725,7 @@ begin
   lg := -43.0292233;
 
   MyLocation := TtdLocation.Create(lt,lg);
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -748,7 +747,7 @@ begin
   if AbrirArquivo.Execute then
     MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -776,7 +775,7 @@ begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
   MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -801,7 +800,7 @@ begin
   if AbrirArquivo.Execute then
     MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -830,7 +829,7 @@ begin
  //Desta Forma o MyLocation não precisa ser instanciado pois os parametros de coordenado sãopassados diretamente aqui
  MyVenue := TtdVenue.Create(lt,lg, VRes_Ex_Endereco_Digitado, VRes_Ex_Titulo,'',VRes_Ex_Tipo);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -856,7 +855,7 @@ begin
   if AbrirArquivo.Execute then
     MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -878,7 +877,7 @@ begin
   if AbrirArquivo.Execute then
     MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -916,7 +915,7 @@ var
   MyCommands: TArray<ItdBotCommand>;
   I: Integer;
 begin
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     try
       MyCommands := InjectTelegramBot1.GetMyCommands(TtdBotCommandScope.BotCommandScopeDefault);
@@ -943,7 +942,7 @@ LMarkup := TtdReplyKeyboardMarkup.Create([
   { Primeira Linha }
   [TtdKeyboardButton.Create(VRes_Enviar_Contato, True, FALSE)]], TRUE);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   Begin
     if txtID.Text <> '' then
     try
@@ -964,7 +963,7 @@ LMarkup := TtdReplyKeyboardMarkup.Create([
   { Primeira Linha }
   [TtdKeyboardButton.Create(VRes_Enviar_Localizacao, False, TRUE)]], TRUE);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   Begin
     if txtID.Text <> '' then
     try
@@ -985,7 +984,7 @@ begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
   MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -1006,7 +1005,7 @@ begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
   MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -1034,7 +1033,7 @@ LMarkup := TtdReplyKeyboardMarkup.Create([
   { Segunda Linha }
   [TtdKeyboardButton.Create(VRes_Qual_Meu_ID, FALSE, FALSE)]], TRUE);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   Begin
     if txtID.Text <> '' then
     try
@@ -1054,7 +1053,7 @@ begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
   MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -1115,7 +1114,7 @@ begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
   MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
@@ -1144,7 +1143,7 @@ LMarkup := TtdInlineKeyboardMarkup.Create([
   { Segunda Linha }
   [TtdInlineKeyboardButton.Create('Texto3Embutido','texto3retornoembutido')]]);
 
-  if InjectTelegramReceiverService1.IsActive then
+  if BotManager1.IsActive then
   Begin
     if txtID.Text <> '' then
     try

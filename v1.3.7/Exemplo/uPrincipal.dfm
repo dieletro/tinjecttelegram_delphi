@@ -3572,7 +3572,6 @@ object Form1: TForm1
     Height = 21
     PasswordChar = '*'
     TabOrder = 1
-    Text = '1238208131:AAGmGQ8TuGGrlZud3WW142ba1bH6IFlGPVY'
     TextHint = 'Preencha este campo com o Token do seu Bot'
   end
   object Button2: TButton
@@ -3949,15 +3948,6 @@ object Form1: TForm1
     Left = 200
     Top = 470
   end
-  object InjectTelegramReceiverService1: TInjectTelegramReceiverService
-    Bot = InjectTelegramBot1
-    OnStart = ServiceStart
-    OnStop = ServiceStop
-    OnMessage = ReceiverMessage
-    OnCallbackQuery = ReceiverCallbackQuery
-    Left = 376
-    Top = 470
-  end
   object cuHttpClientSysNet1: TcuHttpClientSysNet
     Left = 520
     Top = 474
@@ -3985,8 +3975,9 @@ object Form1: TForm1
     OnStart = ServiceStart
     OnStop = ServiceStop
     OnMessage = ReceiverMessage
+    OnChosenInlineResult = ChosenInlineResult
     OnCallbackQuery = ReceiverCallbackQuery
-    Left = 376
-    Top = 528
+    Left = 368
+    Top = 472
   end
 end
