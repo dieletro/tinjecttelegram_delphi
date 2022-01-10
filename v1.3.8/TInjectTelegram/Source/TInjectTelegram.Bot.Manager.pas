@@ -551,6 +551,7 @@ begin
     ProcessarResposta(AMessage);
     OnMessage(Self, AMessage);
     if AMessage.SuccessfulPayment <> Nil then
+
       OnSuccessfulPayment(Self,AMessage.SuccessfulPayment);
   End;
 end;
