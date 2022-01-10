@@ -279,6 +279,7 @@ type
     function TotalAmount: Int64;
   end;
   ItdOrderInfo = interface;
+
   ItdSuccessfulPayment = interface
     ['{B2BE36C2-61F9-4D4B-AB9D-75BB524661AB}']
     function Currency: string;
