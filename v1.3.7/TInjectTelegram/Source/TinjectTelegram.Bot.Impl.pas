@@ -95,7 +95,59 @@ type
     function GetWebhookInfo: ItdWebhookInfo;
 {$ENDREGION}
 {$REGION 'Basic methods'}
+    /// <summary>
+    /// <param>
+    /// A simple method for testing your bot's authentication token
+    /// </param>
+    /// </summary>
+    /// <returns>
+    /// <param>
+    /// Requires no parameters.
+    /// </param>
+    /// <param>
+    /// Returns basic information about the bot in form of a User object. <see cref="TInjectTelegram.Types|TtdUser">
+    /// User</see> object.
+    /// </param>
+    /// </returns>
     function GetMe: ItdUser;
+    /// <summary>
+    /// Use este método para enviar mensagens de texto.
+    /// </summary>
+    /// <param name="ChatId">
+    /// Int64 or String. Unique identifier for the target chat or username of
+    /// the target channel (in the format <c>@channelusername</c> ).
+    /// </param>
+    /// <param name="Text">
+    /// Texto da mensagem a ser enviada, 1-4096 caracteres após a análise das
+    /// entidades
+    /// </param>
+    /// <param name="ParseMode">
+    /// Modo para analisar entidades no texto da mensagem. Veja as opções de
+    /// formatação para mais detalhes.
+    /// </param>
+    /// <param name="DisableWebPagePreview">
+    /// Desativa visualizações de link para links nesta mensagem
+    /// </param>
+    /// <param name="DisableNotification">
+    /// Envia a mensagem silenciosamente . Os usuários receberão uma notificação
+    /// sem som.
+    /// </param>
+    /// <param name="ReplyToMessageId">
+    /// Se a mensagem for uma resposta, o ID da mensagem original
+    /// </param>
+    /// <param name="ReplyMarkup">
+    /// InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardHide or
+    /// ForceReply. Opções de interface adicionais. Um objeto serializado JSON
+    /// para um teclado embutido , teclado de resposta personalizado , instruções
+    /// para remover o teclado de resposta ou forçar uma resposta do usuário.
+    /// </param>
+    /// <param name="ProtectContent">
+    ///  Protects the contents of the sent message from forwarding and saving
+    /// </param>
+    /// <returns>
+    /// Em caso de sucesso, a mensagem enviada é retornada.
+    /// <a href="https://core.telegram.org/bots/api#sendmessage">SendMessage</a>
+    /// </returns>
     function SendMessage( //
       const ChatId: TtdUserLink; //
       const Text: string; //
@@ -105,10 +157,83 @@ type
       const ReplyToMessageId: Int64 = 0; //
       const AllowSendingWithoutReply:	Boolean = False;
       ReplyMarkup: IReplyMarkup = nil): ItdMessage;
+    /// <summary>
+    /// Use this method to forward messages of any kind.
+    /// </summary>
+    /// <param name="ChatId">
+    /// Unique identifier for the target chat or username of the target
+    /// channel (in the format @channelusername) <br />
+    /// </param>
+    /// <param name="FromChatId">
+    /// Unique identifier for the chat where the original message was sent
+    /// (or channel username in the format @channelusername) <br />
+    /// </param>
+    /// <param name="DisableNotification">
+    /// Sends the message silently. iOS users will not receive a
+    /// notification, Android users will receive a notification with no
+    /// sound. <br />
+    /// </param>
+    /// <param name="MessageId">
+    /// Unique message identifier <br />
+    /// </param>
+    /// <returns>
+    /// On success, the sent Message is returned.
+    /// </returns>
     function ForwardMessage( //
       const ChatId, FromChatId: TtdUserLink; //
       const MessageId: Int64; //
       const DisableNotification: Boolean = False): ItdMessage;
+    /// <summary>
+    /// Use this method to send photos.<br/>
+    /// </summary>
+    /// <param name='ChatId'>
+    /// Unique identifier for the target chat or username of the target
+    /// channel (in the format @channelusername) <br/>
+    /// </param>
+    /// <param name="Photo">
+    /// Photo to send. You can either pass a file_id as String to resend a
+    /// photo that is already on the Telegram servers, or upload a new photo
+    /// using multipart/form-data. <br/>
+    /// </param>
+    /// <param name="Caption">
+    /// Photo caption (may also be used when resending photos by file_id),
+    /// 0-200 characters <br/>
+    /// </param>
+    /// <param name="DisableNotification">
+    /// Sends the message silently. iOS users will not receive a
+    /// notification, Android users will receive a notification with no
+    /// sound. <br/>
+    /// </param>
+    /// <param name="ReplyToMessageId">
+    /// If the message is a reply, ID of the original message <br />
+    /// </param>
+    /// <param name="ReplyMarkup">
+    /// Additional interface options. A JSON-serialized object for an inline
+    /// keyboard, custom reply keyboard, instructions to remove reply
+    /// keyboard or to force a reply from the user. <br/>
+    /// </param>
+    /// <param name="ProtectContent">
+    ///  Protects the contents of the sent message from forwarding and saving. <br/>
+    /// </param>
+    /// <returns>
+    /// On success, the sent <see cref="TInjectTelegram.Types|TtdMessage">Message</see>
+    /// is returned.<br/>
+    /// </returns>
+    /// <example>
+    /// <c/>Example:<br/>
+    /// <code lang="Delphi">
+    /// var <br/>
+    /// LMessage: TtdMessage;<br/>
+    /// Begin<br/>
+    /// //If the file ID is not known<br/>
+    /// LMessage := sendPhoto(chatId, TtdFileToSend.Create('The path to the file'), nil);<br/>
+    /// //If the file ID is known<br/>
+    /// LMessage := sendPhoto(chatId, 'File ID');<br/>
+    /// ...<br/>
+    /// LMessage.Free;<br/>
+    /// End;<br/>
+    /// </code>
+    /// </example>
     function SendPhoto( //
       const ChatId: TtdUserLink; //
       const Photo: TtdFileToSend; //
