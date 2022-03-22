@@ -1,9 +1,6 @@
 unit TInjectTelegram.Bot.Manager;
-
 {$I config.inc}
-
 interface
-
 uses
   REST.Json,
   REST.Types,
@@ -36,13 +33,10 @@ uses
   TInjectTelegram.Receiver.UI,
   TInjectTelegram.Bot.Chat{,
     TinjectTelegram.Receiver.Manager.Base};
-
 const
   URL_File_Download : String = 'https://api.telegram.org/file/bot';
-
 type
   TtdOnUpdate = procedure(ASender: TObject; AUpdate: ItdUpdate) of object;
-
   TtdOnUpdates = procedure(ASender: TObject; AUpdates: TArray<ItdUpdate>) of object;
   TtdOnMessage = procedure(ASender: TObject; AMessage: ItdMessage) of object;
   TtdOnInlineQuery = procedure(ASender: TObject; AInlineQuery: ItdInlineQuery) of object;
@@ -53,9 +47,7 @@ type
   TtdOnPreCheckoutQuery = procedure(ASender: TObject; APreCheckoutQuery: ItdPreCheckoutQuery) of object;
   TtdOnPollStatus = procedure(ASender: TObject; APoll: ItdPoll) of object;
   TtdOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItdPollAnswer) of object;
-
   TtdOnSuccessfulPayment = procedure(ASender: TObject; ASuccessfulPayment: ItdSuccessfulPayment) of object;
-
 
   TtdOnMyChatMember = procedure(ASender: TObject; AMyChatMember: ItdChatMemberUpdated) of object;
   TtdOnChatMember = procedure(ASender: TObject; AChatMember: ItdChatMemberUpdated) of object;
@@ -74,10 +66,8 @@ type
     FOnChosenInlineResult: TtdOnInlineResultChosen;
     FOnEditedChannelPost: TtdOnMessage;
     FOnCallbackQuery: TtdOnCallbackQuery;
-
     FOnPollStatus: TtdOnPollStatus;
     FOnPollAnswer: TtdOnPollAnswer;
-
     FSenhaADM: String;
     FSimultaneos: Integer;
     FTempoInatividade: Integer;
@@ -85,14 +75,12 @@ type
     FConversa: TInjectTelegramChatBot;
     LParseMode: TtdParseMode;
     FOnTimer: TNotifyEvent;
-
     FTimeNow, FLimit: TTime;
     FOnTimerSleepExecute: TOnTimerSleepExecute;
     FOnMyChatMember: TtdOnMyChatMember;
     FOnChatMember: TtdOnChatMember;
     FOnChatJoinRequest: TtdOnChatJoinRequest;
     FOnSuccessfulPayment: TtdOnSuccessfulPayment;
-
   protected
     procedure DoOnStart; override;
     procedure DoOnStop; override;
@@ -112,9 +100,7 @@ type
     procedure DoOnChatJoinRequest(AChatJoinRequest: ItdChatJoinRequest); override;
     procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); override;
     procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); override;
-
     procedure DoOnSuccessfulPayment(ASuccessfulPayment: ItdSuccessfulPayment); override;
-
     procedure Init;
   public
     constructor Create(AOwner: TComponent); override;
@@ -122,12 +108,10 @@ type
     procedure TypeParser(AMessage : ItdMessage);
     procedure ProcessarResposta(AMessage : ItdMessage);
     procedure ConversaSituacaoAlterada(AConversa: TInjectTelegramChatBot; AMessage : ItdMessage);
-
     function BuscarConversa(AID: String): TInjectTelegramChatBot;
     function NovaConversa(AMessage : ItdMessage): TInjectTelegramChatBot;
     function BuscarConversaEmEspera: TInjectTelegramChatBot;
     function AtenderProximoEmEspera: TInjectTelegramChatBot;
-
 
     property Conversas: TObjectList<TInjectTelegramChatBot> read FConversas;
     property Conversa: TInjectTelegramChatBot read FConversa write FConversa;
@@ -138,7 +122,6 @@ type
     property Simultaneos: Integer read FSimultaneos write FSimultaneos;
     [Default(1)]
     property TempoInatividade: Integer read FTempoInatividade write FTempoInatividade;
-
     {Eventos}
     property OnStart: TNotifyEvent read FOnStart write FOnStart;
     property OnStop: TNotifyEvent read FOnStop write FOnStop;
@@ -153,9 +136,7 @@ type
     property OnShippingQuery: TtdOnShippingQuery read FOnShippingQuery write FOnShippingQuery;
     property OnPreCheckoutQuery: TtdOnPreCheckoutQuery read FOnPreCheckoutQuery write FOnPreCheckoutQuery;
     property OnCallbackQuery: TtdOnCallbackQuery read FOnCallbackQuery write FOnCallbackQuery;
-
     property OnSuccessfulPayment: TtdOnSuccessfulPayment read FOnSuccessfulPayment write FOnSuccessfulPayment;
-
     property OnPollStatus: TtdOnPollStatus read FOnPollStatus write FOnPollStatus;
     property OnPollAnswer: TtdOnPollAnswer read FOnPollAnswer write FOnPollAnswer;
     property OnChatJoinRequest: TtdOnChatJoinRequest read FOnChatJoinRequest write FOnChatJoinRequest;
@@ -163,14 +144,10 @@ type
     property OnMyChatMember: TtdOnMyChatMember read FOnMyChatMember write FOnMyChatMember;
     property OnChatMember:   TtdOnChatMember read FOnChatMember write FOnChatMember;
   end;
-
 implementation
-
 uses
   System.StrUtils;
-
 { TInjectTelegramBotManager }
-
 function TInjectTelegramBotManager.AtenderProximoEmEspera: TInjectTelegramChatBot;
 var
   AConversa: TInjectTelegramChatBot;
@@ -187,35 +164,32 @@ begin
     End;
   end;
 end;
-
 function TInjectTelegramBotManager.BuscarConversa(AID: String): TInjectTelegramChatBot;
 var
   AConversa: TInjectTelegramChatBot;
 begin
-  Result := Nil;
   for AConversa in FConversas do
   begin
-    if AConversa.IdChat.ToString = AID then  //Para Grupos...
+    if AConversa.IdCliente.ToString = AID then //Para Conversa Privada...
     begin
       Result := AConversa;
-      FConversa := AConversa;
      // FTimeNow := StrToTime(FormatDateTime('hh:mm:ss',Now));
       Break;
     end
      else
-    if AConversa.IdCliente.ToString = AID then
+    if AConversa.IdChat.ToString = AID then //Para Grupos...
     begin
       Result := AConversa;
-      FConversa := AConversa;
      // FTimeNow := StrToTime(FormatDateTime('hh:mm:ss',Now));
       Break;
     end
     else //Nada encontrado
+    Begin
+      Result := Nil;
       Break;
-
+    End;
   end; //Fim For in...
 end;
-
 function TInjectTelegramBotManager.BuscarConversaEmEspera: TInjectTelegramChatBot;
 var
   AConversa: TInjectTelegramChatBot;
@@ -232,7 +206,6 @@ begin
       end;
     end;
 end;
-
 procedure TInjectTelegramBotManager.ConversaSituacaoAlterada(
   AConversa: TInjectTelegramChatBot; AMessage : ItdMessage);
 begin
@@ -240,34 +213,27 @@ begin
   if AConversa.Situacao in [saInativa, saFinalizada] then
   begin
     DoOnMessage(AMessage); //Encaminha a Mensagem
-
     FConversas.Remove( AConversa ); //Deleta a Conversa
-
     AtenderProximoEmEspera; //Atende o Próximo Cliente da fila
   end;
 end;
-
 constructor TInjectTelegramBotManager.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   Init;
 end;
-
 destructor TInjectTelegramBotManager.Destroy;
 begin
   if Assigned(FConversas) then
     FreeAndNil(FConversas);
   inherited Destroy;
 end;
-
 function TInjectTelegramBotManager.NovaConversa(AMessage: ItdMessage): TInjectTelegramChatBot;
 var
   ADisponivel: Boolean;
   AConversa: TInjectTelegramChatBot;
 begin
-
-  ADisponivel := FConversas.Count < Simultaneos;
-
+  ADisponivel := FConversas.Count < FSimultaneos;
   FConversa := TInjectTelegramChatBot.Create(Self);
   with FConversa do
   begin
@@ -276,7 +242,6 @@ begin
         True  : TipoUsuario := tpAdm;
         False : TipoUsuario := tpCliente;
       end;
-
     ID            := TtdMessage(AMessage).MessageId.ToString;{.Chat.ID.ToString;}
     IdChat        := TtdMessage(AMessage).Chat.ID;
     IdCliente     := TtdMessage(AMessage).From.ID;
@@ -288,29 +253,22 @@ begin
                           ,AMessage.From.Username
                           ,'Cliente '+AMessage.From.ID.ToString)
                         );
-
     FConversa.UltimaIteracao := StrToTime(FormatDateTime('hh:mm:ss',Now));
-
     { TODO 5 -oRuan Diego -cTempodeInatividade : Corrigir o tempo de inatividade... }
     SetTempoInatividade(FTempoInatividade);
-
     //Eventos para controle externos
     FConversa.FMessage := AMessage;
     OnSituacaoAlterada := ConversaSituacaoAlterada;
     OnTimerSleepExecute := Self.OnTimerSleepExecute;
   end;
-
   //Validando a disponibilidade ou tipo adm
   if ((ADisponivel = True) or (FConversa.TipoUsuario = tpAdm)) then
     FConversa.Situacao := saNova
   else
     FConversa.Situacao := saEmEspera;
-
   FConversas.Add( FConversa );
-
   Result := FConversa;
 end;
-
 procedure TInjectTelegramBotManager.TypeParser(AMessage : ItdMessage);
 var
   FilePath, FileName : String;
@@ -325,124 +283,97 @@ Begin
       FConversa.Latitude        := AMessage.Location.Latitude;
       FConversa.Longitude       := AMessage.Location.Longitude;
     end;
-
   //Tratamento para receber Fotos ou Imagens
   if AMessage.&Type = TtdMessageType.PhotoMessage then
   Begin
-
     for I := 0 to Length(AMessage.Photo) -1 do
     Begin
-
       if I = 0 then
         FileName := 'Thumbs';
       if I = 1 then
-        FileName := 'Foto_Media_Qld';
+        FileName := 'Photo_Low';
       if I = 2 then
-        FileName := 'Foto_Alta_Qld';
+        FileName := 'Photo_Mid';
       if I = 3 then
-        FileName := 'Foto_SuperAlta_Qld';
+        FileName := 'Photo_High';
       if I = 4 then
-        FileName := 'Foto_FULLHD_Qld';
-
+        FileName := 'Photo_Full_High';
       MyFile := Bot.GetFile(AMessage.Photo[I].FileId);
       FilePath := MyFile.FilePath;
-
       //Enviando para o proprio Bot...
       Bot.SendMessage(AMessage.From.ID,
-        '[Baixar '+FileName+I.ToString+']('+URL_File_Download+
+        '[Download '+FileName+I.ToString+']('+URL_File_Download+
         Bot.Token+'/'+FilePath+')',LParseMode);
       //Bot.SendMessage(AMessage.From.ID, MyFile.GetFileUrl(Bot.Token),LParseMode);
-
       FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
     End;
-
   End;
-
   //Tratamento para receber Documentos
   if AMessage.&Type = TtdMessageType.DocumentMessage then
   Begin
-
     MyFile := Bot.GetFile(AMessage.Document.FileId);
     FilePath := MyFile.FilePath;
-
     Bot.SendMessage(AMessage.From.ID,
-      '[Baixar '+ExtractFileName(FilePath)+']('+URL_File_Download+
+      '[Download '+ExtractFileName(FilePath)+']('+URL_File_Download+
       Bot.Token+'/'+FilePath+')',LParseMode);
-
     FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
   End;
-
   if AMessage.&Type = TtdMessageType.VideoMessage then
   Begin
     MyFile := Bot.GetFile(AMessage.Video.FileId);
     FilePath := MyFile.FilePath;
-
     Bot.SendMessage(AMessage.From.ID,
-      '[Baixar '+ExtractFileName(FilePath)+']('+URL_File_Download+
+      '[Download '+ExtractFileName(FilePath)+']('+URL_File_Download+
       Bot.Token+'/'+FilePath+')',LParseMode);
-
     FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
   End;
-
   if AMessage.&Type = TtdMessageType.AudioMessage then
   Begin
     MyFile := Bot.GetFile(AMessage.Audio.FileId);
     FilePath := MyFile.FilePath;
-
     Bot.SendMessage(AMessage.From.ID,
-      '[Baixar '+ExtractFileName(FilePath)+']('+URL_File_Download+
+      '[Download '+ExtractFileName(FilePath)+']('+URL_File_Download+
       Bot.Token+'/'+FilePath+')',LParseMode);
-
     FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
   End;
-
   if AMessage.&Type = TtdMessageType.VideoNoteMessage then
   Begin
     MyFile := Bot.GetFile(AMessage.VideoNote.FileId);
     FilePath := MyFile.FilePath;
-
     Bot.SendMessage(AMessage.From.ID,
-      '[Baixar '+ExtractFileName(FilePath)+']('+URL_File_Download+
+      '[Download '+ExtractFileName(FilePath)+']('+URL_File_Download+
       Bot.Token+'/'+FilePath+')',LParseMode);
-
     FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
   End;
-
   if AMessage.&Type = TtdMessageType.StickerMessage then
   Begin
     MyFile := Bot.GetFile(AMessage.Sticker.FileId);
     FilePath := MyFile.FilePath;
-
     Bot.SendMessage(AMessage.From.ID,
-      '[Baixar '+ExtractFileName(FilePath)+']('+URL_File_Download+
+      '[Download '+ExtractFileName(FilePath)+']('+URL_File_Download+
       Bot.Token+'/'+FilePath+')',LParseMode);
-
     FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
   End;
-
   if AMessage.&Type = TtdMessageType.AnimatoinMessage then
   Begin
     MyFile := Bot.GetFile(AMessage.Animation.FileId);
     FilePath := MyFile.FilePath;
-
     Bot.SendMessage(AMessage.From.ID,
-      '[Baixar '+ExtractFileName(FilePath)+']('+URL_File_Download+
+      '[Download '+ExtractFileName(FilePath)+']('+URL_File_Download+
       Bot.Token+'/'+FilePath+')',LParseMode);
-
     FConversa.ArquivoRecebido := URL_File_Download+Bot.Token+'/'+FilePath;
   End;
-
 End;
-
 procedure TInjectTelegramBotManager.ProcessarResposta(AMessage : ItdMessage);
 var
   AConversa: TInjectTelegramChatBot;
 begin
   FConversa := Nil;
       //id de usuario                   //id do grupo     no chat privado eles são iguais
-  if (AMessage.From.ID.ToString <> AMessage.Chat.ID.ToString) then
-    FConversa := BuscarConversa( AMessage.Chat.ID.ToString ) //Para uso de Grupos
-  else
+  //if (AMessage.From.ID.ToString <> AMessage.Chat.ID.ToString) then
+    FConversa := BuscarConversa( AMessage.Chat.ID.ToString ); //Para uso de Grupos
+  //else
+  if FConversa = Nil then
     FConversa := BuscarConversa( AMessage.From.ID.ToString ); //Para uso de Chat Privado
 
   if FConversa = Nil then
@@ -463,17 +394,14 @@ begin
                                 ,AMessage.From.Username
                                 ,'Cliente '+AMessage.From.ID.ToString)
                                 );
-
     //Zera o Endereco de Arquivo recebido
     FConversa.ArquivoRecebido := '';
-
     //Se Existe Tempo de Inatividade definido, então controlo o timer;
     if Self.TempoInatividade <> 0 then
     Begin
       //Atualiza o Limite de Tempo da Sessão  {IncSecond}
       FTimeNow := StrToTime(FormatDateTime('hh:mm:ss',Now));
       FLimit := IncMinute(FConversa.UltimaIteracao, Self.TempoInatividade);
-
       if (DateTimeToUnix(FTimeNow) > DateTimeToUnix(FLimit)) then
       Begin
         //Atribuido para solução temporaria da falha na autofinalização
@@ -482,20 +410,18 @@ begin
       Else
         FConversa.ReiniciarTimer;
     End;
-
   End;
-
   TypeParser(AMessage);
-
 end;
-
 procedure TInjectTelegramBotManager.DoOnCallbackQuery(ACallbackQuery: ItdCallbackQuery);
 begin
   inherited;
   //Teste
-//  ProcessarResposta(ACallbackQuery.message);
   if Assigned(OnCallbackQuery) then
+  Begin
+    ProcessarResposta(ACallbackQuery.message);
     OnCallbackQuery(Self, ACallbackQuery);
+  End;
 end;
 procedure TInjectTelegramBotManager.DoOnChannelPost(AChannelPost: ItdMessage);
 begin
@@ -510,7 +436,6 @@ begin
   if Assigned(OnChatJoinRequest) then
     OnChatJoinRequest(Self, AChatJoinRequest);
 end;
-
 procedure TInjectTelegramBotManager.DoOnChatMember(
   AChatMember: ItdChatMemberUpdated);
 begin
@@ -518,7 +443,6 @@ begin
   if Assigned(OnChatMember) then
     OnChatMember(Self, AChatMember);
 end;
-
 procedure TInjectTelegramBotManager.DoOnChosenInlineResult(AChosenInlineResult: ItdChosenInlineResult);
 begin
   inherited;
@@ -561,21 +485,18 @@ begin
   if Assigned(OnMyChatMember) then
     OnMyChatMember(Self, AMyChatMember);
 end;
-
 procedure TInjectTelegramBotManager.DoOnPollAnswer(APollAnswer: ItdPollAnswer);
 begin
   inherited;
   if Assigned(OnPollAnswer) then
     OnPollAnswer(Self, APollAnswer);
 end;
-
 procedure TInjectTelegramBotManager.DoOnPollStatus(APoll: ItdPoll);
 begin
   inherited;
   if Assigned(OnPollStatus) then
     OnPollStatus(Self, APoll);
 end;
-
 procedure TInjectTelegramBotManager.DoOnPreCheckoutQuery(APreCheckoutQuery: ItdPreCheckoutQuery);
 begin
   inherited;
@@ -631,5 +552,4 @@ begin
   LParseMode := TtdParseMode.Markdown;
   FConversas := TObjectList<TInjectTelegramChatBot>.Create;
 end;
-
 end.

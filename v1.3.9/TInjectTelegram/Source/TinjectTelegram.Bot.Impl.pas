@@ -2940,7 +2940,7 @@ begin
           if Assigned(OnDisconect) then
             OnDisconect(Self, StrCodeError);
       End;
-      Logger.Error('RequestAPI', E);
+      Logger.Error('TInjectTelegramRequestAPI', E);
     end;
   GetRequest.OnReceive :=
     procedure(AData: string)
@@ -3142,13 +3142,27 @@ function TInjectTelegramBot.createChatInviteLink(const ChatId: TtdUserLink;
   const creates_join_request: boolean): ItdChatInviteLink;
 begin
   Logger.Enter(Self, 'createChatInviteLink');
-  Result := TtdChatInviteLink.Create(GetRequest.SetMethod('createChatInviteLink') //
+
+  if creates_join_request = false then
+  Begin
+    Result := TtdChatInviteLink.Create(GetRequest.SetMethod('createChatInviteLink') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('name', name, '', False) //
     .AddParameter('expire_date', expire_date, 0, False) //
     .AddParameter('member_limit', member_limit, 0, False) //
     .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
     .Execute);
+  End
+  Else
+  Begin
+    Result := TtdChatInviteLink.Create(GetRequest.SetMethod('createChatInviteLink') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('name', name, '', False) //
+    .AddParameter('expire_date', expire_date, 0, False) //
+    .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
+    .Execute);
+  End;
+
   Logger.Leave(Self, 'createChatInviteLink');
 end;
 function TInjectTelegramBot.editChatInviteLink(const ChatId: TtdUserLink;

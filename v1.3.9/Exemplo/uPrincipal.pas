@@ -483,6 +483,10 @@ begin
 end;
 
 procedure TForm1.btnEnviaFotoClick(Sender: TObject);
+//From Stream Use
+var
+ MyStream: TMemoryStream;
+ BoolStream: Boolean;
 begin
 
   AbrirArquivo.Filter := VRes_Filtro_Fotos;
@@ -490,18 +494,41 @@ begin
       ImgLoad.Picture.WICImage.LoadFromFile(AbrirArquivo.FileName);
 
   MyFile := Nil;
-  MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName, Nil);
+
+  if MessageDlg('Send from Stream?',mtInformation,[mbYes,mbNo],0) = mrYes then
+  Begin
+    BoolStream := True;
+    //From Stream Use
+    MyStream := TMemoryStream.Create;
+    MyStream.Position := 0;
+
+    ImgLoad.Picture.Graphic.SaveToStream(MyStream);
+
+    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromStream,AbrirArquivo.FileName, MyStream);
+  End Else
+  Begin
+    BoolStream := False;
+    //From File
+    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName, Nil);
+  End;
 
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      InjectTelegramBot1.SendPhoto(StrToInt64(txtID.Text), MyFile,VRes_Texto_Foto, LParseMode, False, 0, False, LMarkup);
+      try
+        if BoolStream then
+          InjectTelegramBot1.SendPhoto(StrToInt64(txtID.Text), MyFile,VRes_Texto_Foto+ ' - From Stream', LParseMode, False, 0, False, LMarkup)
+        else
+          InjectTelegramBot1.SendPhoto(StrToInt64(txtID.Text), MyFile,VRes_Texto_Foto+ ' - From File', LParseMode, False, 0, False, LMarkup);
       except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Imagem);
+        memConsole.Lines.Add(VRes_Falha+VRes_Imagem+ ' ERROR: '+e.Message);
       end;
+    finally
+      if BoolStream then
+        MyStream.Free;
     end;
+
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
