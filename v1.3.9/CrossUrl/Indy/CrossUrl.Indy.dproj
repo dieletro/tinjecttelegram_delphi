@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{736CEA6E-0CB3-4907-A696-8704727F2301}</ProjectGuid>
         <MainSource>CrossUrl.Indy.dpk</MainSource>
-        <ProjectVersion>19.3</ProjectVersion>
+        <ProjectVersion>19.4</ProjectVersion>
         <FrameworkType>None</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
@@ -185,7 +185,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libPCRE.dylib" Class="DependencyModule">
+                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
                     <Platform Name="iOSSimulator">
                         <Overwrite>true</Overwrite>
                     </Platform>
@@ -195,14 +195,8 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
+                <DeployFile LocalName="$(BDS)\Redist\iossimulator\libPCRE.dylib" Class="DependencyModule">
                     <Platform Name="iOSSimulator">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\CrossUrl.Indy.bpl" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>CrossUrl_Indy.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -218,6 +212,12 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx64\libcgsqlite3.dylib" Class="DependencyModule">
                     <Platform Name="OSX64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\CrossUrl.Indy.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>CrossUrl_Indy.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1013,17 +1013,17 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="Android64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Android64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
-                <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSSimulator" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
                 <Platform value="Android">False</Platform>

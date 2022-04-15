@@ -208,7 +208,7 @@ type
     function sendMediaGroup( //
       const ChatId: TtdUserLink; //
       const AMedia: TArray<TtdInputMedia>; //
-      const ADisableNotification: Boolean = False; //
+      const DisableNotification: Boolean = False; //
       const ReplyToMessageId: Int64 = 0;
       const AllowSendingWithoutReply:	Boolean = False;
       const ProtectContent: Boolean = False): TArray<ItdMessage>;
@@ -283,6 +283,18 @@ type
       const Caption: string; //
       const ParseMode: TtdParseMode = TtdParseMode.Default; //
       ReplyMarkup: IReplyMarkup = nil): Boolean; overload;
+
+    function editMessageMedia(
+      const ChatId: TtdUserLink; //
+      const MessageId: Int64; //
+      const Media: TtdInputMedia; //
+      ReplyMarkup: IReplyMarkup = nil): ItdMessage; overload;
+
+    function editMessageMedia(
+      const InlineMessageId: string; //
+      const Media: TtdInputMedia; //
+      ReplyMarkup: IReplyMarkup = nil): ItdMessage; overload;
+
     function editMessageLiveLocation( //
       const ChatId: TtdUserLink; //
       const MessageId: Int64; //

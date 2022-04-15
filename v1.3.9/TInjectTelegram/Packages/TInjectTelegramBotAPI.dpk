@@ -1,5 +1,4 @@
 ﻿package TInjectTelegramBotAPI;
-
 {$R *.res}
 {$R *.dcr}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}

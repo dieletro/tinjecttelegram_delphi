@@ -11,7 +11,7 @@ uses
   TInjectTelegram.Types.Enums,
   TInjectTelegram.Bot.Chat;
 type
-  TtdOnRuning = procedure(AChatBot: TInjectTelegramChatBot) of object;
+  TtdOnRuning = procedure(AChatBot: TInjectTelegramChat) of object;
 
   TtdOnUpdate = procedure(ASender: TObject; AUpdate: ItdUpdate) of object;
   TtdOnUpdates = procedure(ASender: TObject; AUpdates: TArray<ItdUpdate>) of object;
@@ -35,13 +35,13 @@ type
     FPollingInterval: Integer;
     FThread: TThread;
     FIsActive: Boolean;
-    FConversas: TObjectList<TInjectTelegramChatBot>;
-    FConversa: TInjectTelegramChatBot;    procedure SetIsActive(const AValue: Boolean);
+    FConversas: TObjectList<TInjectTelegramChat>;
+    FConversa: TInjectTelegramChat;    procedure SetIsActive(const AValue: Boolean);
   protected
     function ReadUpdates: TArray<ItdUpdate>; virtual;
     procedure Go; virtual;
     //Ruan Diego
-    procedure DoOnRuning(AChatBot: TInjectTelegramChatBot); virtual; abstract;
+    procedure DoOnRuning(AChatBot: TInjectTelegramChat); virtual; abstract;
     procedure DoOnStart; virtual; abstract;
     procedure DoOnStop; virtual; abstract;
     procedure DoOnUpdates(AUpdates: TArray<ItdUpdate>); virtual; abstract;
@@ -69,8 +69,8 @@ type
     procedure Stop;
     [Default(False)]
     property IsActive: Boolean read FIsActive write SetIsActive;
-    property Conversas: TObjectList<TInjectTelegramChatBot> read FConversas;
-    property Conversa: TInjectTelegramChatBot read FConversa write FConversa;
+    property Conversas: TObjectList<TInjectTelegramChat> read FConversas;
+    property Conversa: TInjectTelegramChat read FConversa write FConversa;
   published
     property Bot: TInjectTelegramBot read FBotDonor write FBotDonor;
     [Default(0)]

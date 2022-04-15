@@ -294,6 +294,7 @@ end;
     function Length: Int64;
     function Url: string;
     function User: ItdUser;
+    function language: string;
   end;
   TtdFile = class(TBaseJson, ItdFile)
   public
@@ -621,7 +622,10 @@ end;
     function NewChatMember: ItdUser;
     function &Type: TtdMessageType;
     function IsCommand(const AValue: string): Boolean;
- end;
+  end;
+  TtdMessageID = class(TBaseJson, ItdMessageID)
+    function MessageId: Int64;
+  end;
   TtdUserProfilePhotos = class(TBaseJson, ItdUserProfilePhotos)
   public
     function TotalCount: Int64;
@@ -1132,7 +1136,7 @@ begin
 end;
 function TtdMessage.ReplyMarkup: IReplyMarkup;
 begin
-  Result := ReadToClass<TtdReplyMarkup>('reply_markup');
+  Result := ReadToClass<TtdInlineKeyboardMarkup>('reply_markup');
 end;
 function TtdMessage.ReplyToMessage: ItdMessage;
 begin
@@ -1910,7 +1914,12 @@ function TtdWebhookInfo.Url: string;
 begin
   Result := ReadToSimpleType<string>('url');
 end;
+
 { TtdMessageEntity }
+function TtdMessageEntity.language: string;
+begin
+  Result := ReadToSimpleType<string>('language');
+end;
 function TtdMessageEntity.Length: Int64;
 begin
   Result := ReadToSimpleType<Int64>('length');
@@ -3101,4 +3110,11 @@ function TtdChatJoinRequest.invite_link: ItdChatInviteLink;
 begin
   Result := ReadToClass<TtdChatInviteLink>('invite_link');
 end;
+{ TtdMessageID }
+
+function TtdMessageID.MessageId: Int64;
+begin
+  Result := ReadToSimpleType<Int64>('message_id');
+end;
+
 End.

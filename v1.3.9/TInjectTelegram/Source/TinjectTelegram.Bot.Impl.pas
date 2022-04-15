@@ -1087,7 +1087,7 @@ type
     function sendMediaGroup( //
       const ChatId: TtdUserLink; //
       const AMedia: TArray<TtdInputMedia>; //
-      const ADisableNotification: Boolean = False; //
+      const DisableNotification: Boolean = False; //
       const ReplyToMessageId: Int64 = 0;
       const AllowSendingWithoutReply:	Boolean = False;
       const ProtectContent: Boolean = False): TArray<ItdMessage>;
@@ -1516,6 +1516,18 @@ type
       const Caption: string; //
       const ParseMode: TtdParseMode = TtdParseMode.Default; //
       ReplyMarkup: IReplyMarkup = nil): Boolean; overload;
+
+    function EditMessageMedia(
+      const ChatId: TtdUserLink; //
+      const MessageId: Int64; //
+      const Media: TtdInputMedia; //
+      ReplyMarkup: IReplyMarkup = nil): ItdMessage; overload;
+
+    function EditMessageMedia(
+      const InlineMessageId: string; //
+      const Media: TtdInputMedia; //
+      ReplyMarkup: IReplyMarkup = nil): ItdMessage; overload;
+
     /// <summary>
     /// Use this method to edit live location messages sent by the bot or via
     /// the bot (for inline bots). A location can be edited until its
@@ -3150,7 +3162,7 @@ begin
     .AddParameter('name', name, '', False) //
     .AddParameter('expire_date', expire_date, 0, False) //
     .AddParameter('member_limit', member_limit, 0, False) //
-    .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
+    .AddParameter('creates_join_request', creates_join_request, False, False) //
     .Execute);
   End
   Else
@@ -3159,7 +3171,7 @@ begin
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('name', name, '', False) //
     .AddParameter('expire_date', expire_date, 0, False) //
-    .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
+    .AddParameter('creates_join_request', creates_join_request, False, False) //
     .Execute);
   End;
 
@@ -3177,7 +3189,7 @@ begin
     .AddParameter('invite_link', invite_link, '', False) //
     .AddParameter('name', name, '', False) //
     .AddParameter('member_limit', member_limit, 0, False) //
-    .AddParameter('creates_join_request', creates_join_request.ToJSONBool, '', False) //
+    .AddParameter('creates_join_request', creates_join_request, False, False) //
     .Execute);
   Logger.Leave(Self, 'editChatInviteLink');
 end;
@@ -3270,7 +3282,7 @@ function TInjectTelegramBot.SendLocation(
   const ReplyToMessageId: Int64;
   const AllowSendingWithoutReply: Boolean;
   ReplyMarkup: IReplyMarkup;
-      const ProtectContent: Boolean): ItdMessage;
+  const ProtectContent: Boolean): ItdMessage;
 begin
   Logger.Enter(Self, 'SendLocation');
   Result := TtdMessage.Create(GetRequest.SetMethod('sendLocation') //
@@ -3285,13 +3297,16 @@ begin
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
     .AddParameter('allow_sending_without_reply', AllowSendingWithoutReply, False, False) //
     .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
+    .AddParameter('protect_content ', ProtectContent, False, False) //
     .Execute);
   Logger.Leave(Self, 'SendLocation');
 end;
-function TInjectTelegramBot.sendMediaGroup(const ChatId: TtdUserLink; const AMedia:
-  TArray<TtdInputMedia>; const ADisableNotification: Boolean; const
-  ReplyToMessageId: Int64;
-  const AllowSendingWithoutReply:	Boolean; const ProtectContent: Boolean): TArray<ItdMessage>;
+function TInjectTelegramBot.sendMediaGroup(const ChatId: TtdUserLink;
+  const AMedia: TArray<TtdInputMedia>;
+  const DisableNotification: Boolean;
+  const ReplyToMessageId: Int64;
+  const AllowSendingWithoutReply:	Boolean;
+  const ProtectContent: Boolean): TArray<ItdMessage>;
 var
   LRequest: ItdRequestAPI;
   LMedia: TtdInputMedia;
@@ -3302,7 +3317,7 @@ begin
   LRequest := GetRequest.SetMethod('sendMediaGroup') //
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('media', LTmpJson, '[]', True) //
-    .AddParameter('disable_notification', ADisableNotification, False, False) //
+    .AddParameter('disable_notification', DisableNotification, False, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False)
     .AddParameter('allow_sending_without_reply', AllowSendingWithoutReply, False, False) //
     .AddParameter('protect_content ', ProtectContent, False, False); //
@@ -3380,7 +3395,7 @@ begin
     .AddParameter('open_period', Open_period, 0, False) //
     .AddParameter('close_date', Close_date, 0, False) //
     .AddParameter('is_closed', Is_Closed, False, False) //
-    .AddParameter('disable_notification', DisableNotification, False, False) //
+     .AddParameter('disable_notification', DisableNotification, False, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
     .AddParameter('allow_sending_without_reply', AllowSendingWithoutReply, False, False) //
     .AddParameter('protect_content ', ProtectContent, False, False) //
@@ -3399,8 +3414,8 @@ begin
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('text', Text, '', True) //
     .AddParameter('parse_mode', ParseMode.ToString, '', False) //
-    .AddParameter('disable_web_page_preview', DisableWebPagePreview, False, False) //
-    .AddParameter('disable_notification', DisableNotification, False, False) //
+    .AddParameter('disable_web_page_preview', DisableWebPagePreview, Not DisableWebPagePreview, False) //
+    .AddParameter('disable_notification', DisableNotification, Not DisableNotification, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
     .AddParameter('allow_sending_without_reply', AllowSendingWithoutReply, False, False) //
     .AddParameter('protect_content ', ProtectContent, False, False) //
@@ -3408,7 +3423,7 @@ begin
     .Execute);
   Logger.Leave(Self, 'SendMessage');
 end;
-//Corrigido erro de envio e falha nas coordenadas - atualizada em 03/05/2020 - by Ruan Diego
+
 function TInjectTelegramBot.SendVenue(const ChatId: TtdUserLink; const Venue: ItdVenue;
   const Location: ItdLocation; const DisableNotification: Boolean;
   const ReplyToMessageId: Int64;const AllowSendingWithoutReply:	Boolean;
@@ -3668,7 +3683,7 @@ begin
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('user_id', UserId, 0, True) //
     .AddParameter('until_date', UntilDate, 0, False) //
-    .AddParameter('revoke_messages', RevokeMessages.ToJSONBool, 'False', False) //
+    .AddParameter('revoke_messages', RevokeMessages, False, False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'BanChatMember');
 end;
@@ -3978,6 +3993,33 @@ begin
     .Execute);
   Logger.Leave(Self, 'EditMessageReplyMarkup');
 end;
+function TInjectTelegramBot.EditMessageMedia(
+  const InlineMessageId: string;
+  const Media: TtdInputMedia; ReplyMarkup: IReplyMarkup): ItdMessage;
+begin
+  Logger.Enter(Self, 'EditMessageMedia');
+  Result := TtdMessage.Create(GetRequest.SetMethod('editMessageMedia') //
+    .AddParameter('inline_message_id', InlineMessageId, 0, True) //
+    .AddParameter('media', Media.GetFileToSend, Nil, True) //
+    .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
+    .Execute);
+  Logger.Leave(Self, 'EditMessageMedia');
+end;
+
+function TInjectTelegramBot.EditMessageMedia(const ChatId: TtdUserLink;
+  const MessageId: Int64; const Media: TtdInputMedia;
+  ReplyMarkup: IReplyMarkup): ItdMessage;
+begin
+  Logger.Enter(Self, 'EditMessageMedia');
+  Result := TtdMessage.Create(GetRequest.SetMethod('editMessageMedia') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('message_id', MessageId, 0, True) //
+    .AddParameter('media', Media.GetFileToSend, Nil, True) //
+    .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
+    .Execute);
+  Logger.Leave(Self, 'EditMessageMedia');
+end;
+
 function TInjectTelegramBot.EditMessageReplyMarkup(const InlineMessageId: string;
   ReplyMarkup: IReplyMarkup): ItdMessage;
 begin
@@ -4296,14 +4338,14 @@ begin
     .AddParameter('photo_size', PhotoSize, 0, False) //
     .AddParameter('photo_width', PhotoWidth, 0, False) //
     .AddParameter('photo_height', PhotoHeight, 0, False) //
-    .AddParameter('need_name', NeedName.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('need_phone_number', NeedPhoneNumber.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('need_email', NeedEmail.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('need_shipping_address', NeedShippingAddress.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('send_phone_number_to_provider', SendPhoneNumberToProvider.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('send_email_to_provider', SendRmailToProvider.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('is_flexible', IsFlexible.ToJSONBool, False.ToJSONBool, False) //
-    .AddParameter('disable_notification', DisableNotification.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('need_name', NeedName, False, False) //
+    .AddParameter('need_phone_number', NeedPhoneNumber, False, False) //
+    .AddParameter('need_email', NeedEmail, False, False) //
+    .AddParameter('need_shipping_address', NeedShippingAddress, False, False) //
+    .AddParameter('send_phone_number_to_provider', SendPhoneNumberToProvider, False, False) //
+    .AddParameter('send_email_to_provider', SendRmailToProvider, False, False) //
+    .AddParameter('is_flexible', IsFlexible, False, False) //
+    .AddParameter('disable_notification', DisableNotification, False, False) //
     .AddParameter('reply_to_message_id', ReplyToMessageId, 0, False) //
     .AddParameter('protect_content ', ProtectContent, False, False) //
     .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
@@ -4315,13 +4357,13 @@ function TInjectTelegramBot.AnswerPreCheckoutQuery(
   const OK: Boolean;
   const ErrorMessage: string): Boolean;
 var
-  DefaultBol : Boolean;
+  DefaultBool : Boolean;
 begin
-  DefaultBol := Not OK;
+  DefaultBool := Not OK;
   Logger.Enter(Self, 'AnswerPreCheckoutQuery');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, '0', True) //
-    .AddParameter('ok', Ok.ToJSONBool , DefaultBol.ToJSONBool, True) //
+    .AddParameter('ok', Ok , DefaultBool, True) //
     .AddParameter('error_message', ErrorMessage, 'null', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQuery');
@@ -4332,7 +4374,7 @@ begin
   Logger.Enter(Self, 'AnswerPreCheckoutQueryBad');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, 0, True) //
-    .AddParameter('ok', False.ToJSONBool, True.ToJSONBool, True) //
+    .AddParameter('ok', False, True, True) //
     .AddParameter('error_message', ErrorMessage, '', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQueryBad');
@@ -4343,7 +4385,7 @@ begin
   Logger.Enter(Self, 'AnswerPreCheckoutQueryGood');
   Result := GetRequest.SetMethod('answerPreCheckoutQuery') //
     .AddParameter('pre_checkout_query_id', PreCheckoutQueryId, 0, True) //
-    .AddParameter('ok',True.ToJSONBool, False.ToJSONBool, True) //
+    .AddParameter('ok',True, False, True) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerPreCheckoutQueryGood');
 end;
@@ -4353,7 +4395,7 @@ begin
   Logger.Enter(Self, 'AnswerShippingQueryBad');
   Result := GetRequest.SetMethod('answerShippingQuery') //
     .AddParameter('Shipping_query_id', ShippingQueryId, 0, True) //
-    .AddParameter('ok',False.ToJSONBool, True.ToJSONBool, False) //
+    .AddParameter('ok',False, True, False) //
     .AddParameter('error_message', ErrorMessage, '', False) //
     .ExecuteAsBool;
   Logger.Leave(Self, 'AnswerShippingQueryBad');
@@ -4364,7 +4406,7 @@ begin
   Logger.Enter(Self, 'AnswerShippingQueryGood');
   Result := GetRequest.SetMethod('answerShippingQuery') //
     .AddParameter('Shipping_query_id', ShippingQueryId, 0, True) //
-    .AddParameter('ok', True.ToJSONBool, False.ToJSONBool, False) //
+    .AddParameter('ok', True, False, False) //
     .AddParameter('Shipping_options', TJsonUtils.ArrayToJString<
     TtdShippingOption>(ShippingOptions), '[]', True)    //
     .ExecuteAsBool;

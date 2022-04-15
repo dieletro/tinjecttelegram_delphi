@@ -5,12 +5,6 @@ unit TInjectTelegram.Bot.Chat;
 interface
 
 uses
-{/$DEFINE  USE_INDY_CORE}
-{$IFDEF  USE_INDY_CORE} // Indy Http Core
-//  CrossUrl.Indy.HttpClient,
-{$ELSE}                 // System.Net HTTP Core
-//  CrossUrl.SystemNet.HttpClient,
-{$ENDIF}
   REST.Json,
   REST.Types,
   REST.Client,
@@ -42,51 +36,8 @@ uses
   TInjectTelegram.Receiver.UI;
 
 type
-  TtdEtapasAtendimento = (
-    pvListarMenu = 0,
-    pvInserirItem = 1,
-    pvRemoverItem = 2,
-    pvAtualizarLista = 3,
-    pvLocalizacao = 4,
-    pvFormaPG = 5,
-    pvConfirmaRemocao = 6);
-
-  TtdTipoArquivo = (
-    taAudio = 14,
-    taVideo = 13,
-    taVoice = 12,
-    taVideoNote = 11,
-    taLocation = 10,
-    taVenue = 9,
-    taContact = 8,
-    taChatAction = 7,
-    taInvoice = 6,
-    taGame = 5,
-    taSticker = 4,
-    taMediaGroup = 3,
-    taTexto = 2,
-    taDocumento = 1,
-    taImagem = 0);
-
-  TtdEndereco = record
-    IdEndereco      : Integer;
-    Endereco        : String;
-    PontoReferencia : String;
-    Latitude        : Single;
-    Longetude       : Single;
-  end;
-
-  TtdTipoUsuario = (tpCliente, tpAdm);
-
-  TtdSituacaoAtendimento = (saIndefinido,
-                      saNova,
-                      saEmAtendimento,
-                      saEmEspera,
-                      saInativa,
-                      saFinalizada);
-
-  TInjectTelegramChatBot = class;
-  TNotifyTelegramBotConversa = procedure(Conversa: TInjectTelegramChatBot; AMessage: ItdMessage) of object;
+  TInjectTelegramChat = class;
+  TNotifyTelegramBotConversa = procedure(Conversa: TInjectTelegramChat; AMessage: ItdMessage) of object;
   TNotifyOnMessage = procedure(AMessage: ItdMessage) of object;
   TNotifyOnInlineQuery = procedure (AInlineQuery: ItdInlineQuery) of object;
   TNotifyOnChosenInlineResult = procedure (AChosenInlineResult: ItdChosenInlineResult) of object;
@@ -95,10 +46,10 @@ type
   TNotifyOnStart = procedure of object;
   TNotifyOnLog = procedure (level: TLogLevel; msg: string; e: Exception) of object;
 
-  TOnTimerSleepExecute = procedure (Sender: TObject) of object;
+  TInjectTelegramChatBot = TInjectTelegramChat deprecated 'Use TInjectTelegramChat instead';
 
   //TAlvez TInjectTelegramChatBotControl???
-  TInjectTelegramChatBot = class(TComponent)
+  TInjectTelegramChat = class(TComponent)
   private
     //Enumerado
     FEtapaAtendimento: TtdEtapasAtendimento;
@@ -114,7 +65,7 @@ type
     FDescricao: String;
     FMaiorValor: Currency;
     FItemsPedido: TStringList;
-      FID: String deprecated; //Use o IdChat
+    FID: String;
     FIdChat: Int64;
     FIdPedido: Integer;
     FIdCliente: Int64;
@@ -141,15 +92,15 @@ type
 
     //Notifys Eventos
     FOnSituacaoAlterada: TNotifyTelegramBotConversa;
-    FOnTimerSleepExecute: TOnTimerSleepExecute;
     FOnMessage: TtdOnMessage;
     FNomeArquivoRecebido: String;
+    FOnConversationReceived: TNotifyTelegramBotConversa;
+
   public
-    FTimerSleep: TTimer;
     FMessage : ItdMessage;
     procedure SetSituacao(const Value: TtdSituacaoAtendimento);
     procedure SetTempoInatividade(const Value: Integer);
-    procedure DoOnTimerSleepExecute(Sender: TObject);
+
     //Construtores e destruidores
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -161,6 +112,7 @@ type
       AInitZero: Boolean = True) : IReplyMarkup;
     function CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
       AInlineMode: Boolean = false) : IReplyMarkup;
+
     //Proprieades
     [Default(0)]
     property  TipoUsuario      : TtdTipoUsuario          read FTipoUsuario       write FTipoUsuario {default tpCliente};
@@ -172,7 +124,6 @@ type
     property  Etapa            : Integer               read FEtapa             write FEtapa {default 0};
     property  Tipo             : string                read FTipo              write FTipo;
 
-    //Use  IdChat - Substituido pelo IdChat
     property  ID               : String                read FID                write FID;
 
     property  IdIdiomaStr      : String                read FIdIdiomaStr       write FIdIdiomaStr;
@@ -208,20 +159,22 @@ type
     [Default('')]
     property  ArquivoRecebido   : String               read FArquivoRecebido   write FArquivoRecebido;
 
-    property  SleepTimer       : TTimer                read FTimerSleep        write FTimerSleep;
     property  UltimaIteracao   : TTime                 read FUltimaIteracao    write FUltimaIteracao;
     property  TempoInatividade : Integer               read FTempoInatividade  write SetTempoInatividade;
 
+    property  Message_         : ItdMessage            read FMessage;
+
     //Eventos
     property OnSituacaoAlterada: TNotifyTelegramBotConversa read FOnSituacaoAlterada write FOnSituacaoAlterada;
-    property OnTimerSleepExecute: TOnTimerSleepExecute read FOnTimerSleepExecute write FOnTimerSleepExecute;
-end;
+    property OnConversationReceived: TNotifyTelegramBotConversa read FOnConversationReceived write FOnConversationReceived;
+
+  end;
 
 implementation
 
 { TInjectTelegramChatBot }
 
-procedure TInjectTelegramChatBot.Clear;
+procedure TInjectTelegramChat.Clear;
 begin
  // Situacao := saIndefinido;
   FLatitude := 0.0;
@@ -244,14 +197,14 @@ begin
   //FTempoInatividade := 0; //Não posso zerar essa propriedade
   FNome := '';
   FIDInc := 0;
-  FID := ''; //deprecated
+  FID := ''; //ID da Mensagem
   FTipo := '';
   FEtapa := 0;
-  FTipoUsuario := tpCliente;
-  FEtapaAtendimento := pvListarMenu;
+  FTipoUsuario := TtdTipoUsuario.tpCliente;
+  FEtapaAtendimento := TtdEtapasAtendimento.pvListarMenu;
 end;
 
-function TInjectTelegramChatBot.CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;AInlineMode: Boolean = false) : IReplyMarkup;
+function TInjectTelegramChat.CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;AInlineMode: Boolean = false) : IReplyMarkup;
 var
   {$REGION 'VARIAVEIS'}
   I, O: Integer;
@@ -324,7 +277,7 @@ Assim ela criara os botoes de acordo com a quantidade de itens do array bidimenc
   {$ENDREGION 'CARREGARBTStr'}
 End;
 
-function TInjectTelegramChatBot.CarregarBotoes(AQuery: TFDQuery; AFieldName: String; AInitZero: Boolean = True) : IReplyMarkup;
+function TInjectTelegramChat.CarregarBotoes(AQuery: TFDQuery; AFieldName: String; AInitZero: Boolean = True) : IReplyMarkup;
 var
   {$REGION 'VARIAVEIS'}
   I: Integer;
@@ -401,63 +354,41 @@ Begin
   {$ENDREGION 'CARREGARBOTOES'}
 End;
 
-constructor TInjectTelegramChatBot.Create(AOwner: TComponent);
+constructor TInjectTelegramChat.Create(AOwner: TComponent);
 begin
-  inherited Create(AOwner);
-
   FIdIdiomaStr := 'pt-br';
-
-  //Prepara Timer
-  FTimerSleep := TTimer.Create(Self);
-  FTimerSleep.Enabled  := False;
-  FTimerSleep.Interval := FTempoInatividade*60000; //*60.000 = 1 min
-  FTimerSleep.OnTimer  := DoOnTimerSleepExecute;
+  inherited Create(AOwner);
 end;
 
-destructor TInjectTelegramChatBot.Destroy;
+destructor TInjectTelegramChat.Destroy;
 begin
-  FTimerSleep.Free;
   inherited Destroy;
 end;
 
-procedure TInjectTelegramChatBot.ReiniciarTimer;
+procedure TInjectTelegramChat.ReiniciarTimer;
 begin
   //Se estiver em atendimento reinicia o timer de inatividade
-  if FSituacao in [saNova, saEmAtendimento] then
+  if FSituacao in [TtdSituacaoAtendimento.saEmAtendimento, TtdSituacaoAtendimento.saNova] then
   begin
-    FTimerSleep.Enabled := False;
-    FTimerSleep.Enabled := True;
     FUltimaIteracao := StrToTime(FormatDateTime('hh:mm:ss',Now));
   end;
 end;
 
-procedure TInjectTelegramChatBot.SetSituacao(const Value: TtdSituacaoAtendimento);
+procedure TInjectTelegramChat.SetSituacao(const Value: TtdSituacaoAtendimento);
 begin
   //DoChange
   if FSituacao <> Value then
   begin
     FSituacao := Value;
-    FTimerSleep.Enabled := FSituacao in [saNova, saEmAtendimento]; //Habilita Time se situacao ativa.
 
     if Assigned( OnSituacaoAlterada ) then
-       OnSituacaoAlterada(Self, FMessage);
+      OnSituacaoAlterada(Self, FMessage);
   end;
 end;
 
-procedure TInjectTelegramChatBot.SetTempoInatividade(const Value: Integer);
+procedure TInjectTelegramChat.SetTempoInatividade(const Value: Integer);
 begin
   FTempoInatividade := Value*60000;
-  FTimerSleep.Interval := FTempoInatividade;
-end;
-
-procedure TInjectTelegramChatBot.DoOnTimerSleepExecute(Sender: TObject);
-begin
-  FSituacao := saInativa;
-  FTimerSleep.Enabled := False;
-
-  if Assigned(OnTimerSleepExecute) then
-    OnTimerSleepExecute(Sender);
-
 end;
 
 end.

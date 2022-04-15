@@ -17,7 +17,6 @@ object Form1: TForm1
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
     Left = 0
@@ -3943,6 +3942,22 @@ object Form1: TForm1
     TabOrder = 38
     OnClick = btnDeleteCommandsClick
   end
+  object cbDisableNotification: TCheckBox
+    Left = 294
+    Top = 217
+    Width = 115
+    Height = 17
+    Caption = 'Disable Notification'
+    TabOrder = 39
+  end
+  object cbProtectedContent: TCheckBox
+    Left = 173
+    Top = 217
+    Width = 115
+    Height = 17
+    Caption = 'Protected Content'
+    TabOrder = 40
+  end
   object InjectTelegramExceptionManagerUI1: TInjectTelegramExceptionManagerUI
     OnLog = InjectTelegramExceptionManagerUI1Log
     Left = 200
@@ -3970,7 +3985,7 @@ object Form1: TForm1
   object BotManager1: TInjectTelegramBotManager
     Bot = InjectTelegramBot1
     SenhaADM = '1234'
-    Simultaneos = 2
+    Simultaneos = 3
     TempoInatividade = 2
     OnStart = ServiceStart
     OnStop = ServiceStop

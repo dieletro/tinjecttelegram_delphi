@@ -8,6 +8,7 @@ uses
   System.Classes,
   TinjectTelegram.Base,
   TinjectTelegram.Types,
+  TinjectTelegram.Helpers,
   CrossUrl.HttpClient;
 type
   ItdRequestAPI = interface
@@ -210,7 +211,7 @@ end;
 function TtdCoreApiBase.AddParameter(const AKey: string; const AValue,
   ADefaultValue, ARequired: Boolean): ItdRequestAPI;
 begin
-  Result := AddParameter(AKey, AValue.ToString, ADefaultValue.ToString, ARequired);
+  Result := AddParameter(AKey, AValue.ToJSONBool, ADefaultValue.ToJSONBool, ARequired);
 end;
 //Correção By Ruan Diego
 function TtdCoreApiBase.AddParameter(const AKey: string; const AValue,

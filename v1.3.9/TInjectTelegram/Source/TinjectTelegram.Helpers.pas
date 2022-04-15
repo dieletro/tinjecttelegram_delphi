@@ -4,7 +4,8 @@ uses
  // TInjectTelegram.Bot.Impl,
   TInjectTelegram.Types,
   TInjectTelegram.Types.Enums,
-  System.DateUtils;
+  System.DateUtils,
+  System.RegularExpressions;
 type
   TtdParseModeHelper = record helper for TtdParseMode
     function ToString: string;
@@ -28,7 +29,14 @@ type
     function ToString: string;
   end;
   TBoolHelper = record helper for Boolean
+  strict protected const
+    FalseString: string = 'false';
+    TrueString: string = 'true';
+    FalseBytes: array[0..4] of Byte = (Ord('f'), Ord('a'), Ord('l'), Ord('s'), Ord('e'));
+    TrueBytes: array[0..3] of Byte = (Ord('t'), Ord('r'), Ord('u'), Ord('e'));
+  published
     function ToJSONBool: string;
+    function ToBytes(const Data: TArray<Byte>; Offset: Integer): Integer;
   end;
   TtdChatTypeHelper = record helper for TtdChatType
     function ToString: string;
@@ -39,11 +47,14 @@ type
   TTDateTimerHelper = record helper for TDateTime
     function ToUnix: Integer;
   End;
+  TtdSituacaoAtendimentoHelper = record helper for TtdSituacaoAtendimento
+    function ToString: String;
+  End;
+
 implementation
 uses
   System.SysUtils,
-  System.Generics.Collections,
-  System.RegularExpressions;
+  System.Generics.Collections;
 { TtdParseModeHelper }
 function TtdParseModeHelper.ToString: string;
 begin
@@ -124,9 +135,7 @@ begin
       Result := 'upload_video_note';
   end;
 end;
-
 { TPassportDataHelper }
-
 function TPassportDataHelper.ToString: string;
 begin
     case self of
@@ -158,9 +167,7 @@ begin
         Result := 'email';
     end;
 end;
-
 { TSendDiceHelper }
-
 function TSendDiceHelper.ToString: string;
 begin
   case Self of
@@ -181,9 +188,7 @@ adicionar os novos
 ⚰️ 🎃 🧛‍♀️ 🧟‍♂️ 🦇 🕷 🕸 🌜 🌛 or 🗿 }
   end;
 end;
-
 { TSendPollHelper }
-
 function TSendPollHelper.ToString: string;
 begin
   case Self of
@@ -195,9 +200,7 @@ begin
       result := 'quiz';
   end;
 end;
-
 { TSendHelper }
-
 function TSendHelper.ToString: string;
 begin
   case Self of
@@ -237,23 +240,33 @@ begin
       result := '';
   end;
 end;
-
 { TBoolHelper }
-
-function TBoolHelper.ToJSONBool: string;
-var
-  StrOut: String;
+function TBoolHelper.ToBytes(const Data: TArray<Byte>;
+  Offset: Integer): Integer;
 begin
-  if Self = True then
-    StrOut := 'True'
-  else
-    StrOut := 'False';
+  case Self of
+    True:
+    Begin
+      Move(TrueBytes[0], Data[Offset], Length(TrueBytes));
+      Result := Offset + Length(TrueBytes);
+    End;
 
-  Result := StrOut;
+    False:
+    Begin
+      Move(FalseBytes[0], Data[Offset], Length(FalseBytes));
+      Result := Offset + Length(FalseBytes);
+    End;
+  end;
 end;
 
+function TBoolHelper.ToJSONBool: string;
+begin
+  case Self of
+    True:  Result := TrueString;
+    False: Result := FalseString;
+  end;
+end;
 { TtdChatTypeHelper }
-
 function TtdChatTypeHelper.ToString: string;
 begin
   case Self of
@@ -267,9 +280,7 @@ begin
       Result := 'Supergroup';
   end;
 end;
-
 { TtdBotCommandScopeHelper }
-
 function TtdBotCommandScopeHelper.ToJsonObject: string;
 begin
   case Self of
@@ -289,12 +300,23 @@ begin
       Result := '{"type":"chat_member"}';
   end;
 end;
-
 { TTDateTimerHelper }
-
 function TTDateTimerHelper.ToUnix: Integer;
 begin
   Result := DateTimeToUnix(TDateTime(Self));
+end;
+{ TtdSituacaoAtendimentoHelper }
+
+function TtdSituacaoAtendimentoHelper.ToString: String;
+begin
+  case Self of
+    TtdSituacaoAtendimento.saIndefinido:    Result := 'Indefinido';
+    TtdSituacaoAtendimento.saNova:          Result := 'Nova';
+    TtdSituacaoAtendimento.saEmAtendimento: Result := 'EmAtendimento';
+    TtdSituacaoAtendimento.saEmEspera:      Result := 'EmEspera';
+    TtdSituacaoAtendimento.saInativa:       Result := 'Inativa';
+    TtdSituacaoAtendimento.saFinalizada:    Result := 'Finalizada';
+  end;
 end;
 
 end.

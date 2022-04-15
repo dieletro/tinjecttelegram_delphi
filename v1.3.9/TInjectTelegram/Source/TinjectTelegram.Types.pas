@@ -51,16 +51,13 @@ type
     function BigFileUniqueId: string;
   end;
   ItdMessage = interface;
-
   ItdLocation = interface;
   ItdChatLocation = interface
     ['{718CA534-E831-41F8-A976-68501F6DCA02}']
     function Location: ItdLocation;
     function Address:	String; //Limit of a 64 character
   end;
-
   ItdChatPermissions = interface;
-
   ItdChat = interface
     ['{5CE94B3E-312E-48FA-98A4-4C34E16A5DC7}']
     function ID: Int64;
@@ -95,6 +92,7 @@ type
     function Length: Int64;
     function Url: string;
     function User: ItdUser;
+    function language: string;
   end;
   ItdFile = interface
     ['{7A0DE9B9-939C-4079-B6A5-997AEA9497C9}']
@@ -284,7 +282,6 @@ type
     function TotalAmount: Int64;
   end;
   ItdOrderInfo = interface;
-
   ItdSuccessfulPayment = interface
     ['{B2BE36C2-61F9-4D4B-AB9D-75BB524661AB}']
     function Currency: string;
@@ -295,7 +292,6 @@ type
     function TelegramPaymentChargeId: string;
     function ProviderPaymentChargeId: string;
   end;
-
   ItdChatInviteLink = Interface //New in API 5.1
     ['{0F5B2D9E-8372-496E-9D30-7454D67D5F29}']
     function invite_link:	String;
@@ -308,7 +304,6 @@ type
     function member_limit:	Integer;
     function pending_join_request_count: Integer;
   End;
-
   //New Methodo in de version 5.0.1
   ItdChatPermissions = interface
     ['{D6EDBDCF-30DE-4597-B39B-5E31FFBF8E68}']
@@ -321,7 +316,6 @@ type
     function CanInviteUsers:	Boolean;
     function CanPinMessages:	Boolean;
   end;
-
   ItdChatJoinRequest = interface //New in API 5.4
     ['{1C15162D-4CB0-4F06-A1ED-A5987EF9C85A}']
     function chat:	ItdChat;
@@ -330,7 +324,6 @@ type
     function bio:	String;
     function invite_link:	ItdChatInviteLink;
   end;
-
   ItdChatMemberUpdated = Interface //New in API 5.1
     ['{C88B26D2-29F1-4EB9-B812-7FF7A4E73212}']
     function chat:	ItdChat;
@@ -425,6 +418,10 @@ type
     function NewChatMember: ItdUser;  //Resource...
     function &Type: TtdMessageType;   //Resource...
     function IsCommand(const AValue: string): Boolean;  //Resource...
+  end;
+  ItdMessageID = interface
+    ['{8F988303-9873-47DF-969E-E6F72391E214}']
+    function MessageId: Int64;
   end;
   ItdUserProfilePhotos = interface
     ['{DD667B04-15A3-47B1-A729-C75ED5BFE719}']
@@ -637,7 +634,6 @@ type
     function IsIDEmpty: Boolean;
     function IsUsernameEmpty: Boolean;
   end;
-
 implementation
 uses
   System.SysUtils;
@@ -659,7 +655,6 @@ begin
   Self.Create(AMedia, ACaption);
   FType := AType;
 end;
-
 function TtdInputMedia.GetFileToSend: TtdFileToSend;
 begin
   Result := FFileToSend;
@@ -743,7 +738,6 @@ begin
   Else
     result := False;
 end;
-
 function TtdUserLink.IsUsernameEmpty: Boolean;
 begin
   if Username = '' then
@@ -751,7 +745,6 @@ begin
   Else
     Result := False;
 end;
-
 function TtdUserLink.ToString: string;
 begin
   if Username.IsEmpty then
@@ -763,5 +756,4 @@ class operator TtdUserLink.Implicit(AID: Int64): TtdUserLink;
 begin
   Result := TtdUserLink.FromID(AID);
 end;
-
 End.

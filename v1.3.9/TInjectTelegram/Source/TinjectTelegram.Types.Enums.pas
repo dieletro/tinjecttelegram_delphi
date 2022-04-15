@@ -2,6 +2,50 @@
 interface
 type
 {$SCOPEDENUMS ON}
+  TtdEtapasAtendimento = (
+    pvListarMenu = 0,
+    pvInserirItem = 1,
+    pvRemoverItem = 2,
+    pvAtualizarLista = 3,
+    pvLocalizacao = 4,
+    pvFormaPG = 5,
+    pvConfirmaRemocao = 6);
+
+  TtdTipoArquivo = (
+    taAudio = 14,
+    taVideo = 13,
+    taVoice = 12,
+    taVideoNote = 11,
+    taLocation = 10,
+    taVenue = 9,
+    taContact = 8,
+    taChatAction = 7,
+    taInvoice = 6,
+    taGame = 5,
+    taSticker = 4,
+    taMediaGroup = 3,
+    taTexto = 2,
+    taDocumento = 1,
+    taImagem = 0);
+
+  TtdEndereco = record
+    IdEndereco      : Integer;
+    Endereco        : String;
+    PontoReferencia : String;
+    Latitude        : Single;
+    Longetude       : Single;
+  end;
+
+  TtdTipoUsuario = (tpCliente, tpAdm);
+
+  TtdSituacaoAtendimento = (saIndefinido,
+                      saNova,
+                      saEmAtendimento,
+                      saEmEspera,
+                      saInativa,
+                      saFinalizada,
+                      saEmFila);
+
   /// <summary>
   ///   Type of action to broadcast.
   /// </summary>
