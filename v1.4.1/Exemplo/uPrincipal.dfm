@@ -4,7 +4,7 @@ object Form1: TForm1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 
-    'Exemplo de uso do TinjectTelegramBot for v1.4.0 (By Ruan Diego L' +
+    'Exemplo de uso do TinjectTelegramBot for v1.4.1 (By Ruan Diego L' +
     'acerda Menezes)'
   ClientHeight = 656
   ClientWidth = 740
