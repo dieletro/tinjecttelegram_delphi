@@ -3571,7 +3571,6 @@ object Form1: TForm1
     Height = 21
     PasswordChar = '*'
     TabOrder = 1
-    Text = '1749861487:AAH61zWbmCsJNUhVTuSMbKzieictVcaT4Qo'
     TextHint = 'Preencha este campo com o Token do seu Bot'
   end
   object Button2: TButton
@@ -3617,7 +3616,6 @@ object Form1: TForm1
     Width = 159
     Height = 21
     TabOrder = 6
-    Text = '1042366601'
     TextHint = 'Id do Usuario'
   end
   object btnEnviaAudio: TButton
