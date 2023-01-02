@@ -56,6 +56,9 @@ type
   TtdChatMemberStatusHelper = record helper for TtdChatMemberStatus
     function ToString: String;
   end;
+  TtdStickerTypeHelper = record helper for TtdStickerType
+    function ToString: String;
+  end;
 
 implementation
 uses
@@ -347,6 +350,20 @@ begin
     TtdChatMemberStatus.Restricted:     Result := 'Restricted';
     TtdChatMemberStatus.Left:           Result := 'Left';
     TtdChatMemberStatus.Kicked:         Result := 'Kicked';
+  end;
+end;
+
+{ TtdStickerTypeHelper }
+
+function TtdStickerTypeHelper.ToString: String;
+begin
+  case Self of
+    TtdStickerType.regular:
+      Result := 'regular';
+    TtdStickerType.mask:
+      Result := 'mask';
+    TtdStickerType.custom_emoji:
+      Result := 'custom_emoji';
   end;
 end;
 

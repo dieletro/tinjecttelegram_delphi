@@ -50,6 +50,13 @@ type
   TtdOnPollAnswer = procedure(ASender: TObject; APollAnswer: ItdPollAnswer) of object;
   TtdOnSuccessfulPayment = procedure(ASender: TObject; ASuccessfulPayment: ItdSuccessfulPayment) of object;
 
+  TtdOnForumTopicCreated = procedure(ASender: TObject; AForumTopicCreated: ItdForumTopicCreated) of object;
+  TtdOnForumTopicClosed = procedure(ASender: TObject; AForumTopicClosed: ItdForumTopicClosed) of object;
+  TtdOnForumTopicEdited = procedure(ASender: TObject; AForumTopicEdited: ItdForumTopicEdited) of object;
+  TtdOnForumTopicReopened = procedure(ASender: TObject; AForumTopicReopened: ItdForumTopicReopened) of object;
+  TtdOnGeneralForumTopicHidden = procedure(ASender: TObject; AGeneralForumTopicHidden: ItdGeneralForumTopicHidden) of object;
+  TtdOnGeneralForumTopicUnhidden = procedure(ASender: TObject; AGeneralForumTopicUnhidden: ItdGeneralForumTopicUnhidden) of object;
+
   TtdOnMyChatMember = procedure(ASender: TObject; AMyChatMember: ItdChatMemberUpdated) of object;
   TtdOnChatMember = procedure(ASender: TObject; AChatMember: ItdChatMemberUpdated) of object;
 
@@ -85,6 +92,12 @@ type
     FOnChatJoinRequest: TtdOnChatJoinRequest;
     FOnSuccessfulPayment: TtdOnSuccessfulPayment;
     FMessage: ItdMessage;
+    FOnForumTopicCreated: TtdOnForumTopicCreated;
+    FOnForumTopicReopened: TtdOnForumTopicReopened;
+    FOnForumTopicEdited: TtdOnForumTopicEdited;
+    FOnForumTopicClosed: TtdOnForumTopicClosed;
+    FOnGeneralForumTopicHidden: TtdOnGeneralForumTopicHidden;
+    FOnGeneralForumTopicUnhidden: TtdOnGeneralForumTopicUnhidden;
     procedure SetMessage(const Value: ItdMessage);
   protected
     procedure DoOnStart; override;
@@ -106,7 +119,14 @@ type
     procedure DoOnMyChatMember(AMyChatMember: ItdChatMemberUpdated); override;
     procedure DoOnChatMember(AChatMember: ItdChatMemberUpdated); override;
     procedure DoOnSuccessfulPayment(ASuccessfulPayment: ItdSuccessfulPayment); override;
+    procedure DoOnForumTopicCreated(AForumTopicCreated: ItdForumTopicCreated); override;
+    procedure DoOnForumTopicReopened(AForumTopicReopened: ItdForumTopicReopened); override;
+    procedure DoOnForumTopicEdited(AForumTopicEdited: ItdForumTopicEdited); override;
+    procedure DoOnForumTopicClosed(AForumTopicClosed: ItdForumTopicClosed); override;
+    procedure DoOnGeneralForumTopicHidden(AGeneralForumTopicHidden: ItdGeneralForumTopicHidden); override;
+    procedure DoOnGeneralForumTopicUnhidden(AGeneralForumTopicUnhidden: ItdGeneralForumTopicUnhidden); override;
     procedure Init;
+    procedure ParseMessageObject(AMessage : ItdMessage);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -158,6 +178,12 @@ type
     property OnChatJoinRequest: TtdOnChatJoinRequest read FOnChatJoinRequest write FOnChatJoinRequest;
     property OnMyChatMember: TtdOnMyChatMember read FOnMyChatMember write FOnMyChatMember;
     property OnChatMember:   TtdOnChatMember read FOnChatMember write FOnChatMember;
+    property OnForumTopicCreated: TtdOnForumTopicCreated read FOnForumTopicCreated write FOnForumTopicCreated;
+    property OnForumTopicClosed: TtdOnForumTopicClosed read FOnForumTopicClosed write FOnForumTopicClosed;
+    property OnForumTopicEdited: TtdOnForumTopicEdited read FOnForumTopicEdited write FOnForumTopicEdited;
+    property OnForumTopicReopened: TtdOnForumTopicReopened read FOnForumTopicReopened write FOnForumTopicReopened;
+    property OnGeneralForumTopicHidden: TtdOnGeneralForumTopicHidden read FOnGeneralForumTopicHidden write FOnGeneralForumTopicHidden;
+    property OnGeneralForumTopicUnhidden: TtdOnGeneralForumTopicUnhidden read FOnGeneralForumTopicUnhidden write FOnGeneralForumTopicUnhidden;
   end;
 implementation
 uses
@@ -619,6 +645,37 @@ Begin
 
 End;
 
+procedure TInjectTelegramBotManager.ParseMessageObject(AMessage: ItdMessage);
+begin
+  if AMessage.SuccessfulPayment <> Nil then
+    if Assigned(OnSuccessfulPayment) then
+      OnSuccessfulPayment(Self,AMessage.SuccessfulPayment);
+
+  if AMessage.ForumTopicCreated <> Nil then
+    if Assigned(OnForumTopicCreated) then
+      OnForumTopicCreated(Self, AMessage.ForumTopicCreated);
+
+  if AMessage.ForumTopicClosed <> Nil then
+    if Assigned(OnForumTopicClosed) then
+      OnForumTopicClosed(Self, AMessage.ForumTopicClosed);
+
+  if AMessage.ForumTopicEdited <> Nil then
+    if Assigned(OnForumTopicEdited) then
+      OnForumTopicEdited(Self, AMessage.ForumTopicEdited);
+
+  if AMessage.ForumTopicReopened <> Nil then
+    if Assigned(OnForumTopicReopened) then
+      OnForumTopicReopened(Self, AMessage.ForumTopicReopened);
+
+  if AMessage.GeneralForumTopicHidden <> Nil then
+    if Assigned(OnGeneralForumTopicHidden) then
+      OnGeneralForumTopicHidden(Self, AMessage.GeneralForumTopicHidden);
+
+  if AMessage.GeneralForumTopicUnhidden <> Nil then
+    if Assigned(OnGeneralForumTopicUnhidden) then
+      OnGeneralForumTopicUnhidden(Self, AMessage.GeneralForumTopicUnhidden);
+end;
+
 procedure TInjectTelegramBotManager.ProcessarResposta(APreCheckoutQuery: ItdPreCheckoutQuery);
 var
   AConversa: TInjectTelegramChat;
@@ -712,6 +769,54 @@ begin
   if Assigned(OnEditedMessage) then
     OnEditedMessage(Self, AEditedMessage);
 end;
+procedure TInjectTelegramBotManager.DoOnForumTopicClosed(
+  AForumTopicClosed: ItdForumTopicClosed);
+begin
+  inherited;
+  if Assigned(OnForumTopicClosed) then
+    OnForumTopicClosed(Self, AForumTopicClosed);
+end;
+
+procedure TInjectTelegramBotManager.DoOnForumTopicCreated(
+  AForumTopicCreated: ItdForumTopicCreated);
+begin
+  inherited;
+  if Assigned(OnForumTopicCreated) then
+    OnForumTopicCreated(Self, AForumTopicCreated);
+end;
+
+procedure TInjectTelegramBotManager.DoOnForumTopicEdited(
+  AForumTopicEdited: ItdForumTopicEdited);
+begin
+  inherited;
+  if Assigned(OnForumTopicEdited) then
+    OnForumTopicEdited(Self, AForumTopicEdited);
+end;
+
+procedure TInjectTelegramBotManager.DoOnForumTopicReopened(
+  AForumTopicReopened: ItdForumTopicReopened);
+begin
+  inherited;
+  if Assigned(OnForumTopicReopened) then
+    OnForumTopicReopened(Self, AForumTopicReopened);
+end;
+
+procedure TInjectTelegramBotManager.DoOnGeneralForumTopicHidden(
+  AGeneralForumTopicHidden: ItdGeneralForumTopicHidden);
+begin
+  inherited;
+  if Assigned(OnGeneralForumTopicHidden) then
+    OnGeneralForumTopicHidden(Self, AGeneralForumTopicHidden);
+end;
+
+procedure TInjectTelegramBotManager.DoOnGeneralForumTopicUnhidden(
+  AGeneralForumTopicUnhidden: ItdGeneralForumTopicUnhidden);
+begin
+  inherited;
+  if Assigned(OnGeneralForumTopicUnhidden) then
+    OnGeneralForumTopicUnhidden(Self, AGeneralForumTopicUnhidden);
+end;
+
 procedure TInjectTelegramBotManager.DoOnInlineQuery(AInlineQuery: ItdInlineQuery);
 begin
   inherited;
@@ -727,8 +832,8 @@ begin
 
     OnMessage(Self, AMessage);
 
-    if AMessage.SuccessfulPayment <> Nil then
-      OnSuccessfulPayment(Self,AMessage.SuccessfulPayment);
+    ParseMessageObject(AMessage);
+
   End;
 end;
 procedure TInjectTelegramBotManager.DoOnMyChatMember(

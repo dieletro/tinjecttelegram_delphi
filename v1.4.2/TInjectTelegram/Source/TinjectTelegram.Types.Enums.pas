@@ -399,6 +399,24 @@ TtdEncryptedPassportElementType = (
 
   /// <summary>
   ///   Type of a <see cref="MessageEntity" />
+  ///  Type of the entity. Currently, can be
+  ///  “mention” (@username),
+  ///  “hashtag” (#hashtag),
+  ///  “cashtag” ($USD),
+  ///  “bot_command” (/start@jobs_bot),
+  ///  “url” (https://telegram.org),
+  ///  “email” (do-not-reply@telegram.org),
+  ///  “phone_number” (+1-212-555-0123),
+  ///  “bold” (bold text),
+  ///  “italic” (italic text),
+  ///  “underline” (underlined text),
+  ///  “strikethrough” (strikethrough text),
+  ///  “spoiler” (spoiler message),
+  ///  “code” (monowidth string),
+  ///  “pre” (monowidth block),
+  ///  “text_link” (for clickable text URLs),
+  ///  “text_mention” (for users without usernames),
+  ///  “custom_emoji” (for inline custom emoji stickers)
   /// </summary>
   TtdMessageEntityType = (
     /// <summary>
@@ -465,8 +483,32 @@ TtdEncryptedPassportElementType = (
     ///  "spoiler message"
     /// </summary>
     spoiler,
+    /// <summary>
+    ///  “custom_emoji” (for inline custom emoji stickers)
+    /// </summary>
+    custom_emoji,
 
      N_A);
+
+
+    ///  Type of the sticker, currently one of
+    ///  “regular”, “mask”, “custom_emoji”.
+    ///  The type of the sticker is independent from its format,
+    ///  which is determined by the fields is_animated and is_video.
+TtdStickerType = (
+    /// <summary>
+    ///  “regular”
+    /// </summary>
+    regular,
+    /// <summary>
+    ///  “mask”
+    /// </summary>
+    mask,
+    /// <summary>
+    ///  “custom_emoji” (for inline custom emoji stickers)
+    /// </summary>
+    custom_emoji
+);
   /// <summary>
   ///   The part of the face relative to which the mask should be placed. One
   ///   of “forehead”, “eyes”, “mouth”, or “chin”.
