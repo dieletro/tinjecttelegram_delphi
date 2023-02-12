@@ -44,9 +44,9 @@ type
   protected
     function GetRequest: ItdRequestAPI;
     procedure DoInitApiCore; virtual;
-    // Returns TJSONArray as method request result
+    /// Returns TJSONArray as method request result
     function GetJSONArrayFromMethod(const AValue: string): TJSONArray;
-    // Returns response JSON from server as result of request
+    /// Returns response JSON from server as result of request
     function GetArrayFromMethod<TI: IInterface>(const TdClass: TBaseJsonClass;
       const AValue: string): TArray<TI>;
   public
@@ -2733,6 +2733,7 @@ type
       const ChatId: TtdUserLink; //
       const UserId: Int64; //
       const UntilDate: TDateTime = 0; //
+      const UseIndependentChatPermissions: Boolean = False;
       const CanSendMessages: Boolean = False; //
       const CanSendMediaMessages: Boolean = False; //
       const CanSendOtherMessages: Boolean = False; //
@@ -2802,6 +2803,30 @@ type
       const CanChangeInfo: Boolean = False; //
       const CanInviteUsers: Boolean = False; //
       const CanPinMessages: Boolean = False): Boolean;
+    /// <summary>
+    /// Use this method to set default chat permissions for all members.
+    /// The bot must be an administrator in the group or a supergroup for this
+    /// to work and must have the can_restrict_members administrator rights.<br/>
+    /// </summary>
+    /// <param name="ChatId">
+    /// Unique identifier for the target chat or username of the target
+    /// supergroup (in the format <c>@supergroupusername</c>) <br/>
+    /// </param>
+    /// <param name="Permissions">
+    /// A JSON-serialized object for new default chat permissions.<br/>
+    /// </param>
+    /// <param name="UseIndependentChatPermissions">
+    /// Pass True if chat permissions are set independently.
+    /// Otherwise, the can_send_other_messages and
+    /// can_add_web_page_previews permissions will imply the
+    /// can_send_messages, can_send_audios, can_send_documents, can_send_photos,
+    /// can_send_videos, can_send_video_notes, and can_send_voice_notes permissions;
+    /// the can_send_polls permission will imply the can_send_messages permission.<br/>
+    /// </param>
+    function setChatPermissions( //
+      const ChatId: TtdUserLink; //
+      const Permissions: ItdChatPermissions;//
+      const UseIndependentChatPermissions: Boolean = False):Boolean;
 {$ENDREGION}
 
 {$REGION 'Strickers'}
@@ -3421,6 +3446,19 @@ begin
     .ExecuteAsBool;
   Logger.Leave(Self, 'SetChatMenuButton');
 
+end;
+
+function TInjectTelegramBot.setChatPermissions(const ChatId: TtdUserLink;
+  const Permissions: ItdChatPermissions;
+  const UseIndependentChatPermissions: Boolean): Boolean;
+begin
+  Logger.Enter(Self, 'SetChatPermissions');
+  Result := GetRequest.SetMethod('setChatPermissions') //
+    .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('permissions', TInterfacedObject(Permissions), Nil, True) //
+    .AddParameter('use_independent_chat_permissions', UseIndependentChatPermissions, False, False) //
+    .ExecuteAsBool;
+  Logger.Leave(Self, 'SetChatPermissions');
 end;
 
 function TInjectTelegramBot.getChatMenuButton(
@@ -4625,7 +4663,7 @@ begin
 end;
 
 function TInjectTelegramBot.RestrictChatMember(const ChatId: TtdUserLink; const UserId:
-  Int64; const UntilDate: TDateTime; const CanSendMessages, CanSendMediaMessages,
+  Int64; const UntilDate: TDateTime; const UseIndependentChatPermissions: Boolean; const CanSendMessages, CanSendMediaMessages,
   CanSendOtherMessages, CanAddWebPagePreviews: Boolean): Boolean;
 begin
   Logger.Enter(Self, 'RestrictChatMember');
@@ -4633,6 +4671,7 @@ begin
     .AddParameter('chat_id', ChatId, 0, True) //
     .AddParameter('user_id', UserId, 0, True) //
     .AddParameter('until_date', UntilDate, 0, False) //
+    .AddParameter('use_independent_chat_permissions', UseIndependentChatPermissions, False, False) //
     .AddParameter('can_send_messages', CanSendMessages, False, False) //
     .AddParameter('can_send_media_messages', CanSendMediaMessages, False, False)   //
     .AddParameter('can_send_other_messages', CanSendOtherMessages, False, False)   //

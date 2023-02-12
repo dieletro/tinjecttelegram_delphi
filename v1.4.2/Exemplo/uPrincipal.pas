@@ -409,10 +409,6 @@ begin
   memConsole.Lines.Add('Um Topico foi Reexibido');
 end;
 
-procedure TForm1.BotManager1Message(ASender: TObject; AMessage: ItdMessage);
-begin
-//
-end;
 procedure TForm1.btnADDClick(Sender: TObject);
 var
   I : Integer;
@@ -477,7 +473,7 @@ begin
 {
 Aqui você Remove botoes do destinatario,apenas seguindo a mensagem
 }
-//Necessario declarar TelegAPI.Types.ReplyMarkups    //TtdReplyKeyboardRemove
+//Necessario declarar TinjectTelegram.Types.ReplyMarkups    //TtdReplyKeyboardRemove
 LMarkup := TtdReplyKeyboardRemove.Create;
   if BotManager1.IsActive then
   Begin
@@ -731,7 +727,7 @@ begin
   BrandName := 'Visa';
   pgMetod := 'pm_card_visa';
                                                                                       //R$10,00
- // MyInvoice := TtdInvoice.Create('Teste Titulo','Descrição', 'www.lmcode.com.br','USD',1000);
+ // MyInvoice := TtdInvoice.Create('Teste Titulo','Descrição', 'www.lmcodenew.com.br','USD',1000);
   if txtTokenBanco.Text = '' then
   Begin
     Showmessage(VRes_Ajuda_Token_Banco);
@@ -775,7 +771,7 @@ begin
     if txtID.Text <> '' then
     try
       {É Necessário criar um game no BotFather para obter o
-      nome do game que sera enviado }
+      nome do game que será enviado }
       if txtNomeJogo.Text <> '' then
       Begin
         MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
@@ -1821,8 +1817,8 @@ end;
 procedure TForm1.InjectTelegramBot1SendData(ASender: TObject; const AUrl,
   AData: string);
 begin
-//  memConsole.Lines.Add('SENDING URL: '+AUrl);
-//  memConsole.Lines.Add('SENDING DATA: '+AData);
+  memConsole.Lines.Add('SENDING URL: '+AUrl);
+  memConsole.Lines.Add('SENDING DATA: '+AData);
 end;
 procedure TForm1.InjectTelegramExceptionManagerUI1Log(ASender: TObject;
   const Level: TLogLevel; const Msg: string; E: Exception);

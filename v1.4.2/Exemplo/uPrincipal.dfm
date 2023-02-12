@@ -4141,6 +4141,11 @@ object Form1: TForm1
   end
   object BotManager1: TInjectTelegramBotManager
     Bot = InjectTelegramBot1
+    TimeOutMessage = 
+      'Ol'#225', notei que nossa conversa atingiu o tempo limite de inativid' +
+      'ade, caso n'#227'o se comunique comigo mais, nossa conversa se encerr' +
+      'ar'#225' automaticamente!'
+    TimeOutSeconds = 30
     SenhaADM = '1234'
     Simultaneos = 2
     TempoInatividade = 2

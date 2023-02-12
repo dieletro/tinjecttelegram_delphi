@@ -98,6 +98,10 @@ type
     FOnForumTopicClosed: TtdOnForumTopicClosed;
     FOnGeneralForumTopicHidden: TtdOnGeneralForumTopicHidden;
     FOnGeneralForumTopicUnhidden: TtdOnGeneralForumTopicUnhidden;
+    FTotaldeConversas: Integer;
+    FConversasEmEspera: Integer;
+    FTimeOutMessage: String;
+    FTimeOutSeconds: int64;
     procedure SetMessage(const Value: ItdMessage);
   protected
     procedure DoOnStart; override;
@@ -142,6 +146,10 @@ type
 
     procedure ReadChats(ABotManager: TInjectTelegramBotManager);
 
+
+    property TotaldeConversas: Integer read FTotaldeConversas;
+    property TotalConversasEmEspera: Integer read FConversasEmEspera;
+
     property Message : ItdMessage read FMessage write SetMessage;
     property Conversas: TtdChatList read FConversas;
     property Conversa: TInjectTelegramChat read FConversa write FConversa;
@@ -152,12 +160,23 @@ type
     function DownloadFile(const Origem, Destino: String): Boolean;
     function ExtractFileNameFromURL(AURLFile: string): string;
   published
+    property TimeOutMessage: String read FTimeOutMessage write FTimeOutMessage;
+  /// <summary> This property is used to define the time to cancel a conversation, after the timeout warning.
+  /// </summary>
+  /// <param name="TimeOutSeconds">Time in Seconds
+  /// </param>
+  /// <remarks>
+  /// If no value is defined, the time of 30 seconds will be assigned automatically.
+  /// <see cref="TInjectTelegramBotManager.TimeOutSeconds"/>
+  /// </remarks>
+    property TimeOutSeconds: int64 read FTimeOutSeconds write FTimeOutSeconds;
     {Propriedades}
     property SenhaADM: String read FSenhaADM write FSenhaADM;
     [Default(1)]
     property Simultaneos: Integer read FSimultaneos write FSimultaneos;
     [Default(1)]
     property TempoInatividade: Integer read FTempoInatividade write FTempoInatividade;
+
     {Eventos}
     property OnStart: TNotifyEvent read FOnStart write FOnStart;
     property OnStop: TNotifyEvent read FOnStop write FOnStop;
@@ -221,12 +240,12 @@ begin
 end;
 
 function TInjectTelegramBotManager.DownloadFile(const Origem, Destino: String): Boolean;
-const
-  BufferSize = 1024;
+const                 //1x    2x      3x     4x     8x
+  BufferSize = 1024; //1024 //2048 //3060 //4056 //8112 //
 var
   hSession,
   hURL: HInternet;
-  Buffer: array[1..BufferSize] of Byte;
+  Buffer: array[1..(BufferSize)] of Byte;
   BufferLen: DWORD;
   f: File;
   sAppName: string;
@@ -292,7 +311,7 @@ begin
     ADisponivel: Boolean;
   begin
 
-    while True do
+    while Self.IsActive do
     Begin
       for AConversa in ABotManager.Conversas do
       Begin
@@ -301,10 +320,20 @@ begin
 
         if (DateTimeToUnix(FTimeNow) > DateTimeToUnix(FLimit)) then
         Begin
-          AConversa.Situacao := TtdSituacaoAtendimento.saInativa;
+          if AConversa.AvisoInatividade = False then
+          Begin
+            Self.Bot.SendMessage(AConversa.IdCliente, FTimeOutMessage);
+            AConversa.UltimaIteracao := IncSecond(FTimeNow, FTimeOutSeconds);
+            AConversa.AvisoInatividade := True;
+            Continue;
+          End
+          Else
+          Begin
+            AConversa.Situacao := TtdSituacaoAtendimento.saInativa;
 
-          FConversas.Remove( AConversa ); //Deleta a Conversa
-          FConversa := AtenderProximoEmEspera; //Atende o Próximo Cliente da fila
+            FConversas.Remove( AConversa ); //Deleta a Conversa
+            FConversa := AtenderProximoEmEspera; //Atende o Próximo Cliente da fila
+          End;
         End Else
           Continue;
 
@@ -357,6 +386,8 @@ begin
   if Assigned( Result ) then
   begin
     Result.Situacao := TtdSituacaoAtendimento.saEmFila;
+    if FConversasEmEspera > 0 then
+      FConversasEmEspera := FConversasEmEspera - 1;
     Result.ReiniciarTimer;
   end;
 end;
@@ -381,12 +412,13 @@ procedure TInjectTelegramBotManager.ConversaSituacaoAlterada(
   AConversa: TInjectTelegramChat; AMessage : ItdMessage);
 begin
   //Se ficar Inativo ou Finalizar o Pedido
-  if (AConversa.Situacao <> TtdSituacaoAtendimento.saAguardandoEntrega) and
-    ((AConversa.Situacao = TtdSituacaoAtendimento.saInativa) or
+  if ((AConversa.Situacao = TtdSituacaoAtendimento.saInativa) or
     (AConversa.Situacao = TtdSituacaoAtendimento.saFinalizada)) then
   begin
     DoOnMessage(AMessage); //Encaminha a Mensagem
     FConversas.Remove( AConversa ); //Deleta a Conversa
+    if FTotaldeConversas > 0 then
+      FTotaldeConversas := FTotaldeConversas - 1;
     FConversa := AtenderProximoEmEspera; //Atende o Próximo Cliente da fila
   end;
 
@@ -401,6 +433,8 @@ end;
 constructor TInjectTelegramBotManager.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FTimeOutSeconds := 30;
+  FTimeOutMessage := 'Olá, notei que nossa conversa atingiu o tempo limite de inatividade, caso não se comunique mais comigo, nossa conversa se encerrará automaticamente!';
   Init;
 end;
 destructor TInjectTelegramBotManager.Destroy;
@@ -423,12 +457,14 @@ begin
         True  : TipoUsuario := TtdTipoUsuario.tpAdm;
         False : TipoUsuario := TtdTipoUsuario.tpCliente;
       end;
-    ID            := AMessage.MessageId.ToString;
-    IdChat        := AMessage.Chat.ID;
-    IdCliente     := AMessage.From.ID;
-    TextoMSG      := AMessage.Text;
-    FMessage      := AMessage;
-    Nome          := GetUserName(AMessage);
+    IdConversa        := Conversas.Count + 1;
+    FTotaldeConversas := IdConversa;
+    ID                := AMessage.MessageId.ToString;
+    IdChat            := AMessage.Chat.ID;
+    IdCliente         := AMessage.From.ID;
+    TextoMSG          := AMessage.Text;
+    FMessage          := AMessage;
+    Nome              := GetUserName(AMessage);
 
     UltimaIteracao := StrToTime(FormatDateTime('hh:mm:ss',Now));
 
@@ -439,8 +475,10 @@ begin
 
   if ((ADisponivel = True) or (Result.TipoUsuario = TtdTipoUsuario.tpAdm)) then
     Result.Situacao := TtdSituacaoAtendimento.saNova
-  else
+  else begin
     Result.Situacao := TtdSituacaoAtendimento.saEmEspera;
+    FConversasEmEspera := FConversasEmEspera + 1;
+  end;
 
   FConversas.Add( Result );
 end;
@@ -485,20 +523,26 @@ begin
     AConversa.Nome        := GetUserName(AMessage);
     AConversa.ArquivoRecebido := '';
 
+    if AMessage.SuccessfulPayment <> NIl then
+    Begin
+
+      AConversa.SuccessfulPayment.TotalAmount             := AMessage.SuccessfulPayment.TotalAmount.ToString;
+      AConversa.SuccessfulPayment.Currency                := AMessage.SuccessfulPayment.Currency;
+      AConversa.SuccessfulPayment.InvoicePayload          := AMessage.SuccessfulPayment.InvoicePayload;
+      AConversa.SuccessfulPayment.ShippingOptionId        := AMessage.SuccessfulPayment.ShippingOptionId;
+      AConversa.SuccessfulPayment.TelegramPaymentChargeId := AMessage.SuccessfulPayment.TelegramPaymentChargeId;
+      AConversa.SuccessfulPayment.ProviderPaymentChargeId := AMessage.SuccessfulPayment.ProviderPaymentChargeId;
+
+    End;
+
     if Self.TempoInatividade <> 0 then
     Begin
       FTimeNow := StrToTime(FormatDateTime('hh:mm:ss',Now));
       FLimit := IncMinute(AConversa.UltimaIteracao, Self.TempoInatividade);
 
-      if (DateTimeToUnix(FTimeNow) > DateTimeToUnix(FLimit)) then
-      Begin
-        AConversa.SetSituacao(TtdSituacaoAtendimento.saInativa);
-      End
-      Else
+      if (DateTimeToUnix(FTimeNow) < DateTimeToUnix(FLimit)) then
         AConversa.ReiniciarTimer;
-        //AConversa.UltimaIteracao := StrToTime(FormatDateTime('hh:mm:ss',Now));
     End;
-    //AConversa.ReiniciarTimer;
 
   End Else
     AConversa := NovaConversa( AMessage );
@@ -702,14 +746,12 @@ begin
       FTimeNow := StrToTime(FormatDateTime('hh:mm:ss',Now));
       FLimit := IncMinute(AConversa.UltimaIteracao, Self.TempoInatividade);
 
-      if (DateTimeToUnix(FTimeNow) > DateTimeToUnix(FLimit)) then
-      Begin
-        AConversa.SetSituacao(TtdSituacaoAtendimento.saInativa);
-      End;
+      if (DateTimeToUnix(FTimeNow) < DateTimeToUnix(FLimit)) then
+        AConversa.ReiniciarTimer;
 
       AConversa.UltimaIteracao := StrToTime(FormatDateTime('hh:mm:ss',Now));
     End;
-    AConversa.ReiniciarTimer;
+
 
   End;
 
@@ -865,6 +907,7 @@ begin
     OnPreCheckoutQuery(Self, APreCheckoutQuery);
   End;
 end;
+
 procedure TInjectTelegramBotManager.DoOnShippingQuery(AShippingQuery: ItdShippingQuery);
 begin
   inherited;

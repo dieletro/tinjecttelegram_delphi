@@ -1,7 +1,5 @@
 ﻿unit TinjectTelegram.UpdateParser;
-
 interface
-
 uses
   System.Classes,
   System.SysUtils,
@@ -9,7 +7,6 @@ uses
   TInjectTelegram.Bot,
   TInjectTelegram.Types,
   TInjectTelegram.Types.Enums;
-
 type
   TInjectTelegramBotUpdateParser = class(TInjectTelegramAbstractComponent)
   private
@@ -43,13 +40,10 @@ type
   public
     procedure ParseResponse(const JSON: string);
   end;
-
 implementation
-
 uses
   TInjectTelegram.Bot.Impl;
 { TInjectTelegramBotUpdateParser }
-
 procedure TInjectTelegramBotUpdateParser.EventParser(AUpdates: TArray<ItdUpdate>);
 var
   LUpdate: ItdUpdate;
@@ -61,7 +55,6 @@ begin
     TypeUpdate(LUpdate);
   end;
 end;
-
 procedure TInjectTelegramBotUpdateParser.ParseResponse(const JSON: string);
 var
   LUpdates: TArray<ItdUpdate>;
@@ -71,54 +64,37 @@ begin
   LUpdates := LBot.GetUpdates(JSON);
   EventParser(LUpdates);
 end;
-
 procedure TInjectTelegramBotUpdateParser.TypeUpdate(AUpdate: ItdUpdate);
 begin
   case AUpdate.&Type of
     TtdUpdateType.MessageUpdate:
       DoOnMessage(AUpdate.Message);
-
     TtdUpdateType.InlineQueryUpdate:
       DoOnInlineQuery(AUpdate.InlineQuery);
-
     TtdUpdateType.ChosenInlineResultUpdate:
       DoOnChosenInlineResult(AUpdate.ChosenInlineResult);
-
     TtdUpdateType.CallbackQueryUpdate:
       DoOnCallbackQuery(AUpdate.CallbackQuery);
-
     TtdUpdateType.EditedMessage:
       DoOnEditedMessage(AUpdate.EditedMessage);
-
     TtdUpdateType.ChannelPost:
       DoOnChannelPost(AUpdate.ChannelPost);
-
     TtdUpdateType.EditedChannelPost:
       DoOnEditedChannelPost(AUpdate.EditedChannelPost);
-
     TtdUpdateType.ShippingQueryUpdate:
       DoOnShippingQuery(AUpdate.ShippingQuery);
-
     TtdUpdateType.PreCheckoutQueryUpdate:
       DoOnPreCheckoutQuery(AUpdate.PreCheckoutQuery);
-
     TtdUpdateType.PollState:
       DoOnPollStatus(AUpdate.PollState);
-
     TtdUpdateType.PollAnswer:
       DoOnPollAnswer(AUpdate.PollAnswer);
-
     TtdUpdateType.MyChatMember:
       DoOnMyChatMember(AUpdate.MyChatMember);
-
     TtdUpdateType.ChatMember:
       DoOnChatMember(AUpdate.ChatMember);
-
     TtdUpdateType.ChatJoinRequest:
       DoOnChatJoinRequest(AUpdate.ChatJoinRequest);
-
   end;
 end;
-
 end.
-

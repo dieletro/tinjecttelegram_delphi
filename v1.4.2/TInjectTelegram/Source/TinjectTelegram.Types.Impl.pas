@@ -161,21 +161,28 @@ end;
   TtdChatMemberMember = class(TBaseJson, ItdChatMember)
   public
     function User: ItdUser;
-    function Status: TtdChatMemberStatus;
+    function Status : TtdChatMemberStatus;
   end;
+
   TtdChatMemberRestricted = class(TBaseJson, ItdChatMember)
   public
     function User: ItdUser;
     function Status: TtdChatMemberStatus;
     function IsMember:	Boolean;
-    function CanChangeInfo:	Boolean;
-    function CanInviteUsers: Boolean;
-    function CanPinMessages: Boolean;
     function CanSendMessages: Boolean;
-    function CanSendMediaMessages: Boolean;
+    function CanSendAudios: Boolean;
+    function CanSendDocuments: Boolean;
+    function CanSendPhotos: Boolean;
+    function CanSendVideos: Boolean;
+    function CanSendVideoNotes: Boolean;
+    function CanSendVoiceNotes: Boolean;
     function CanSendPolls: Boolean;
     function CanSendOtherMessages: Boolean;
     function CanAddWebPagePreviews: Boolean;
+    function CanChangeInfo:	Boolean;
+    function CanInviteUsers: Boolean;
+    function CanPinMessages: Boolean;
+    function CanManageTopics: Boolean;
     function UntilDate: TDateTime;
   end;
   TtdChatMemberLeft = class(TBaseJson, ItdChatMember)
@@ -248,14 +255,20 @@ end;
   end;
   TtdChatPermissions = class(TBaseJson, ItdChatPermissions)
   public
-    function CanSendMessages:	Boolean;
-    function CanSendMediaMessages: Boolean;
-    function CanSendPolls:	Boolean;
+    function CanSendMessages: Boolean;
+    function CanSendAudios: Boolean;
+    function CanSendDocuments: Boolean;
+    function CanSendPhotos: Boolean;
+    function CanSendVideos: Boolean;
+    function CanSendVideoNotes: Boolean;
+    function CanSendVoiceNotes: Boolean;
+    function CanSendPolls: Boolean;
     function CanSendOtherMessages: Boolean;
-    function CanAddWebPagePreviews:	Boolean;
+    function CanAddWebPagePreviews: Boolean;
     function CanChangeInfo:	Boolean;
-    function CanInviteUsers:	Boolean;
-    function CanPinMessages:	Boolean;
+    function CanInviteUsers: Boolean;
+    function CanPinMessages: Boolean;
+    function CanManageTopics: Boolean;
   end;
   TtdChatLocation = class(TBaseJson, ItdChatLocation)
   public
@@ -551,10 +564,38 @@ end;
     function member_limit:	Integer;
     function pending_join_request_count: Integer;
   End;
+  /// <summary>
+  /// Represents a join request sent to a chat..<br/>
+  /// </summary>
+  /// <param name="chat">
+  /// Chat to which the request was sent.<br/>
+  /// </param>
+  /// <param name="from">
+  /// User that sent the join request.<br/>
+  /// </param>
+  /// <param name="user_chat_id">
+  /// Identifier of a private chat with the user who sent the join request.
+  /// This number may have more than 32 significant bits and some programming
+  /// languages may have difficulty/silent defects in interpreting it. But it
+  /// has at most 52 significant bits, so a 64-bit integer or double-precision
+  /// float type are safe for storing this identifier. The bot can use this
+  /// identifier for 24 hours to send messages until the join request is processed,
+  /// assuming no other administrator contacted the user.<br/>
+  /// </param>
+  /// <param name="date">
+  /// Date the request was sent in Unix time.<br/>
+  /// </param>
+  /// <param name="bio">
+  /// Optional. Bio of the user..<br/>
+  /// </param>
+  /// <param name="invite_link">
+  /// Optional. Chat invite link that was used by the user to send the join request.<br/>
+  /// </param>
   TtdChatJoinRequest = class(TBaseJson, ItdChatJoinRequest) //New in API 5.4
     ['{1C15162D-4CB0-4F06-A1ED-A5987EF9C85A}']
     function chat:	ItdChat;
     function from:	ItdUser;
+    function user_chat_id: Integer;
     function date:	TDateTime; {Integer Unix Time}
     function bio:	String;
     function invite_link:	ItdChatInviteLink;
@@ -665,6 +706,8 @@ end;
     function PinnedMessage: ItdMessage;
     function Invoice: ItdInvoice;
     function SuccessfulPayment: ItdSuccessfulPayment;
+    function UserShared: ItdUserShared;
+    function ChatShared: ItdChatShared;
     function ConnectedWebsite: string;
     function WriteAccessAllowed: ItdWriteAccessAllowed;
     function PassportData: ItdPassportData;
@@ -1068,6 +1111,18 @@ end;
 //    function isProgressVisible:	Boolean;
   End;
 
+  TtdUserShared = class(TBaseJson, ItdUserShared)
+  public
+    function request_id: integer;
+    function user_id: integer;
+  End;
+
+  TtdChatShared = class(TBaseJson, ItdChatShared)
+  public
+    function request_id: integer;
+    function chat_id: integer;
+  End;
+
 implementation
 uses
   System.JSON,
@@ -1459,6 +1514,14 @@ begin
   if not Text.IsEmpty then
     Exit(TtdMessageType.TextMessage);
   Result := TtdMessageType.UnknownMessage;
+end;
+function TtdMessage.UserShared: ItdUserShared;
+begin
+  Result := ReadToClass<TtdUserShared>('UserShared');
+end;
+function TtdMessage.ChatShared: ItdChatShared;
+begin
+  Result := ReadToClass<TtdChatShared>('ChatShared');
 end;
 function TtdMessage.Animation: ItdAnimation;
 begin
@@ -3066,14 +3129,25 @@ function TtdChatPermissions.CanInviteUsers: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_invite_users');
 end;
+function TtdChatPermissions.CanManageTopics: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_manage_topics');
+end;
+
 function TtdChatPermissions.CanPinMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_pin_messages');
 end;
-function TtdChatPermissions.CanSendMediaMessages: Boolean;
+function TtdChatPermissions.CanSendAudios: Boolean;
 begin
-  Result := ReadToSimpleType<Boolean>('can_send_media_messages');
+  Result := ReadToSimpleType<Boolean>('can_send_audios');
 end;
+
+function TtdChatPermissions.CanSendDocuments: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_documents');
+end;
+
 function TtdChatPermissions.CanSendMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_send_messages');
@@ -3082,10 +3156,30 @@ function TtdChatPermissions.CanSendOtherMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_send_other_messages');
 end;
+function TtdChatPermissions.CanSendPhotos: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_photos');
+end;
+
 function TtdChatPermissions.CanSendPolls: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_send_polls');
 end;
+function TtdChatPermissions.CanSendVideoNotes: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_video_notes');
+end;
+
+function TtdChatPermissions.CanSendVideos: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_videos');
+end;
+
+function TtdChatPermissions.CanSendVoiceNotes: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_voice_notes');
+end;
+
 { TtdChatLocation }
 function TtdChatLocation.Address: String;
 begin
@@ -3352,14 +3446,25 @@ function TtdChatMemberRestricted.CanInviteUsers: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_invite_users');
 end;
+function TtdChatMemberRestricted.CanManageTopics: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_manage_topics');
+end;
+
 function TtdChatMemberRestricted.CanPinMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_pin_messages');
 end;
-function TtdChatMemberRestricted.CanSendMediaMessages: Boolean;
+function TtdChatMemberRestricted.CanSendAudios: Boolean;
 begin
-  Result := ReadToSimpleType<Boolean>('can_send_media_messages');
+  Result := ReadToSimpleType<Boolean>('can_send_audios');
 end;
+
+function TtdChatMemberRestricted.CanSendDocuments: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_documents');
+end;
+
 function TtdChatMemberRestricted.CanSendMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_send_messages');
@@ -3368,10 +3473,30 @@ function TtdChatMemberRestricted.CanSendOtherMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_send_other_messages');
 end;
+function TtdChatMemberRestricted.CanSendPhotos: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_photos');
+end;
+
 function TtdChatMemberRestricted.CanSendPolls: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_send_polls');
 end;
+function TtdChatMemberRestricted.CanSendVideoNotes: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_video_notes');
+end;
+
+function TtdChatMemberRestricted.CanSendVideos: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_videos');
+end;
+
+function TtdChatMemberRestricted.CanSendVoiceNotes: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_send_voice_notes');
+end;
+
 function TtdChatMemberRestricted.IsMember: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('is_member');
@@ -3482,6 +3607,11 @@ function TtdChatJoinRequest.invite_link: ItdChatInviteLink;
 begin
   Result := ReadToClass<TtdChatInviteLink>('invite_link');
 end;
+function TtdChatJoinRequest.user_chat_id: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('user_chat_id');
+end;
+
 { TtdMessageID }
 
 function TtdMessageID.MessageId: Int64;
@@ -3870,6 +4000,30 @@ end;
 function TtdForumTopic.name: string;
 begin
   Result := ReadToSimpleType<string>('name');
+end;
+
+{ TtdUserShared }
+
+function TtdUserShared.request_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('request_id');
+end;
+
+function TtdUserShared.user_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('user_id');
+end;
+
+{ TtdChatShared }
+
+function TtdChatShared.chat_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('chat_id');
+end;
+
+function TtdChatShared.request_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('request_id');
 end;
 
 End.

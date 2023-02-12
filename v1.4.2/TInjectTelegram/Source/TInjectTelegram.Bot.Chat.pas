@@ -1,9 +1,6 @@
 unit TInjectTelegram.Bot.Chat;
-
 {$I config.inc}
-
 interface
-
 uses
   REST.Json,
   REST.Types,
@@ -34,7 +31,6 @@ uses
   TInjectTelegram.Receiver.Console,
   TInjectTelegram.Receiver.Service,
   TInjectTelegram.Receiver.UI;
-
 type
   TInjectTelegramChat = class;
   TNotifyTelegramBotConversa = procedure(Conversa: TInjectTelegramChat; AMessage: ItdMessage) of object;
@@ -45,8 +41,26 @@ type
   TNotifyOnStop = procedure of object;
   TNotifyOnStart = procedure of object;
   TNotifyOnLog = procedure (level: TLogLevel; msg: string; e: Exception) of object;
-
   TInjectTelegramChatBot = TInjectTelegramChat deprecated 'Use TInjectTelegramChat instead';
+
+  PSuccessfulPayment = ^TSuccessfulPayment;
+
+  TSuccessfulPayment = class
+  private
+    FTelegramPaymentChargeId: string;
+    FShippingOptionId: string;
+    FInvoicePayload: string;
+    FProviderPaymentChargeId: string;
+    FTotalAmount: string;
+    FCurrency: string;
+  public
+    property Currency : string read FCurrency write FCurrency;
+    property TotalAmount    : string read FTotalAmount write FTotalAmount;
+    property InvoicePayload : string read FInvoicePayload write FInvoicePayload;
+    property ShippingOptionId: string read FShippingOptionId write FShippingOptionId;
+    property TelegramPaymentChargeId: string read FTelegramPaymentChargeId write FTelegramPaymentChargeId;
+    property ProviderPaymentChargeId: string read FProviderPaymentChargeId write FProviderPaymentChargeId;
+  end;
 
   //TAlvez TInjectTelegramChatBotControl???
   TInjectTelegramChat = class(TComponent)
@@ -55,7 +69,6 @@ type
     FEtapaAtendimento: TtdEtapasAtendimento;
     FSituacao: TtdSituacaoAtendimento;
     FTipoUsuario: TtdTipoUsuario;
-
     //Propriedades Telegram
     FEnderecoEntrega: String;
     FLatitude: Single;
@@ -89,91 +102,80 @@ type
     FUF: String;
     FLocalidade: String;
     FArquivoRecebido: String;
-
     //Notifys Eventos
     FOnSituacaoAlterada: TNotifyTelegramBotConversa;
     FOnMessage: TtdOnMessage;
     FNomeArquivoRecebido: String;
     FOnConversationReceived: TNotifyTelegramBotConversa;
-
+    FSuccessfulPayment: TSuccessfulPayment;
+    FAvisoInatividade: Boolean;
+    FIdConversa: Int64;
   public
     FMessage : ItdMessage;
     procedure SetSituacao(const Value: TtdSituacaoAtendimento);
     procedure SetTempoInatividade(const Value: Integer);
-
     //Construtores e destruidores
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Clear;
     procedure ReiniciarTimer;
 
+    property  SuccessfulPayment  : TSuccessfulPayment    read FSuccessfulPayment write FSuccessfulPayment;
   published
     function CarregarBotoes(AQuery: TFDQuery; AFieldName: String;
       AInitZero: Boolean = True) : IReplyMarkup;
     function CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
       AInlineMode: Boolean = false) : IReplyMarkup;
-
     //Proprieades
     [Default(0)]
-    property  TipoUsuario      : TtdTipoUsuario          read FTipoUsuario       write FTipoUsuario {default tpCliente};
+    property  TipoUsuario        : TtdTipoUsuario          read FTipoUsuario       write FTipoUsuario {default tpCliente};
     [Default(0)]
-    property  Situacao         : TtdSituacaoAtendimento  read FSituacao          write SetSituacao  {default saIndefinido};
+    property  Situacao           : TtdSituacaoAtendimento  read FSituacao          write SetSituacao  {default saIndefinido};
     [Default(0)]
-    property  EtapaAtendimento : TtdEtapasAtendimento    read FEtapaAtendimento  write FEtapaAtendimento {default pvListarMenu};
+    property  EtapaAtendimento   : TtdEtapasAtendimento    read FEtapaAtendimento  write FEtapaAtendimento {default pvListarMenu};
     [Default(0)]
-    property  Etapa            : Integer               read FEtapa             write FEtapa {default 0};
-    property  Tipo             : string                read FTipo              write FTipo;
-
-    property  ID               : String                read FID                write FID;
-
-    property  IdIdiomaStr      : String                read FIdIdiomaStr       write FIdIdiomaStr;
-    property  IdPedido         : Integer               read FIdPedido          write FIdPedido;
-    property  IdCliente        : Int64                 read FIdCliente         write FIdCliente;
-    property  IdChat           : Int64                 read FIdChat            write FIdChat;
-    property  IDInc            : Integer               read FIDInc             write FIDInc;
-    property  TextoMSG         : String                read FTextoMSG          write FTextoMSG;
-    property  Nome             : String                read FNome              write FNome;
-    property  ItemsPedido      : TStringList           read FItemsPedido       write FItemsPedido;
-    property  MaiorValor       : Currency              read FMaiorValor        write FMaiorValor;
-    property  EnderecoEntrega  : String                read FEnderecoEntrega   write FEnderecoEntrega;
-
-    property  Numero           : String                read FNumero            write FNumero;
-    property  Cep              : String                read FCep               write FCep;
-    property  Logradouro       : String                read FLogradouro        write FLogradouro;
-    property  Bairro           : String                read FBairro            write FBairro;
-    property  Localidade       : String                read FLocalidade        write FLocalidade;
-    property  UF               : String                read FUF                write FUF;
-
-    property  PontoReferencia  : String                read FPontoReferencia   write FPontoReferencia;
-    property  DistanciaKM      : String                read FDistanciaKM       write FDistanciaKM;
-    property  DuracaoMIN       : String                read FDuracaoMIN        write FDuracaoMIN;
-    property  TaxaEntrega      : Real                  read FTaxaEntrega       write FTaxaEntrega;
-
-    property  Latitude         : Single                read FLatitude          write FLatitude;
-    property  Longitude        : Single                read FLongetude         write FLongetude;
-
-    property  FormaPGT         : String                read FFormaPGT          write FFormaPGT;
-    property  TotalPedido      : Real                  read FTotalPedido       write FTotalPedido;
-    property  Descricao        : String                read FDescricao         write FDescricao;
+    property  Etapa              : Integer               read FEtapa             write FEtapa {default 0};
+    property  IdConversa         : Int64                 read FIdConversa        write FIdConversa;
+    property  Tipo               : string                read FTipo              write FTipo;
+    property  ID                 : String                read FID                write FID;
+    property  IdIdiomaStr        : String                read FIdIdiomaStr       write FIdIdiomaStr;
+    property  IdPedido           : Integer               read FIdPedido          write FIdPedido;
+    property  IdCliente          : Int64                 read FIdCliente         write FIdCliente;
+    property  IdChat             : Int64                 read FIdChat            write FIdChat;
+    property  IDInc              : Integer               read FIDInc             write FIDInc;
+    property  TextoMSG           : String                read FTextoMSG          write FTextoMSG;
+    property  Nome               : String                read FNome              write FNome;
+    property  ItemsPedido        : TStringList           read FItemsPedido       write FItemsPedido;
+    property  MaiorValor         : Currency              read FMaiorValor        write FMaiorValor;
+    property  EnderecoEntrega    : String                read FEnderecoEntrega   write FEnderecoEntrega;
+    property  Numero             : String                read FNumero            write FNumero;
+    property  Cep                : String                read FCep               write FCep;
+    property  Logradouro         : String                read FLogradouro        write FLogradouro;
+    property  Bairro             : String                read FBairro            write FBairro;
+    property  Localidade         : String                read FLocalidade        write FLocalidade;
+    property  UF                 : String                read FUF                write FUF;
+    property  PontoReferencia    : String                read FPontoReferencia   write FPontoReferencia;
+    property  DistanciaKM        : String                read FDistanciaKM       write FDistanciaKM;
+    property  DuracaoMIN         : String                read FDuracaoMIN        write FDuracaoMIN;
+    property  TaxaEntrega        : Real                  read FTaxaEntrega       write FTaxaEntrega;
+    property  Latitude           : Single                read FLatitude          write FLatitude;
+    property  Longitude          : Single                read FLongetude         write FLongetude;
+    property  FormaPGT           : String                read FFormaPGT          write FFormaPGT;
+    property  TotalPedido        : Real                  read FTotalPedido       write FTotalPedido;
+    property  Descricao          : String                read FDescricao         write FDescricao;
 
     [Default('')]
-    property  ArquivoRecebido   : String               read FArquivoRecebido   write FArquivoRecebido;
-
-    property  UltimaIteracao   : TTime                 read FUltimaIteracao    write FUltimaIteracao;
-    property  TempoInatividade : Integer               read FTempoInatividade  write SetTempoInatividade;
-
-    property  Message_         : ItdMessage            read FMessage;
-
+    property  ArquivoRecebido    : String                read FArquivoRecebido   write FArquivoRecebido;
+    property  UltimaIteracao     : TTime                 read FUltimaIteracao    write FUltimaIteracao;
+    property  AvisoInatividade   : Boolean               read FAvisoInatividade  write FAvisoInatividade;
+    property  TempoInatividade   : Integer               read FTempoInatividade  write SetTempoInatividade;
+    property  Message_           : ItdMessage            read FMessage;
     //Eventos
     property OnSituacaoAlterada: TNotifyTelegramBotConversa read FOnSituacaoAlterada write FOnSituacaoAlterada;
     property OnConversationReceived: TNotifyTelegramBotConversa read FOnConversationReceived write FOnConversationReceived;
-
   end;
-
 implementation
-
 { TInjectTelegramChatBot }
-
 procedure TInjectTelegramChat.Clear;
 begin
  // Situacao := saIndefinido;
@@ -203,7 +205,6 @@ begin
   FTipoUsuario := TtdTipoUsuario.tpCliente;
   FEtapaAtendimento := TtdEtapasAtendimento.pvListarMenu;
 end;
-
 function TInjectTelegramChat.CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;AInlineMode: Boolean = false) : IReplyMarkup;
 var
   {$REGION 'VARIAVEIS'}
@@ -213,7 +214,6 @@ var
   LButtonIL: TArray<TtdInlineKeyboardButton>;
   DButtonIL: TArray<TtdInlineKeyboardButton>;
   RButtonIL: TArray<TArray<TtdInlineKeyboardButton>>;
-
   //Reply Mode
   LButton : TArray<TtdKeyboardButton>;
   DButton : TArray<TtdKeyboardButton>;
@@ -226,28 +226,21 @@ Exemplo de uso
 Assim ela criara os botoes de acordo com a quantidade de itens do array bidimencional
  CarregarBTStr([['REMOVER','FINALIZAR'],['INICIO','SAIR']]);
 }
-
   SetLength(AStrArrayBtName, Length(AStrArrayBtName[0]) + Length(AStrArrayBtName[1]));
-
 
   if Not AInlineMode then  //Reply Mode
   Begin
-
     SetLength(LButton, Length(AStrArrayBtName[0]));
     SetLength(DButton, Length(AStrArrayBtName[1]));
     SetLength(RButton, Length(LButton) + Length(DButton));
-
     for I := 0 to Length(AStrArrayBtName[0]) - 1 do
         LButton[I] := TtdKeyboardButton.Create(String(AStrArrayBtName[0,I]));
-
     if Length(AStrArrayBtName[1]) > 0 then
     Begin
       for O := 0 to Length(AStrArrayBtName[1]) - 1 do
           DButton[O] := TtdKeyboardButton.Create(String(AStrArrayBtName[1,O]));
-
         RButton[LOW(RButton)]   := LButton;
         RButton[HIGH(RButton)]  := DButton;
-
         Result := TtdReplyKeyboardMarkup.Create(RButton,TRUE);
     End Else
         Result := TtdReplyKeyboardMarkup.Create([LButton],TRUE);
@@ -257,18 +250,14 @@ Assim ela criara os botoes de acordo com a quantidade de itens do array bidimenc
     SetLength(LButtonIL, Length(AStrArrayBtName[0]));
     SetLength(DButtonIL, Length(AStrArrayBtName[1]));
     SetLength(RButtonIL, Length(LButton) + Length(DButton));
-
     for I := 0 to Length(AStrArrayBtName[0]) - 1 do
       LButtonIL[I] := TtdInlineKeyboardButton.Create(String(AStrArrayBtName[0,I]),String(AStrArrayBtName[0,I]));
-
     if Length(AStrArrayBtName[1]) > 0 then
     Begin
       for O := 0 to Length(AStrArrayBtName[1]) - 1 do
         DButtonIL[O] := TtdInlineKeyboardButton.Create(String(AStrArrayBtName[1,O]));
-
       RButtonIL[LOW(RButtonIL)] := LButtonIL;
       RButtonIL[HIGH(RButtonIL)] := DButtonIL;
-
       Result := TtdInlineKeyboardMarkup.Create(RButtonIL);
     End
       Else
@@ -276,7 +265,6 @@ Assim ela criara os botoes de acordo com a quantidade de itens do array bidimenc
   End;
   {$ENDREGION 'CARREGARBTStr'}
 End;
-
 function TInjectTelegramChat.CarregarBotoes(AQuery: TFDQuery; AFieldName: String; AInitZero: Boolean = True) : IReplyMarkup;
 var
   {$REGION 'VARIAVEIS'}
@@ -292,16 +280,13 @@ Begin
   Begin
     if AFieldName <> '' then
     Begin
-
       try
         try
           if AInitZero = True then
           Begin
             SetLength(LButton, AQuery.RecordCount + 1);
             SetLength(RButton, Length(LButton) + 1);
-
            // SetLength(INLbutton, AQuery.RecordCount + 1);
-
             AQuery.First;
             for I := 0 to AQuery.RecordCount do
             Begin
@@ -310,7 +295,6 @@ Begin
               Begin
                 LButton[I] := TtdKeyboardButton.Create('0');
                 LButton[I+1] := TtdKeyboardButton.Create(strTexto);
-
                // INLbutton[I] := TtdInlineKeyboardButton.Create('0', '0');
                // INLbutton[I+1] := TtdInlineKeyboardButton.Create(strTexto, strTexto);
               End
@@ -320,16 +304,13 @@ Begin
                // INLbutton[I+1] := TtdInlineKeyboardButton.Create(strTexto, strTexto);
               End;
               AQuery.Next;
-
             End;
           End
             Else
           Begin
             SetLength(LButton, AQuery.RecordCount);
             SetLength(RButton, Length(LButton) + 1);
-
            // SetLength(INLbutton, AQuery.RecordCount);
-
             AQuery.First;
             for I := 0 to AQuery.RecordCount - 1 do
             Begin
@@ -342,57 +323,53 @@ Begin
         except on E: Exception do
            E.Message := 'Erro ao Ler a tabela'+ E.Message;
         end;
-
       finally
         RButton[LOW(RButton)] := LButton;
         RButton[HIGH(RButton)] := [TtdKeyboardButton.Create('Inicio')];
-
         Result := TtdReplyKeyboardMarkup.Create(RButton, TRUE);
       end;
     End;
   End;
   {$ENDREGION 'CARREGARBOTOES'}
 End;
-
 constructor TInjectTelegramChat.Create(AOwner: TComponent);
 begin
   FIdIdiomaStr := 'pt-br';
+  FAvisoInatividade := False;
+  FSuccessfulPayment := TSuccessfulPayment.Create;
   inherited Create(AOwner);
 end;
-
 destructor TInjectTelegramChat.Destroy;
 begin
+  FSuccessfulPayment.Free;
   inherited Destroy;
 end;
-
 procedure TInjectTelegramChat.ReiniciarTimer;
 begin
   //Se estiver em atendimento reinicia o timer de inatividade
-  if FSituacao in [TtdSituacaoAtendimento.saEmAtendimento, TtdSituacaoAtendimento.saNova] then
+  if FSituacao in [TtdSituacaoAtendimento.saEmAtendimento, TtdSituacaoAtendimento.saNova, TtdSituacaoAtendimento.saAguardandoEntrega] then
   begin
     FUltimaIteracao := StrToTime(FormatDateTime('hh:mm:ss',Now));
   end;
 end;
-
 procedure TInjectTelegramChat.SetSituacao(const Value: TtdSituacaoAtendimento);
 begin
   //DoChange
   if FSituacao <> Value then
   begin
-    if FSituacao <> TtdSituacaoAtendimento.saAguardandoEntrega then
-      FSituacao := Value
-    Else if Value <> TtdSituacaoAtendimento.saInativa then
-      FSituacao := Value;
+//    if FSituacao <> TtdSituacaoAtendimento.saAguardandoEntrega then
+//      FSituacao := Value;
+//    if Value <> TtdSituacaoAtendimento.saInativa then
 
-    if FSituacao = Value then
-      if Assigned( OnSituacaoAlterada ) then
-        OnSituacaoAlterada(Self, FMessage);
+    if FSituacao <> Value then
+      FSituacao := Value;
+    if Assigned( OnSituacaoAlterada ) then
+      OnSituacaoAlterada(Self, FMessage);
   end;
 end;
-
 procedure TInjectTelegramChat.SetTempoInatividade(const Value: Integer);
 begin
-  FTempoInatividade := Value*60000;
+  FTempoInatividade := Value*60000; //60000
 end;
 
 end.

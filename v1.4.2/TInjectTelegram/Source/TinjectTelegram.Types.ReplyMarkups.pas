@@ -22,6 +22,44 @@ type
     constructor Create(const AType: string); overload;
   end;
 
+  TtdKeyboardButtonRequestUser = class
+  private
+    [JSONName('request_id')]
+    Frequest_id: string;
+    [JSONName('user_is_bot')]
+    Fuser_is_bot: string;
+    [JSONName('user_is_premium')]
+    Fuser_is_premium: string;
+  public
+    property request_id: string read Frequest_id write Frequest_id;
+    property user_is_bot: string read Fuser_is_bot write Fuser_is_bot;
+    property user_is_premium: string read Fuser_is_premium write Fuser_is_premium;
+    constructor Create(const Arequest_id: string); overload;
+  end;
+
+  TtdKeyboardButtonRequestChat = class
+  private
+    Fchat_is_created: boolean;
+    [JSONName('request_id')]
+    Frequest_id: integer;
+    Fbot_is_member: boolean;
+    Fuser_administrator_rights: TtdChatAdministratorRights;
+    Fchat_has_username: boolean;
+    Fchat_is_forum: boolean;
+    Fbot_administrator_rights: TtdChatAdministratorRights;
+    Fchat_is_channel: boolean;
+  public
+    property request_id: integer read Frequest_id write Frequest_id;
+    property chat_is_channel: boolean read Fchat_is_channel write Fchat_is_channel;
+    property chat_is_forum: boolean read Fchat_is_forum write Fchat_is_forum;
+    property chat_has_username: boolean read Fchat_has_username write Fchat_has_username;
+    property chat_is_created: boolean read Fchat_is_created write Fchat_is_created;
+    property user_administrator_rights: TtdChatAdministratorRights read Fuser_administrator_rights write Fuser_administrator_rights;
+    property bot_administrator_rights: TtdChatAdministratorRights read Fbot_administrator_rights write Fbot_administrator_rights;
+    property bot_is_member: boolean read Fbot_is_member write Fbot_is_member;
+    constructor Create(const Arequest_id: integer); overload;
+  end;
+
   TtdInlineKeyboardButton = class(TInterfacedObject, IReplyMarkup)
   private
     [JSONName('text')]
@@ -80,12 +118,19 @@ type
     FRequestLocation: Boolean;
     [JSONName('request_contact')]
     FRequestContact: Boolean;
+
     FRequestPoll : TtdKeyboardButtonPollType;
+    [JSONName('request_user')]
+    FRequestUser: TtdKeyboardButtonRequestUser;
+    [JSONName('request_chat')]
+    FRequestChat: TtdKeyboardButtonRequestChat;
   public
     constructor Create(Const ARequestPoll: TtdKeyboardButtonPollType; AText: string; ARequestContact: Boolean = False;
       ARequestLocation: Boolean = False); overload;
     constructor Create(const AText: string; ARequestContact: Boolean = False;
       ARequestLocation: Boolean = False); overload;
+    property RequestUser: TtdKeyboardButtonRequestUser read FRequestUser write FRequestUser;
+    property RequestChat: TtdKeyboardButtonRequestChat read FRequestChat write FRequestChat;
     property RequestContact: Boolean read FRequestContact write FRequestContact;
     property RequestLocation: Boolean read FRequestLocation write FRequestLocation;
     [JSONName('request_poll')] //Resolvido
@@ -312,6 +357,20 @@ constructor TtdInlineKeyboardButton.Create(const AText: string;
 begin
   WebApp := AWebApp;
   Text := AText;;
+end;
+
+{ TtdKeyboardButtonRequestUser }
+
+constructor TtdKeyboardButtonRequestUser.Create(const Arequest_id: string);
+begin
+  Frequest_id := Arequest_id;
+end;
+
+{ TtdKeyboardButtonRequestChat }
+
+constructor TtdKeyboardButtonRequestChat.Create(const Arequest_id: integer);
+begin
+  Frequest_id := Arequest_id;
 end;
 
 end.

@@ -302,19 +302,26 @@ type
   //New Methodo in de version 5.0.1
   ItdChatPermissions = interface
     ['{D6EDBDCF-30DE-4597-B39B-5E31FFBF8E68}']
-    function CanSendMessages:	Boolean;
-    function CanSendMediaMessages: Boolean;
-    function CanSendPolls:	Boolean;
+    function CanSendMessages: Boolean;
+    function CanSendAudios: Boolean;
+    function CanSendDocuments: Boolean;
+    function CanSendPhotos: Boolean;
+    function CanSendVideos: Boolean;
+    function CanSendVideoNotes: Boolean;
+    function CanSendVoiceNotes: Boolean;
+    function CanSendPolls: Boolean;
     function CanSendOtherMessages: Boolean;
-    function CanAddWebPagePreviews:	Boolean;
+    function CanAddWebPagePreviews: Boolean;
     function CanChangeInfo:	Boolean;
-    function CanInviteUsers:	Boolean;
-    function CanPinMessages:	Boolean;
+    function CanInviteUsers: Boolean;
+    function CanPinMessages: Boolean;
+    function CanManageTopics: Boolean;
   end;
   ItdChatJoinRequest = interface //New in API 5.4
     ['{1C15162D-4CB0-4F06-A1ED-A5987EF9C85A}']
     function chat:	ItdChat;
     function from:	ItdUser;
+    function user_chat_id: Integer;
     function date:	TDateTime; {Integer Unix Time}
     function bio:	String;
     function invite_link:	ItdChatInviteLink;
@@ -398,6 +405,18 @@ type
     ['{91AEC975-5CFF-4FD0-B8F6-EDB6C3DE0151}']
   end;
 
+  ItdUserShared = Interface
+    ['{B975E2B8-8A86-4E59-83A5-6148FC04B055}']
+    function request_id: integer;
+    function user_id: integer;
+  End;
+
+  ItdChatShared = Interface
+    ['{309FB1B9-3ED7-48AE-99DF-28B1EC447D5A}']
+    function request_id: integer;
+    function chat_id: integer;
+  End;
+
   ItdMessage = interface
     ['{66BC2558-00C0-4BDD-BDDE-E83249787B30}']
     function MessageId: Int64;
@@ -453,6 +472,8 @@ type
     function PinnedMessage: ItdMessage;
     function Invoice: ItdInvoice;
     function SuccessfulPayment: ItdSuccessfulPayment;
+    function UserShared: ItdUserShared;
+    function ChatShared: ItdChatShared;
     function ConnectedWebsite: string;
     function WriteAccessAllowed: ItdWriteAccessAllowed;
     function PassportData: ItdPassportData;

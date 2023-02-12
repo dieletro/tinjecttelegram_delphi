@@ -581,6 +581,7 @@ type
       const ChatId: TtdUserLink; //
       const UserId: Int64; //
       const UntilDate: TDateTime = 0; //
+      const UseIndependentChatPermissions: Boolean = False;
       const CanSendMessages: Boolean = False; //
       const CanSendMediaMessages: Boolean = False; //
       const CanSendOtherMessages: Boolean = False; //
@@ -599,6 +600,10 @@ type
       const CanChangeInfo: Boolean = False; //
       const CanInviteUsers: Boolean = False; //
       const CanPinMessages: Boolean = False): Boolean;
+    function setChatPermissions( //
+      const ChatId: TtdUserLink; //
+      const Permissions: ItdChatPermissions;//
+      const UseIndependentChatPermissions: Boolean = False):Boolean;
 {$ENDREGION}
 
 {$REGION 'Strickers'}

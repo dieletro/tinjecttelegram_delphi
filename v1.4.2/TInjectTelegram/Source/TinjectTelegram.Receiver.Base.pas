@@ -1,7 +1,5 @@
 ﻿unit TinjectTelegram.Receiver.Base;
-
 interface
-
 uses
   System.Classes,
   System.SysUtils,
@@ -10,9 +8,7 @@ uses
   TInjectTelegram.Bot.Impl,
   TInjectTelegram.Types,
   TInjectTelegram.Types.Enums;
-
 type
-
   {TInjectTelegramBotReceiverBase}
   TInjectTelegramBotReceiverBase = class(TInjectTelegramBotUpdateParser)
   private
@@ -45,12 +41,9 @@ type
     [Default(1000)]
     property PollingInterval: Integer read FPollingInterval write FPollingInterval;
   end;
-
 implementation
-
-
+uses TinjectTelegram.Logger;
 { TInjectTelegramBotReceiverBase }
-
 constructor TInjectTelegramBotReceiverBase.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -58,20 +51,17 @@ begin
   AllowedUpdates := UPDATES_ALLOWED_ALL;
   PollingInterval := 1000;
 end;
-
 constructor TInjectTelegramBotReceiverBase.Create(ABot: IInjectTelegramBot);
 begin
   Self.Create(nil);
   FBotDonor := ABot as TInjectTelegramBot;
 end;
-
 destructor TInjectTelegramBotReceiverBase.Destroy;
 begin
  // FBotDonor.Free;
   Stop;
   inherited;
 end;
-
 procedure TInjectTelegramBotReceiverBase.Go;
 var
   LUpdates: TArray<ItdUpdate>;
@@ -79,33 +69,44 @@ begin
   DoOnStart;
   while FIsActive do
   begin
-    LUpdates := ReadUpdates;
-    if Length(LUpdates) = 0 then
-    begin
+    try
+      Self.Bot.Logger.Enter(Self, 'Go');
+      LUpdates := ReadUpdates;
+      if Length(LUpdates) = 0 then
+      begin
+        Sleep(FPollingInterval);
+        Continue;
+      end;
+      MessageOffset := LUpdates[High(LUpdates)].ID + 1;
+      EventParser(LUpdates);
       Sleep(FPollingInterval);
-      Continue;
+      Self.Bot.Logger.Leave(Self, 'Go');
+    except on E: Exception do
+      Begin
+         Bot.Logger.Fatal('Go', E);
+         //Independente do tipo de erro que o bot encontre,
+         //ele nunca para de responder a novas solicitações
+         continue;
+      End;
     end;
-    MessageOffset := LUpdates[High(LUpdates)].ID + 1;
-    EventParser(LUpdates);
-    Sleep(FPollingInterval);
   end;
   DoOnStop;
 end;
-
 function TInjectTelegramBotReceiverBase.ReadUpdates: TArray<ItdUpdate>;
 var
   LBot: TInjectTelegramBot;
 begin
   LBot := TInjectTelegramBot.Create(Self);
   try
+    Bot.Logger.Enter(Self, 'ReadUpdates');
     FBotDonor.AssignTo(LBot);
     Result := LBot.GetUpdates(MessageOffset, 100, 0, AllowedUpdates);
+    Bot.Logger.Leave(Self, 'ReadUpdates');
   except
     on E: Exception do
       Bot.Logger.Fatal('TInjectTelegramBotReceiverBase.ReadUpdates', E)
   end;
 end;
-
 procedure TInjectTelegramBotReceiverBase.SetIsActive(const AValue: Boolean);
 begin
   if FIsActive = AValue then
@@ -120,16 +121,12 @@ begin
   else
     FreeAndNil(FThread);
 end;
-
 procedure TInjectTelegramBotReceiverBase.Start;
 begin
   IsActive := True;
 end;
-
 procedure TInjectTelegramBotReceiverBase.Stop;
 begin
   IsActive := False;
 end;
-
 end.
-
