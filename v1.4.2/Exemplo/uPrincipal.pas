@@ -161,7 +161,6 @@ type
     procedure btnDeleteCommandsClick(Sender: TObject);
     procedure InjectTelegramBot1Disconect(ASender: TObject;
       const AErrorCode: string);
-    procedure BotManager1Message(ASender: TObject; AMessage: ItdMessage);
     procedure btnSetChatMenuButtonClick(Sender: TObject);
     procedure btnGetChatMenuButtonClick(Sender: TObject);
     procedure btnSetMyDefaultAdministratorRightsClick(Sender: TObject);

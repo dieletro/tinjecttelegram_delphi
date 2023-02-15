@@ -118,19 +118,19 @@ type
     FRequestLocation: Boolean;
     [JSONName('request_contact')]
     FRequestContact: Boolean;
-
     FRequestPoll : TtdKeyboardButtonPollType;
-    [JSONName('request_user')]
     FRequestUser: TtdKeyboardButtonRequestUser;
-    [JSONName('request_chat')]
     FRequestChat: TtdKeyboardButtonRequestChat;
   public
     constructor Create(Const ARequestPoll: TtdKeyboardButtonPollType; AText: string; ARequestContact: Boolean = False;
       ARequestLocation: Boolean = False); overload;
     constructor Create(const AText: string; ARequestContact: Boolean = False;
       ARequestLocation: Boolean = False); overload;
+    [JSONName('request_user')]
     property RequestUser: TtdKeyboardButtonRequestUser read FRequestUser write FRequestUser;
+    [JSONName('request_chat')]
     property RequestChat: TtdKeyboardButtonRequestChat read FRequestChat write FRequestChat;
+
     property RequestContact: Boolean read FRequestContact write FRequestContact;
     property RequestLocation: Boolean read FRequestLocation write FRequestLocation;
     [JSONName('request_poll')] //Resolvido
