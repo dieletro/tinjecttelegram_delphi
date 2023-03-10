@@ -1,11 +1,10 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  AutoSize = True
   Caption = 
     'Example of use of TinjectTelegambot for v1.4.3 (by Ruan Diego La' +
     'cerda Menezes)'
-  ClientHeight = 513
+  ClientHeight = 518
   ClientWidth = 740
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -4136,18 +4135,18 @@ object Form1: TForm1
   end
   object InjectTelegramExceptionManagerUI1: TInjectTelegramExceptionManagerUI
     OnLog = InjectTelegramExceptionManagerUI1Log
-    Left = 224
-    Top = 590
+    Left = 208
+    Top = 326
   end
   object cuHttpClientSysNet1: TcuHttpClientSysNet
-    Left = 520
-    Top = 530
+    Left = 488
+    Top = 322
   end
   object AbrirArquivo: TOpenDialog
     Filter = 'Imagens|*.jpeg;*.jpg;*.gif;*.png;*.bmp'
     FilterIndex = 0
-    Left = 632
-    Top = 522
+    Left = 608
+    Top = 322
   end
   object InjectTelegramBot1: TInjectTelegramBot
     Logger = InjectTelegramExceptionManagerUI1
@@ -4157,7 +4156,7 @@ object Form1: TForm1
     OnSendData = InjectTelegramBot1SendData
     OnDisconect = InjectTelegramBot1Disconect
     Left = 48
-    Top = 582
+    Top = 326
   end
   object BotManager1: TInjectTelegramBotManager
     Bot = InjectTelegramBot1
@@ -4180,7 +4179,8 @@ object Form1: TForm1
     OnForumTopicReopened = BotManager1ForumTopicReopened
     OnGeneralForumTopicHidden = BotManager1GeneralForumTopicHidden
     OnGeneralForumTopicUnhidden = BotManager1GeneralForumTopicUnhidden
-    Left = 384
-    Top = 592
+    OnMessageEntityReceiver = BotManager1MessageEntityReceiver
+    Left = 360
+    Top = 328
   end
 end

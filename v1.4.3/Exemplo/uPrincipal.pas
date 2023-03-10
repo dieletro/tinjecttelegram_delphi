@@ -191,6 +191,8 @@ type
     procedure EditarTopicoClick(Sender: TObject);
     procedure GetForumStikersTopicClick(Sender: TObject);
     procedure SendTextTopicClick(Sender: TObject);
+    procedure BotManager1MessageEntityReceiver(ASender: TObject;
+      AMessageEntityType: TtdMessageEntityType);
   private
     procedure CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
       AInlineMode: Boolean; url: string);
@@ -410,6 +412,31 @@ procedure TForm1.BotManager1GeneralForumTopicUnhidden(ASender: TObject;
   AGeneralForumTopicUnhidden: ItdGeneralForumTopicUnhidden);
 begin
   memConsole.Lines.Add('Um Topico foi Reexibido');
+end;
+
+procedure TForm1.BotManager1MessageEntityReceiver(ASender: TObject;
+  AMessageEntityType: TtdMessageEntityType);
+begin
+  case AMessageEntityType of
+    TtdMessageEntityType.mention: ;
+    TtdMessageEntityType.hashtag: ;
+    TtdMessageEntityType.cashtag: ;
+    TtdMessageEntityType.bot_command: ;
+    TtdMessageEntityType.url: ;
+    TtdMessageEntityType.email: ;
+    TtdMessageEntityType.phone_number: ;
+    TtdMessageEntityType.bold: ;
+    TtdMessageEntityType.italic: ;
+    TtdMessageEntityType.underline: ;
+    TtdMessageEntityType.strikethrough: ;
+    TtdMessageEntityType.code: ;
+    TtdMessageEntityType.pre: ;
+    TtdMessageEntityType.text_link: ;
+    TtdMessageEntityType.text_mention: ;
+    TtdMessageEntityType.spoiler: ;
+    TtdMessageEntityType.custom_emoji: ;
+    TtdMessageEntityType.N_A: ;
+  end;
 end;
 
 procedure TForm1.btnADDClick(Sender: TObject);
