@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 
-    'Example of use of TinjectTelegambot for v1.4.3 (by Ruan Diego La' +
+    'Example of use of TinjectTelegambot for v1.4.4 (by Ruan Diego La' +
     'cerda Menezes)'
   ClientHeight = 518
   ClientWidth = 740
@@ -3510,7 +3510,8 @@ object Form1: TForm1
       C5F4471C7CF05C742FCDD7E2A3D4B5AC11C5662F568B0FE6510E1F763C95E243
       42F5F1896BF7FD7F43AD0EBDFA2406840000000049454E44AE426082}
     Stretch = True
-    ExplicitWidth = 747
+    ExplicitLeft = -8
+    ExplicitTop = 8
   end
   object ImgLoad: TImage
     Left = 627
@@ -3645,7 +3646,7 @@ object Form1: TForm1
         TabOrder = 8
       end
       object memConsole: TMemo
-        Left = 0
+        Left = 3
         Top = 114
         Width = 732
         Height = 202
@@ -3997,7 +3998,7 @@ object Form1: TForm1
       end
       object btnSolicitarCtt: TButton
         Left = 3
-        Top = 34
+        Top = 65
         Width = 137
         Height = 25
         Caption = 'Get Contact'
@@ -4007,7 +4008,7 @@ object Form1: TForm1
       end
       object btnSolicitarLocalizacao: TButton
         Left = 146
-        Top = 34
+        Top = 65
         Width = 137
         Height = 25
         Caption = 'Get Location'
@@ -4017,7 +4018,7 @@ object Form1: TForm1
       end
       object Button6: TButton
         Left = 3
-        Top = 158
+        Top = 189
         Width = 137
         Height = 25
         Caption = 'Send Thread'
@@ -4027,7 +4028,7 @@ object Form1: TForm1
       end
       object Button7: TButton
         Left = 146
-        Top = 158
+        Top = 189
         Width = 137
         Height = 25
         Caption = 'Send Thread Loop'
@@ -4067,7 +4068,7 @@ object Form1: TForm1
       end
       object CriarTopico: TButton
         Left = 3
-        Top = 65
+        Top = 96
         Width = 137
         Height = 25
         Caption = 'Create Topic'
@@ -4077,7 +4078,7 @@ object Form1: TForm1
       end
       object EditarTopico: TButton
         Left = 146
-        Top = 65
+        Top = 96
         Width = 137
         Height = 25
         Caption = 'Edit Topic'
@@ -4087,7 +4088,7 @@ object Form1: TForm1
       end
       object btnSetChatMenuButton: TButton
         Left = 3
-        Top = 127
+        Top = 158
         Width = 137
         Height = 25
         Caption = 'setChatMenuButton'
@@ -4097,7 +4098,7 @@ object Form1: TForm1
       end
       object btnGetChatMenuButton: TButton
         Left = 146
-        Top = 127
+        Top = 158
         Width = 137
         Height = 25
         Caption = 'getChatMenuButton'
@@ -4107,7 +4108,7 @@ object Form1: TForm1
       end
       object btnAnswerWebAppQuery: TButton
         Left = 3
-        Top = 96
+        Top = 127
         Width = 137
         Height = 25
         Caption = 'answerWebAppQuery'
@@ -4130,6 +4131,56 @@ object Form1: TForm1
         Height = 17
         Caption = 'Chanel'
         TabOrder = 16
+      end
+      object btnGetCMD2: TButton
+        Left = 3
+        Top = 34
+        Width = 137
+        Height = 25
+        Caption = 'GetMyCommands2'
+        Default = True
+        TabOrder = 17
+        OnClick = btnGetCMD2Click
+      end
+      object Button11: TButton
+        Left = 146
+        Top = 34
+        Width = 137
+        Height = 25
+        Caption = 'SetMyCommands2'
+        Default = True
+        TabOrder = 18
+        OnClick = Button11Click
+      end
+      object Button12: TButton
+        Left = 289
+        Top = 34
+        Width = 137
+        Height = 25
+        Caption = 'DeleteMyCommands2'
+        Default = True
+        TabOrder = 19
+        OnClick = Button12Click
+      end
+      object btnSetMyName: TButton
+        Left = 3
+        Top = 241
+        Width = 137
+        Height = 25
+        Caption = 'setMyName for Bot'
+        Default = True
+        TabOrder = 20
+        OnClick = btnSetMyNameClick
+      end
+      object btnGetMyName: TButton
+        Left = 3
+        Top = 272
+        Width = 137
+        Height = 25
+        Caption = 'getMyName for Bot'
+        Default = True
+        TabOrder = 21
+        OnClick = btnGetMyNameClick
       end
     end
   end
@@ -4164,9 +4215,9 @@ object Form1: TForm1
       'Ol'#225', notei que nossa conversa atingiu o tempo limite de inativid' +
       'ade, caso n'#227'o se comunique comigo mais, nossa conversa se encerr' +
       'ar'#225' automaticamente!'
-    TimeOutSeconds = 30
+    TimeOutAutoIncSeconds = 30
     Simultaneous = 0
-    InactivityTime = 0
+    InactivityTimeMinute = 0
     InactivityNotice = False
     OnStart = ServiceStart
     OnStop = ServiceStop
@@ -4180,6 +4231,7 @@ object Form1: TForm1
     OnGeneralForumTopicHidden = BotManager1GeneralForumTopicHidden
     OnGeneralForumTopicUnhidden = BotManager1GeneralForumTopicUnhidden
     OnMessageEntityReceiver = BotManager1MessageEntityReceiver
+    OnWebAppData = BotManager1WebAppData
     Left = 360
     Top = 400
   end
