@@ -1866,6 +1866,7 @@ type
     /// </returns>
     function CopyMessage( //
       const ChatId: TtdUserLink; //
+      const message_thread_id: Integer; //
       const FromChatId: TtdUserLink; //
       const MessageId: Int64;//
       const Caption: string; //
@@ -4316,7 +4317,8 @@ begin
   Logger.Leave(Self, 'Close');
 end;
 
-function TInjectTelegramBot.CopyMessage(const ChatId, FromChatId: TtdUserLink;
+function TInjectTelegramBot.CopyMessage(const ChatId: TtdUserLink;
+  const message_thread_id: Integer; const FromChatId: TtdUserLink;
   const MessageId: Int64; const Caption: string; const ParseMode: TtdParseMode;
   const CaptionEntities: TArray<TtdMessageEntity>; const DisableWebPagePreview,
   DisableNotification: Boolean; const ReplyToMessageId: Int64;
@@ -4329,6 +4331,7 @@ begin
   LTmpJson := TJsonUtils.ArrayToJString<TtdMessageEntity>(CaptionEntities);
   Result := GetRequest.SetMethod('copyMessage') //
     .AddParameter('chat_id', ChatId, 0, True) //
+    .AddParameter('message_thread_id', message_thread_id, 0, False) //
     .AddParameter('from_chat_id', FromChatId, 0, True) //
     .AddParameter('message_id', MessageId, 0, True) //
     .AddParameter('caption', Caption, '', False) //
@@ -4340,7 +4343,7 @@ begin
     .AddParameter('allow_sending_without_reply', AllowSendingWithoutReply, False, False) //
     .AddParameter('protect_content ', ProtectContent, False, False) //
     .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
-    .Execute.ToInt64;
+    .ExecuteAsInt64('message_id');
   Logger.Leave(Self, 'CopyMessage');
 end;
 function TInjectTelegramBot.LogOut: Boolean;

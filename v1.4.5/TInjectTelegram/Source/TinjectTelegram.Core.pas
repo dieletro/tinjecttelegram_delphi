@@ -56,6 +56,7 @@ type
     function ClearParameters: ItdRequestAPI;
     function Execute: string;
     function ExecuteAsBool: Boolean;
+    function ExecuteAsInt64(AKey: String): Int64;
     function ExecuteAndReadValue: string;
     // props
     property DataExtractor: TFunc<string, string> read GetDataExtractor write
@@ -126,6 +127,7 @@ type
     function ClearParameters: ItdRequestAPI;
     function Execute: string; virtual; abstract;
     function ExecuteAsBool: Boolean;
+    function ExecuteAsInt64(AKey:String): Int64;
     function ExecuteAndReadValue: string;
     constructor Create;
     // props
@@ -288,6 +290,18 @@ begin
     LJson.Free;
   end;
 end;
+function TtdCoreApiBase.ExecuteAsInt64(AKey :String): Int64;
+var
+  LJson: TJSONValue;
+begin
+  LJson := TJSONObject.ParseJSONValue(Execute);
+  try
+    Result := LJson.GetValue<Int64>(AKey);
+  finally
+    LJson.Free;
+  end;
+end;
+
 function TtdCoreApiBase.GetDataExtractor: TFunc<string, string>;
 begin
   Result := FDataExtractor;

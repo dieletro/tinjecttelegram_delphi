@@ -4182,6 +4182,36 @@ object Form1: TForm1
         TabOrder = 21
         OnClick = btnGetMyNameClick
       end
+      object btnCopyMessage: TButton
+        Left = 289
+        Top = 96
+        Width = 137
+        Height = 25
+        Caption = 'CopyMessage'
+        Default = True
+        TabOrder = 22
+        OnClick = btnCopyMessageClick
+      end
+      object btnEditMessage: TButton
+        Left = 289
+        Top = 127
+        Width = 137
+        Height = 25
+        Caption = 'EditMessage'
+        Default = True
+        TabOrder = 23
+        OnClick = btnEditMessageClick
+      end
+      object btnDeleteMessage: TButton
+        Left = 289
+        Top = 158
+        Width = 137
+        Height = 25
+        Caption = 'DeleteMessage'
+        Default = True
+        TabOrder = 24
+        OnClick = btnDeleteMessageClick
+      end
     end
   end
   object InjectTelegramExceptionManagerUI1: TInjectTelegramExceptionManagerUI
@@ -4197,7 +4227,7 @@ object Form1: TForm1
     Filter = 'Imagens|*.jpeg;*.jpg;*.gif;*.png;*.bmp'
     FilterIndex = 0
     Left = 608
-    Top = 322
+    Top = 298
   end
   object InjectTelegramBot1: TInjectTelegramBot
     Logger = InjectTelegramExceptionManagerUI1

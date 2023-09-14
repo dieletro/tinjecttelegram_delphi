@@ -571,6 +571,7 @@ type
     function UnPinAllChatMessages(const ChatId: TtdUserLink): Boolean;
     function CopyMessage( //
       const ChatId: TtdUserLink; //
+      const message_thread_id: Integer; //
       const FromChatId: TtdUserLink; //
       const MessageId: Int64;//
       const Caption: string; //
