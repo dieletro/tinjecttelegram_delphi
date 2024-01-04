@@ -1,0 +1,121 @@
+h1, .h1
+{
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 32px;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h2, .h2
+{
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 27px;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h3, .h3
+{
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 24px;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h4, .h4
+{
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 21px;
+   font-style: italic;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h5, .h5
+{
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 19px;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h6, .h6
+{
+   font-family: Arial;
+   font-weight: bold;
+   font-size: 16px;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+.CustomStyle
+{
+   font-family: "Courier New";
+   font-weight: bold;
+   font-size: 16px;
+   text-decoration: none;
+   color: #2E74B5;
+   background-color: transparent;
+}
+.bt-add
+{
+   font-weight: bold;
+   font-size: 13px;
+   text-decoration: none;
+   color: #FFFFFF;
+   background-color: #FBB727;
+   background-clip: text;
+   border-radius: 6px;
+}
+.bt-dec
+{
+   font-weight: bold;
+   font-size: 15px;
+   text-decoration: none;
+   color: #FFFFFF;
+   background-color: #FF4500;
+   background-clip: text;
+   border-radius: 6px;
+}
+.bt-ViewOrder
+{
+   font-weight: bold;
+   text-align: center;
+   text-decoration: none;
+   color: #FFFFFF;
+   background-color: #32CD32;
+   border-radius: 6px;
+}
+.ballon
+{
+   font-weight: bold;
+   text-decoration: none;
+   color: #FFFFFF;
+   background-color: #FBB727;
+   background-clip: text;
+   border: 0px none #FBB727;
+   border-radius: 20px;
+}

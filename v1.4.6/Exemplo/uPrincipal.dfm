@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 
-    'Example of use of TinjectTelegambot for v1.4.5 (by Ruan Diego La' +
+    'Example of use of TinjectTelegambot for v1.4.6 (by Ruan Diego La' +
     'cerda Menezes)'
   ClientHeight = 518
   ClientWidth = 740
@@ -3526,7 +3526,7 @@ object Form1: TForm1
     Top = 169
     Width = 740
     Height = 344
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Align = alTop
     TabOrder = 0
     object TabSheet2: TTabSheet
