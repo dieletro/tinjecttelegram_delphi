@@ -1727,6 +1727,8 @@ begin
 end;
 function TtdMessage.&Type: TtdMessageType;
 begin
+  if not Text.IsEmpty then
+    Exit(TtdMessageType.TextMessage);
   if Audio <> nil then
     Exit(TtdMessageType.AudioMessage);
   if Contact <> nil then
@@ -1737,8 +1739,8 @@ begin
     Exit(TtdMessageType.GameMessage);
   if (Location <> nil) then
     Exit(TtdMessageType.LocationMessage);
-  if (NewChatMember <> nil) or (LeftChatMember <> nil) or ((NewChatPhoto <> nil) and (Length(NewChatPhoto) > 0)) or ((NewChatMembers <> nil) and (Length(NewChatMembers) > 0)) or (not NewChatTitle.IsEmpty) or DeleteChatPhoto or GroupChatCreated or SupergroupChatCreated or ChannelChatCreated or (MigrateToChatId <> 0) or (MigrateFromChatId <> 0) or (PinnedMessage <> nil) then
-    Exit(TtdMessageType.ServiceMessage);
+//  if (NewChatMember <> nil) or (LeftChatMember <> nil) or ((NewChatPhoto <> nil) and (Length(NewChatPhoto) > 0)) or ((NewChatMembers <> nil) and (Length(NewChatMembers) > 0)) or (not NewChatTitle.IsEmpty) or DeleteChatPhoto or GroupChatCreated or SupergroupChatCreated or ChannelChatCreated or (MigrateToChatId <> 0) or (MigrateFromChatId <> 0) or (PinnedMessage <> nil) then
+//    Exit(TtdMessageType.ServiceMessage);
   if (Photo <> nil) and (Length(Photo) > 0) then
     Exit(TtdMessageType.PhotoMessage);
   if (Sticker <> nil) then
@@ -1761,8 +1763,6 @@ begin
     Exit(TtdMessageType.InvoiceMessage);
   if (PassportData <> nil) then
     Exit(TtdMessageType.PassportDataMessage);
-  if not Text.IsEmpty then
-    Exit(TtdMessageType.TextMessage);
   Result := TtdMessageType.UnknownMessage;
 end;
 function TtdMessage.UserShared: ItdUserShared;
