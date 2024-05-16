@@ -7,6 +7,7 @@ uses
   System.DateUtils,
   System.RegularExpressions;
 type
+
   TtdParseModeHelper = record helper for TtdParseMode
     function ToString: string;
   end;
@@ -96,6 +97,18 @@ begin
       LAllowed.Add('"channel_post"');
     if TAllowedUpdate.Edited_channel_post in Self then
       LAllowed.Add('"edited_channel_post"');
+    if TAllowedUpdate.business_connection in Self then
+      LAllowed.Add('"business_connection"');
+    if TAllowedUpdate.business_message in Self then
+      LAllowed.Add('"business_message"');
+    if TAllowedUpdate.edited_business_message in Self then
+      LAllowed.Add('"edited_business_message"');
+    if TAllowedUpdate.deleted_business_messages in Self then
+      LAllowed.Add('"deleted_business_messages"');
+    if TAllowedUpdate.message_reaction in Self then
+      LAllowed.Add('"message_reaction"');
+    if TAllowedUpdate.message_reaction_count in Self then
+      LAllowed.Add('"message_reaction_count"');
     if TAllowedUpdate.Inline_query in Self then
       LAllowed.Add('"inline_query"');
     if TAllowedUpdate.Chosen_inline_result in Self then

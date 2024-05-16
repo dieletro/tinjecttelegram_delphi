@@ -23,6 +23,7 @@ type
     function CanJoinGroups: Boolean;
     function CanReadAllGroupMessages: Boolean;
     function SupportsInlineQueries: Boolean;
+    function CanConnectToBusiness: Boolean;
     function ToJSonStr: String;
   end;
 
@@ -99,6 +100,7 @@ type
     function old_chat_member:	ItdChatMember;
     function new_chat_member:	ItdChatMember;
     function invite_link:	ItdChatInviteLink;
+    function via_join_request: Boolean;
     function via_chat_folder_invite_link: Boolean;
   End;
 
@@ -132,7 +134,51 @@ type
     function Location: ItdLocation;
     function Address:	String; //Limit of a 64 character
   end;
+
+  TtdBirthdate = class(TBaseJson, ItdBirthdate)
+  public
+    function day: Integer;
+    function month: Integer;
+    function year: Integer;
+  end;
+
+  TtdBusinessIntro = class(TBaseJson, ItdBusinessIntro)
+  public
+    function title: String;
+    function message_: String;
+    function sticker: ItdSticker;
+  end;
+
+  TtdBusinessLocation = class(TBaseJson, ItdBusinessLocation)
+  public
+    function address: String;
+    function location: ItdLocation;
+  end;
+
+  TtdBusinessOpeningHoursInterval = class(TBaseJson, ItdBusinessOpeningHoursInterval)
+  public
+    function opening_minute: integer;
+    function closing_minute: integer;
+  end;
+
+  TtdBusinessOpeningHours = class(TBaseJson, ItdBusinessOpeningHours)
+  public
+    function time_zone_name: string;
+    function opening_hours: TArray<TtdBusinessOpeningHoursInterval>;
+  end;
+
   TtdChat = class(TBaseJson, ItdChat)
+  public
+    function ID: Int64;
+    function TypeChat: TtdChatType;
+    function Title: string;
+    function Username: string;
+    function FirstName: string;
+    function LastName: string;
+    function is_forum: boolean;
+  end;
+
+  TtdChatFullInfo = class(TBaseJson, ItdChatFullInfo)
   private
     function IsGroup: Boolean;
   public
@@ -143,10 +189,16 @@ type
     function FirstName: string;
     function LastName: string;
     function is_forum: boolean;
+    function accent_color_id: integer;
+    function max_reaction_count: integer;
     function Photo: ItdChatPhoto;
     function active_usernames: Tarray<string>;
+    function birthdate: ItdBirthdate;
+    function business_intro: ItdBusinessIntro;
+    function business_location: ItdBusinessLocation;
+    function business_opening_hours: ItdBusinessOpeningHours;
+    function personal_chat: ItdChat;
     function available_reactions: TArray<ItdReactionType>;
-    function accent_color_id: integer;
     function background_custom_emoji_id: string;
     function profile_accent_color_id: Integer;
     function profile_background_custom_emoji_id: string;
@@ -162,6 +214,7 @@ type
     function PinnedMessage: ItdMessage;
     function Permissions: ItdChatPermissions;
     function SlowModeDelay:	Integer;
+    function UnrestrictBoostCount: Integer;
     function MessageAutoDeleteTime: integer;
     function has_aggressive_anti_spam_enabled: Boolean;
     function has_hidden_members: Boolean;
@@ -169,6 +222,7 @@ type
     function HasVisibleHistory: boolean;
     function StickerSetName: string;
     function CanSetStickerSet: Boolean;
+    function CustomEmojiStickerSetName: String;
     function LinkedChatId:	Integer;
     function location: ItdChatLocation;
     function ToJSonStr: String;
@@ -219,6 +273,40 @@ type
     function YShift: Single;
     function Scale: Single;
   end;
+
+  TtdInputSticker = class(TBaseJson, ItdInputSticker)
+  public
+    function sticker: string;
+    function format: string;
+    function emoji_list: TArray<string>;
+    function mask_position: ItdMaskPosition;
+    function keywords: TArray<string>;
+  end;
+
+  TtdSharedUser = class(TBaseJson, ItdSharedUser)
+  public
+    function user_id: int64;
+    function first_name: string;
+    function last_name: string;
+    function username: string;
+    function photo: TArray<ItdPhotosize>;
+  end;
+
+  TtdUsersShared = class(TBaseJson, ItdUsersShared)
+  public
+    function request_id: integer;
+    function users: TArray<ItdSharedUser>;
+  end;
+
+  TtdChatShared = class(TBaseJson, ItdChatShared)
+  public
+    function request_id: integer;
+    function chat_id: integer;
+    function title: string;
+    function username: string;
+    function photo: TArray<ItdPhotosize>;
+  end;
+
   TtdSticker = class(TtdFile, ItdSticker)
   public
     function type_: string;
@@ -235,15 +323,17 @@ type
     function NeedsRepainting: boolean;
   end;
 
-  TtdStory = class(TBaseJson, ItdStory);
+  TtdStory = class(TBaseJson, ItdStory)
+  public
+    function id: Int64;
+    function chat: ItdChat;
+  end;
 
   TtdStickerSet = class(TBaseJson, ItdStickerSet)
   public
     function Name: string;
     function Title: string;
     function StickerType: TtdStickerType;
-    function is_animated:	Boolean;
-    function is_video:	Boolean;
     function ContainsMasks: Boolean;
     function Stickers: TArray<ItdSticker>;
     function Thumbnail: ItdPhotoSize;
@@ -296,7 +386,14 @@ type
   TtdPollOption = class(TBaseJson, ItdPollOption)
   public
     function text : String;
+    function text_entities: TArray<ItdMEssageEntity>;
     function voter_count: String;
+  end;
+  TtdInputPollOption = class(TBaseJson, ItdInputPollOption)
+  public
+    function text : String;
+    function text_parse_mode: String;
+    function text_entities: TArray<ItdMEssageEntity>;
   end;
   TtdPollAnswer = class(TBaseJson, ItdPollAnswer)
     function poll_id: String;
@@ -307,6 +404,7 @@ type
   TtdPoll = class(TBaseJson, ItdPoll)
     function Id : String;
     function Question: String;
+    function QuestionEntities: TArray<ItdMessageEntity>;
     function options: TArray<ItdPollOption>;
     function total_voter_count: Integer;
     function is_closed: Boolean;
@@ -645,13 +743,24 @@ type
     constructor Create; overload;
   End;
 
+  TtdTextQuote = class(TBaseJson, ItdTextQuote)
+  public
+    function Text: string;
+    function Entity: TArray<TtdMessageEntity>;
+    function position: Integer;
+    function is_manual: Boolean;
+  end;
+
   TtdMessage = class(TBaseJson, ItdMessage)
   public
     function MessageId: Int64;
     function MessageThreadId: Int64;
     function From: ItdUser;
     function SenderChat: ItdChat;
+    function SenderBoostCount: Integer;
+    function SenderBusinessBot: ItdUser;
     function Date: TDateTime;
+    function BusinessConnectionId: string;
     function Chat: ItdChat;
     function ForwardOrigin: ItdMessageOrigin; //
     function IsTopicMessage : Boolean;
@@ -659,9 +768,11 @@ type
     function ReplyToMessage: ItdMessage;
     function ExternalReply: ItdExternalReplyInfo;
     function Quote: ItdTextQuote;
+    function ReplyToStory: ItdStory;
     function ViaBot : ItdUser;
     function EditDate: TDateTime;
     function HasProtectedContent: boolean;
+    function IsFromOffline: boolean;
     function MediaGroupId: string;
     function AuthorSignature: string;
     function Text: string;
@@ -699,12 +810,14 @@ type
     function PinnedMessage: ItdMaybeInaccessibleMessage_;
     function Invoice: ItdInvoice;
     function SuccessfulPayment: ItdSuccessfulPayment;
-    function UserShared: ItdUserShared;
+    function UsersShared: ItdUsersShared;
     function ChatShared: ItdChatShared;
     function ConnectedWebsite: string;
     function WriteAccessAllowed: ItdWriteAccessAllowed;
     function PassportData: ItdPassportData;
     function ProximityAlertTriggered: ItdProximityAlertTriggered;
+    function BoostAdded: ItdChatBoostAdded;
+    function ChatBackgroundSet: ItdChatBackground;
     function ForumTopicCreated: ItdForumTopicCreated;
     function ForumTopicClosed: ItdForumTopicClosed;
     function ForumTopicEdited: ItdForumTopicEdited;
@@ -986,6 +1099,25 @@ type
     function Credentials : ItdEncryptedCredentials;
   end;
 {$ENDREGION}
+
+  TtdBusinessConnection = class(TBaseJson, ItdBusinessConnection)
+  public
+    function id: string;
+    function user: Itduser;
+    function user_chat_id: Int64;
+    function date: TDateTime;
+    function can_reply: Boolean;
+    function is_enabled: Boolean;
+  end;
+
+  TtdBusinessMessagesDeleted = class(TBaseJson, ItdBusinessMessagesDeleted)
+  public
+    function business_connection_id: string;
+    function chat: ItdChat;
+    function message_ids: TArray<Integer>;
+  end;
+
+
   TtdUpdate = class(TBaseJson, ItdUpdate)
   public
     function ID: Int64;
@@ -996,6 +1128,10 @@ type
     function CallbackQuery: ItdCallbackQuery;
     function ChannelPost: ItdMessage;
     function EditedChannelPost: ItdMessage;
+    function BusinessConnection: ItdBusinessConnection;
+    function BusinessMessage: ItdMessage;
+    function EditedBusinessMessage: ItdMessage;
+    function DeletedBusinessMessages: ItdBusinessMessagesDeleted;
     function MessageReaction: ItdReaction;
     function MessageReactionCount: ItdReactionCount;
     function ShippingQuery: ItdShippingQuery;
@@ -1151,7 +1287,6 @@ type
     function can_edit_stories: Boolean;
     function can_delete_stories: Boolean;
     function can_manage_topics: Boolean;
-
   published
     constructor Create; reintroduce; overload;
     function ToJsonObject: string;
@@ -1216,18 +1351,6 @@ type
 //    function isProgressVisible:	Boolean;
   End;
 
-  TtdUserShared = class(TBaseJson, ItdUserShared)
-  public
-    function request_id: integer;
-    function user_ids: TArray<integer>;
-  End;
-
-  TtdChatShared = class(TBaseJson, ItdChatShared)
-  public
-    function request_id: integer;
-    function chat_id: integer;
-  End;
-
   TtdBotName = class(TBaseJson, ItdBotName)
   public
     function name: string;
@@ -1280,14 +1403,6 @@ type
     function short_description: string;
   end;
 
-  TtdInputSticker = class(TBaseJson, ItdInputSticker)
-  public
-    function sticker: string;
-    function emoji_list: TArray<string>;
-    function mask_position: ItdMaskPosition;
-    function keywords: TArray<string>; //List of 0-20 search keywords
-  end;
-
   TtdReactionTypeEmoji = class(TBaseJson, ItdReactionType)
   public
     function type_ : string;
@@ -1332,6 +1447,73 @@ type
     function date         : TDateTime;
     function reaction     : TArray<TtdReactionCount>;
   end;
+
+  TtdChatBoostAdded = class(TBaseJson, ItdChatBoostAdded)
+  public
+    function boost_count: Integer;
+  end;
+
+  TtdBackgroundFill = class(TBaseJson, ItdBackgroundFill);
+
+  TtdBackgroundFillSolid = class(TBaseJson, ItdBackgroundFillSolid)
+  public
+    function type_: string;
+    function color: Integer;
+  end;
+
+  TtdBackgroundFillGradient = class(TBaseJson, ItdBackgroundFillGradient)   //Type of the background fill, always “gradient”
+  public
+    function type_: string;
+    function top_color: Integer;       //Top color of the gradient in the RGB24 format
+    function bottom_color: Integer;    //Bottom color of the gradient in the RGB24 format
+    function rotation_angle: Integer;  //Clockwise rotation angle of the background fill in degrees; 0-359
+  end;
+
+  TtdBackgroundFillFreeformGradient = class(TBaseJson, ItdBackgroundFillFreeformGradient)
+  public
+    function type_: string;
+    function colors: TArray<integer>;  //A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format
+  end;
+
+  TtdBackgroundType = class(TBaseJson, ItdBackgroundType);
+
+  TtdBackgroundTypeFill = class(TBaseJson, ItdBackgroundTypeFill)  //	Type of the background, always “fill”
+  public
+    function type_: string;
+    function fill: ItdBackgroundFill;      //The background fill
+    function dark_theme_dimming: Integer;  //Dimming of the background in dark themes, as a percentage; 0-100
+  end;
+
+  TtdBackgroundTypeWallpaper = class(TBaseJson, ItdBackgroundTypeWallpaper)
+  public
+    function type_: string;
+    function document: ItdDocument;
+    function dark_theme_dimming: Integer;  //Dimming of the background in dark themes, as a percentage; 0-100
+    function is_blurred: Boolean;          //Optional. True, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12
+    function is_moving: Boolean;           //Optional. True, if the background moves slightly when the device is tilted
+  end;
+
+  TtdBackgroundTypePattern = class(TBaseJson, ItdBackgroundTypePattern)
+  public
+    function type_: string;
+    function document: ItdDocument;
+    function fill: ItdBackgroundFill;      //The background fill
+    function intensity: Integer;
+    function is_inverted: Boolean;
+    function is_moving: Boolean;
+  end;
+
+  TtdBackgroundTypeChatTheme = class(TBaseJson, ItdBackgroundTypeChatTheme) //Type of the background, always “chat_theme”
+  public
+    function type_: string;
+    function theme_name: string; //Name of the chat theme, which is usually an emoji
+  end;
+
+  TtdChatBackground = class(TBaseJson, ItdChatBackground)
+  public
+    function type_: ItdBackgroundType;
+  end;
+
 
 implementation
 uses
@@ -1553,6 +1735,11 @@ begin
       if Text.Substring(LEnt.Offset, LEnt.Length).StartsWith(AValue, True) then
         Exit(True);
 end;
+function TtdMessage.IsFromOffline: boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('is_from_offline');
+end;
+
 function TtdMessage.IsTopicMessage: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('is_topic_message');
@@ -1564,7 +1751,7 @@ begin
 end;
 function TtdMessage.LinkPreviewOptions: ItdLinkPreviewOptions;
 begin
-
+  Result := ReadToClass<TtdLinkPreviewOptions>('link_preview_options');
 end;
 
 function TtdMessage.Location: ItdLocation;
@@ -1655,9 +1842,10 @@ begin
   for I := 0 to LJsonArray.Count - 1 do
     Result[I] := TtdMessageEntity.Create(LJsonArray.Items[I].ToString);
 end;
+
 function TtdMessage.ExternalReply: ItdExternalReplyInfo;
 begin
-
+  Result := ReadToClass<TtdExternalReplyInfo>('external_reply');
 end;
 
 function TtdMessage.PassportData: ItdPassportData;
@@ -1687,9 +1875,10 @@ function TtdMessage.ProximityAlertTriggered: ItdProximityAlertTriggered;
 begin
   Result := ReadToClass<TtdProximityAlertTriggered>('proximity_alert_triggered');
 end;
+
 function TtdMessage.Quote: ItdTextQuote;
 begin
-
+  Result := ReadToClass<TtdTextQuote>('quote');
 end;
 
 function TtdMessage.ReplyMarkup: IReplyMarkup;
@@ -1700,6 +1889,22 @@ function TtdMessage.ReplyToMessage: ItdMessage;
 begin
   Result := ReadToClass<TtdMessage>('reply_to_message');
 end;
+
+function TtdMessage.ReplyToStory: ItdStory;
+begin
+  Result := ReadToClass<TtdStory>('reply_to_story');
+end;
+
+function TtdMessage.SenderBoostCount: Integer;
+begin
+ Result := ReadToSimpleType<Integer>('sender_boost_count');
+end;
+
+function TtdMessage.SenderBusinessBot: ItdUser;
+begin
+  Result := ReadToClass<TtdUser>('sender_business_bot');
+end;
+
 function TtdMessage.SenderChat: ItdChat;
 begin
   Result := ReadToClass<TtdChat>('sender_chat');
@@ -1770,9 +1975,9 @@ begin
     Exit(TtdMessageType.PassportDataMessage);
   Result := TtdMessageType.UnknownMessage;
 end;
-function TtdMessage.UserShared: ItdUserShared;
+function TtdMessage.UsersShared: ItdUsersShared;
 begin
-  Result := ReadToClass<TtdUserShared>('users_shared');
+  Result := ReadToClass<TtdUsersShared>('users_shared');
 end;
 function TtdMessage.ChatShared: ItdChatShared;
 begin
@@ -1790,6 +1995,16 @@ function TtdMessage.AuthorSignature: string;
 begin
   Result := ReadToSimpleType<string>('author_signature');
 end;
+function TtdMessage.BoostAdded: ItdChatBoostAdded;
+begin
+  Result := ReadToClass<TtdChatBoostAdded>('boost_added');
+end;
+
+function TtdMessage.BusinessConnectionId: string;
+begin
+  Result := ReadToSimpleType<string>('business_connection_id');
+end;
+
 function TtdMessage.Caption: string;
 begin
   Result := ReadToSimpleType<string>('caption');
@@ -1806,6 +2021,11 @@ function TtdMessage.Chat: ItdChat;
 begin
   Result := ReadToClass<TtdChat>('chat');
 end;
+function TtdMessage.ChatBackgroundSet: ItdChatBackground;
+begin
+  Result := ReadToClass<TtdChatBackground>('chat_background_set');
+end;
+
 function TtdMessage.ConnectedWebsite: string;
 begin
   Result := ReadToSimpleType<string>('connected_website');
@@ -1886,6 +2106,16 @@ begin
   Result := ReadToSimpleType<string>('title');
 end;
 { TtdUpdate }
+function TtdUpdate.BusinessConnection: ItdBusinessConnection;
+begin
+  Result := ReadToClass<TtdBusinessConnection>('business_connection');
+end;
+
+function TtdUpdate.BusinessMessage: ItdMessage;
+begin
+  Result := ReadToClass<TtdMessage>('business_message');
+end;
+
 function TtdUpdate.CallbackQuery: ItdCallbackQuery;
 begin
   Result := ReadToClass<TtdCallbackQuery>('callback_query');
@@ -1916,6 +2146,16 @@ function TtdUpdate.ChosenInlineResult: ItdChosenInlineResult;
 begin
   Result := ReadToClass<TtdChosenInlineResult>('chosen_inline_result');
 end;
+function TtdUpdate.DeletedBusinessMessages: ItdBusinessMessagesDeleted;
+begin
+  Result := ReadToClass<TtdBusinessMessagesDeleted>('deleted_business_messages');
+end;
+
+function TtdUpdate.EditedBusinessMessage: ItdMessage;
+begin
+  Result := ReadToClass<TtdMessage>('edited_business_message');
+end;
+
 function TtdUpdate.EditedChannelPost: ItdMessage;
 begin
   Result := ReadToClass<TtdMessage>('edited_channel_post');
@@ -2066,15 +2306,6 @@ function TtdStickerSet.ContainsMasks: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('contains_masks');
 end;
-function TtdStickerSet.is_animated: Boolean;
-begin
-  Result := ReadToSimpleType<Boolean>('is_animated');
-end;
-
-function TtdStickerSet.is_video: Boolean;
-begin
-  Result := ReadToSimpleType<Boolean>('is_video');
-end;
 
 function TtdStickerSet.Name: string;
 begin
@@ -2146,6 +2377,11 @@ end;
 function TtdUser.AddedToAttachmentMenu: string;
 begin
   Result := ReadToSimpleType<string>('added_to_attachment_menu');
+end;
+
+function TtdUser.CanConnectToBusiness: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('can_connect_to_business');
 end;
 
 function TtdUser.CanJoinGroups: Boolean;
@@ -2319,13 +2555,13 @@ begin
   Result := ReadToSimpleType<string>('small_file_unique_id');
 end;
 
-{ TtdChat }
-function TtdChat.accent_color_id: integer;
+{ TtdChatFullInfo }
+function TtdChatFullInfo.accent_color_id: integer;
 begin
   Result := ReadToSimpleType<integer>('accent_color_id');
 end;
 
-function TtdChat.active_usernames: Tarray<string>;
+function TtdChatFullInfo.active_usernames: Tarray<string>;
 var
   LJsonArray: TJSONArray;
   I: Integer;
@@ -2338,7 +2574,7 @@ begin
     Result[I] := ReadToSimpleType<string>(LJsonArray.Items[I].ToString);
 end;
 
-function TtdChat.available_reactions: TArray<ItdReactionType>;
+function TtdChatFullInfo.available_reactions: TArray<ItdReactionType>;
 var
   LJsonArray: TJSONArray;
   I: Integer;
@@ -2351,149 +2587,184 @@ begin
     Result[I] := ReadToClass<TtdReactionType>(LJsonArray.Items[I].ToString);
 end;
 
-function TtdChat.background_custom_emoji_id: string;
+function TtdChatFullInfo.background_custom_emoji_id: string;
 begin
   Result := ReadToSimpleType<string>('background_custom_emoji_id');
 end;
 
-function TtdChat.Bio: String;
+function TtdChatFullInfo.Bio: String;
 begin
   Result := ReadToSimpleType<String>('bio');
 end;
-function TtdChat.CanSetStickerSet: Boolean;
+function TtdChatFullInfo.birthdate: ItdBirthdate;
+begin
+  Result := ReadToClass<TtdBirthdate>('birthdate');
+end;
+
+function TtdChatFullInfo.business_intro: ItdBusinessIntro;
+begin
+  Result := ReadToClass<TtdBusinessIntro>('business_intro');
+end;
+
+function TtdChatFullInfo.business_location: ItdBusinessLocation;
+begin
+  Result := ReadToClass<TtdBusinessLocation>('business_location');
+end;
+
+function TtdChatFullInfo.business_opening_hours: ItdBusinessOpeningHours;
+begin
+  Result := ReadToClass<TtdBusinessOpeningHours>('business_opening_hours');
+end;
+
+function TtdChatFullInfo.CanSetStickerSet: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('can_set_sticker_set');
 end;
-function TtdChat.Description: string;
+function TtdChatFullInfo.CustomEmojiStickerSetName: String;
+begin
+  Result := ReadToSimpleType<string>('custom_emoji_sticker_set_name');
+end;
+
+function TtdChatFullInfo.Description: string;
 begin
   Result := ReadToSimpleType<string>('description');
 end;
-function TtdChat.emoji_status_custom_emoji_id: string;
+function TtdChatFullInfo.emoji_status_custom_emoji_id: string;
 begin
   Result := ReadToSimpleType<string>('emoji_status_custom_emoji_id');
 end;
 
-function TtdChat.emoji_status_expiration_date: Integer;
+function TtdChatFullInfo.emoji_status_expiration_date: Integer;
 begin
   Result := ReadToSimpleType<Integer>('emoji_status_expiration_date');
 end;
 
-function TtdChat.FirstName: string;
+function TtdChatFullInfo.FirstName: string;
 begin
   Result := ReadToSimpleType<string>('first_name');
 end;
-function TtdChat.HasPrivateForwards: Boolean;
+function TtdChatFullInfo.HasPrivateForwards: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('has_private_forwards');
 end;
 
-function TtdChat.HasProtectedContent: boolean;
+function TtdChatFullInfo.HasProtectedContent: boolean;
 begin
   Result := ReadToSimpleType<Boolean>('has_protected_content');
 end;
 
-function TtdChat.HasVisibleHistory: boolean;
+function TtdChatFullInfo.HasVisibleHistory: boolean;
 begin
   Result := ReadToSimpleType<Boolean>('has_visible_history');
 end;
 
-function TtdChat.has_aggressive_anti_spam_enabled: Boolean;
+function TtdChatFullInfo.has_aggressive_anti_spam_enabled: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('has_aggressive_anti_spam_enabled');
 end;
 
-function TtdChat.has_hidden_members: Boolean;
+function TtdChatFullInfo.has_hidden_members: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('has_hidden_members');
 end;
 
-function TtdChat.has_restricted_voice_and_video_messages: boolean;
+function TtdChatFullInfo.has_restricted_voice_and_video_messages: boolean;
 begin
   Result := ReadToSimpleType<Boolean>('has_restricted_voice_and_video_messages');
 end;
 
-function TtdChat.ID: Int64;
+function TtdChatFullInfo.ID: Int64;
 begin
   Result := ReadToSimpleType<Int64>('id');
 end;
-function TtdChat.InviteLink: string;
+function TtdChatFullInfo.InviteLink: string;
 begin
   Result := ReadToSimpleType<string>('invite_link');
 end;
-function TtdChat.IsGroup: Boolean;
+function TtdChatFullInfo.IsGroup: Boolean;
 var
   LValue: string;
 begin
   LValue := ReadToSimpleType<string>('type');
   result := (LValue = 'group');
 end;
-function TtdChat.is_forum: boolean;
+function TtdChatFullInfo.is_forum: boolean;
 begin
   Result := ReadToSimpleType<Boolean>('is_forum');
 end;
 
-function TtdChat.JoinByRequest: Boolean;
+function TtdChatFullInfo.JoinByRequest: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('join_by_request');
 end;
 
-function TtdChat.JoinToSendMessages: Boolean;
+function TtdChatFullInfo.JoinToSendMessages: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('join_to_send_messages');
 end;
 
-function TtdChat.LastName: string;
+function TtdChatFullInfo.LastName: string;
 begin
   Result := ReadToSimpleType<string>('last_name');
 end;
-function TtdChat.LinkedChatId: Integer;
+function TtdChatFullInfo.LinkedChatId: Integer;
 begin
   Result := ReadToSimpleType<Integer>('linked_chat_id');
 end;
-function TtdChat.location: ItdChatLocation;
+function TtdChatFullInfo.location: ItdChatLocation;
 begin
   Result := ReadToClass<TtdChatLocation>('location');
 end;
-function TtdChat.MessageAutoDeleteTime: integer;
+function TtdChatFullInfo.max_reaction_count: integer;
+begin
+
+end;
+
+function TtdChatFullInfo.MessageAutoDeleteTime: integer;
 begin
   Result := ReadToSimpleType<Integer>('message_auto_delete_time');
 end;
 
-function TtdChat.Permissions: ItdChatPermissions;
+function TtdChatFullInfo.Permissions: ItdChatPermissions;
 begin
   Result := ReadToClass<TtdChatPermissions>('ChatPermissions');
 end;
-function TtdChat.Photo: ItdChatPhoto;
+function TtdChatFullInfo.personal_chat: ItdChat;
+begin
+  Result := ReadToClass<TtdChat>('personal_chat');
+end;
+
+function TtdChatFullInfo.Photo: ItdChatPhoto;
 begin
   Result := ReadToClass<TtdChatPhoto>('photo');
 end;
-function TtdChat.PinnedMessage: ItdMessage;
+function TtdChatFullInfo.PinnedMessage: ItdMessage;
 begin
   Result := ReadToClass<TtdMessage>('pinned_message');
 end;
-function TtdChat.profile_accent_color_id: Integer;
+function TtdChatFullInfo.profile_accent_color_id: Integer;
 begin
   Result := ReadToSimpleType<Integer>('profile_accent_color_id');
 end;
 
-function TtdChat.profile_background_custom_emoji_id: string;
+function TtdChatFullInfo.profile_background_custom_emoji_id: string;
 begin
   Result := ReadToSimpleType<string>('profile_background_custom_emoji_id');
 end;
 
-function TtdChat.SlowModeDelay: Integer;
+function TtdChatFullInfo.SlowModeDelay: Integer;
 begin
   Result := ReadToSimpleType<Integer>('slow_mode_delay');
 end;
-function TtdChat.StickerSetName: string;
+function TtdChatFullInfo.StickerSetName: string;
 begin
   Result := ReadToSimpleType<string>('sticker_set_name');
 end;
-function TtdChat.Title: string;
+function TtdChatFullInfo.Title: string;
 begin
   Result := ReadToSimpleType<string>('title');
 end;
-function TtdChat.ToJSonStr: String;
+function TtdChatFullInfo.ToJSonStr: String;
 var
   LValue: string;
   Saida : Boolean;
@@ -2518,7 +2789,7 @@ begin
 // '","can_set_sticker_set":"'+ReadToSimpleType<Boolean>('can_set_sticker_set').ToString+sLineBreak+
 // '","is_group":"'+Saida.ToString+'"}]';
 end;
-function TtdChat.ToString: String;
+function TtdChatFullInfo.ToString: String;
 var
   LValue: string;
   Saida : Boolean;
@@ -2541,7 +2812,7 @@ begin
 // 'can_set_sticker_set='+ReadToSimpleType<Boolean>('can_set_sticker_set').ToString+sLineBreak+
 // 'is_group='+Saida.ToJsonString+']';
 end;
-function TtdChat.TypeChat: TtdChatType;
+function TtdChatFullInfo.TypeChat: TtdChatType;
 var
   LValue: string;
 begin
@@ -2558,7 +2829,12 @@ begin
   else
     UnSupported;
 end;
-function TtdChat.Username: string;
+function TtdChatFullInfo.UnrestrictBoostCount: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('unrestrict_boost_count');
+end;
+
+function TtdChatFullInfo.Username: string;
 begin
   Result := ReadToSimpleType<string>('username');
 end;
@@ -3173,6 +3449,11 @@ function TtdPollOption.text: String;
 begin
   Result := ReadToSimpleType<String>('text');
 end;
+function TtdPollOption.text_entities: TArray<ItdMEssageEntity>;
+begin
+  Result := ReadToInterfaceArray<ItdMEssageEntity>(TtdMEssageEntity,'text_entities');
+end;
+
 function TtdPollOption.voter_count: String;
 begin
   Result := ReadToSimpleType<String>('voter_count');
@@ -3267,6 +3548,11 @@ function TtdPoll.question: String;
 begin
   Result := ReadToSimpleType<String>('question');
 end;
+function TtdPoll.QuestionEntities: TArray<ItdMessageEntity>;
+begin
+  Result := ReadToInterfaceArray<ItdMessageEntity>(TtdMessageEntity, 'question_entities');
+end;
+
 function TtdPoll.total_voter_count: Integer;
 begin
   Result := ReadToSimpleType<Integer>('total_voter_count');
@@ -3630,6 +3916,11 @@ end;
 function TtdChatMemberUpdated.via_chat_folder_invite_link: Boolean;
 begin
   Result := ReadToSimpleType<Boolean>('via_chat_folder_invite_link');
+end;
+
+function TtdChatMemberUpdated.via_join_request: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('via_join_request');
 end;
 
 { TtdVoiceChatEnded }
@@ -4258,30 +4549,6 @@ begin
   Result := ReadToSimpleType<string>('name');
 end;
 
-{ TtdUserShared }
-
-function TtdUserShared.request_id: integer;
-begin
-  Result := ReadToSimpleType<integer>('request_id');
-end;
-
-function TtdUserShared.user_ids: TArray<integer>;
-begin
-  Result := ReadToArraySimpleType<integer>('user_ids');
-end;
-
-{ TtdChatShared }
-
-function TtdChatShared.chat_id: integer;
-begin
-  Result := ReadToSimpleType<integer>('chat_id');
-end;
-
-function TtdChatShared.request_id: integer;
-begin
-  Result := ReadToSimpleType<integer>('request_id');
-end;
-
 { TtdBotDescription }
 
 function TtdBotDescription.description: string;
@@ -4301,6 +4568,11 @@ end;
 function TtdInputSticker.emoji_list: TArray<string>;
 begin
   Result := ReadToTArrayString('emoji_list');
+end;
+
+function TtdInputSticker.format: string;
+begin
+  Result := ReadToSimpleType<string>('format');
 end;
 
 function TtdInputSticker.keywords: TArray<string>;
@@ -5036,6 +5308,440 @@ end;
 function TtdInaccessibleMessage.message_id: Integer;
 begin
   Result := ReadToSimpleType<integer>('message_id');
+end;
+
+{ TtdChatBoostAdded }
+
+function TtdChatBoostAdded.boost_count: Integer;
+begin
+  Result := ReadToSimpleType<integer>('boost_count');
+end;
+
+{ TtdBackgroundFillSolid }
+
+function TtdBackgroundFillSolid.color: Integer;
+begin
+  Result := ReadToSimpleType<integer>('color');
+end;
+
+function TtdBackgroundFillSolid.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdBackgroundFillGradient }
+
+function TtdBackgroundFillGradient.bottom_color: Integer;
+begin
+  Result := ReadToSimpleType<integer>('bottom_color');
+end;
+
+function TtdBackgroundFillGradient.rotation_angle: Integer;
+begin
+  Result := ReadToSimpleType<integer>('rotation_angle');
+end;
+
+function TtdBackgroundFillGradient.top_color: Integer;
+begin
+  Result := ReadToSimpleType<integer>('top_color');
+end;
+
+function TtdBackgroundFillGradient.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdBackgroundFillFreeformGradient }
+
+function TtdBackgroundFillFreeformGradient.colors: TArray<integer>;
+begin
+  Result := ReadToArraySimpleType<integer>('colors');
+end;
+
+function TtdBackgroundFillFreeformGradient.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdBackgroundTypeFill }
+
+function TtdBackgroundTypeFill.dark_theme_dimming: Integer;
+begin
+  Result := ReadToSimpleType<integer>('dark_theme_dimming');
+end;
+
+function TtdBackgroundTypeFill.fill: ItdBackgroundFill;
+begin
+  Result := ReadToClass<TtdBackgroundFill>('fill');
+end;
+
+function TtdBackgroundTypeFill.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdBackgroundTypeWallpaper }
+
+function TtdBackgroundTypeWallpaper.dark_theme_dimming: Integer;
+begin
+  Result := ReadToSimpleType<integer>('dark_theme_dimming');
+end;
+
+function TtdBackgroundTypeWallpaper.document: ItdDocument;
+begin
+  Result := ReadToClass<TtdDocument>('document');
+end;
+
+function TtdBackgroundTypeWallpaper.is_blurred: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('is_blurred');
+end;
+
+function TtdBackgroundTypeWallpaper.is_moving: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('is_moving');
+end;
+
+function TtdBackgroundTypeWallpaper.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdBackgroundTypePattern }
+
+function TtdBackgroundTypePattern.document: ItdDocument;
+begin
+  Result := ReadToClass<TtdDocument>('document');
+end;
+
+function TtdBackgroundTypePattern.fill: ItdBackgroundFill;
+begin
+  Result := ReadToClass<TtdBackgroundFill>('fill');
+end;
+
+function TtdBackgroundTypePattern.intensity: Integer;
+begin
+  Result := ReadToSimpleType<integer>('intensity');
+end;
+
+function TtdBackgroundTypePattern.is_inverted: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('is_inverted');
+end;
+
+function TtdBackgroundTypePattern.is_moving: Boolean;
+begin
+  Result := ReadToSimpleType<boolean>('is_moving');
+end;
+
+function TtdBackgroundTypePattern.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdBackgroundTypeChatTheme }
+
+function TtdBackgroundTypeChatTheme.theme_name: string;
+begin
+  Result := ReadToSimpleType<string>('theme_name');
+end;
+
+function TtdBackgroundTypeChatTheme.type_: string;
+begin
+  Result := ReadToSimpleType<string>('type');
+end;
+
+{ TtdChatBackground }
+
+function TtdChatBackground.type_: ItdBackgroundType;
+begin
+  Result := ReadToClass<TtdBackgroundType>('type');
+end;
+
+{ TtdTextQuote }
+
+function TtdTextQuote.Entity: TArray<TtdMessageEntity>;
+begin
+  Result := ReadToClassArray<TtdMessageEntity>('entity');
+end;
+
+function TtdTextQuote.is_manual: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('is_manual');
+end;
+
+function TtdTextQuote.position: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('position');
+end;
+
+function TtdTextQuote.Text: string;
+begin
+  Result := ReadToSimpleType<string>('text');
+end;
+
+{ TtdStory }
+
+function TtdStory.chat: ItdChat;
+begin
+  Result := ReadToClass<TtdChat>('chat');
+end;
+
+function TtdStory.id: Int64;
+begin
+  Result := ReadToSimpleType<Int64>('id');
+end;
+
+{ TtdChat }
+
+function TtdChat.FirstName: string;
+begin
+  Result := ReadToSimpleType<string>('first_name');
+end;
+
+function TtdChat.ID: Int64;
+begin
+  Result := ReadToSimpleType<Int64>('id');
+end;
+
+function TtdChat.is_forum: boolean;
+begin
+  Result := ReadToSimpleType<boolean>('is_forum');
+end;
+
+function TtdChat.LastName: string;
+begin
+  Result := ReadToSimpleType<string>('last_name');
+end;
+
+function TtdChat.Title: string;
+begin
+  Result := ReadToSimpleType<string>('first_name');
+end;
+
+function TtdChat.TypeChat: TtdChatType;
+var
+  LValue: string;
+begin
+  LValue := ReadToSimpleType<string>('type');
+  Result := TtdChatType.&private;
+  if LValue = 'private' then
+    Result := TtdChatType.&private
+  else if LValue = 'group' then
+    Result := TtdChatType.Group
+  else if LValue = 'channel' then
+    Result := TtdChatType.Channel
+  else if LValue = 'supergroup' then
+    Result := TtdChatType.Supergroup
+  else
+    UnSupported;
+end;
+
+function TtdChat.Username: string;
+begin
+  Result := ReadToSimpleType<string>('user_name');
+end;
+
+{ TtdBusinessConnection }
+
+function TtdBusinessConnection.can_reply: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('can_reply');
+end;
+
+function TtdBusinessConnection.date: TDateTime;
+begin
+  Result := ReadToDateTime('date');
+end;
+
+function TtdBusinessConnection.id: string;
+begin
+  Result := ReadToSimpleType<string>('id');
+end;
+
+function TtdBusinessConnection.is_enabled: Boolean;
+begin
+  Result := ReadToSimpleType<Boolean>('is_enabled');
+end;
+
+function TtdBusinessConnection.user: Itduser;
+begin
+  Result := ReadToClass<Ttduser>('user');
+end;
+
+function TtdBusinessConnection.user_chat_id: Int64;
+begin
+  Result := ReadToSimpleType<Int64>('user_chat_id');
+end;
+
+{ TtdBusinessMessagesDeleted }
+
+function TtdBusinessMessagesDeleted.business_connection_id: string;
+begin
+  Result := ReadToSimpleType<string>('business_connection_id');
+end;
+
+function TtdBusinessMessagesDeleted.chat: ItdChat;
+begin
+  Result := ReadToClass<TtdChat>('chat');
+end;
+
+function TtdBusinessMessagesDeleted.message_ids: TArray<Integer>;
+begin
+  Result := ReadToArraySimpleType<Integer>('message_ids');
+end;
+
+{ TtdBirthdate }
+
+function TtdBirthdate.day: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('day');
+end;
+
+function TtdBirthdate.month: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('month');
+end;
+
+function TtdBirthdate.year: Integer;
+begin
+  Result := ReadToSimpleType<Integer>('year');
+end;
+
+{ TtdBusinessIntro }
+
+function TtdBusinessIntro.message_: String;
+begin
+  Result := ReadToSimpleType<string>('message');
+end;
+
+function TtdBusinessIntro.sticker: ItdSticker;
+begin
+  Result := ReadToClass<TtdSticker>('sticker');
+end;
+
+function TtdBusinessIntro.title: String;
+begin
+  Result := ReadToSimpleType<string>('title');
+end;
+
+{ TtdBusinessLocation }
+
+function TtdBusinessLocation.address: String;
+begin
+  Result := ReadToSimpleType<string>('address');
+end;
+
+function TtdBusinessLocation.location: ItdLocation;
+begin
+  Result := ReadToClass<TtdLocation>('location');
+end;
+
+{ TtdBusinessOpeningHoursInterval }
+
+function TtdBusinessOpeningHoursInterval.closing_minute: integer;
+begin
+  Result := ReadToSimpleType<Integer>('closing_minute');
+end;
+
+function TtdBusinessOpeningHoursInterval.opening_minute: integer;
+begin
+  Result := ReadToSimpleType<Integer>('opening_minute');
+end;
+
+{ TtdBusinessOpeningHours }
+
+function TtdBusinessOpeningHours.opening_hours: TArray<TtdBusinessOpeningHoursInterval>;
+begin
+  Result := ReadToClassArray<TtdBusinessOpeningHoursInterval>('opening_hours');
+end;
+
+function TtdBusinessOpeningHours.time_zone_name: string;
+begin
+  Result := ReadToSimpleType<string>('time_zone_name');
+end;
+
+{ TtdSharedUser }
+
+function TtdSharedUser.first_name: string;
+begin
+  Result := ReadToSimpleType<string>('first_name');
+end;
+
+function TtdSharedUser.last_name: string;
+begin
+  Result := ReadToSimpleType<string>('last_name');
+end;
+
+function TtdSharedUser.photo: TArray<ItdPhotosize>;
+begin
+  Result := ReadToInterfaceArray<ItdPhotosize>(TtdPhotosize, 'photo');
+end;
+
+function TtdSharedUser.username: string;
+begin
+  Result := ReadToSimpleType<string>('username');
+end;
+
+function TtdSharedUser.user_id: int64;
+begin
+  Result := ReadToSimpleType<int64>('user_id');
+end;
+
+{ TtdUsersShared }
+
+function TtdUsersShared.request_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('request_id');
+end;
+
+function TtdUsersShared.users: TArray<ItdSharedUser>;
+begin
+  Result := ReadToInterfaceArray<ItdSharedUser>(TtdSharedUser, 'users');
+end;
+
+{ TtdChatShared }
+
+function TtdChatShared.chat_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('chat_id');
+end;
+
+function TtdChatShared.photo: TArray<ItdPhotosize>;
+begin
+  Result := ReadToInterfaceArray<ItdPhotosize>(TtdPhotosize, 'photo');
+end;
+
+function TtdChatShared.request_id: integer;
+begin
+  Result := ReadToSimpleType<integer>('request_id');
+end;
+
+function TtdChatShared.title: string;
+begin
+  Result := ReadToSimpleType<string>('title');
+end;
+
+function TtdChatShared.username: string;
+begin
+  Result := ReadToSimpleType<string>('username');
+end;
+
+{ TtdInputPollOption }
+
+function TtdInputPollOption.text: String;
+begin
+  Result := ReadToSimpleType<string>('text');
+end;
+
+function TtdInputPollOption.text_entities: TArray<ItdMEssageEntity>;
+begin
+  Result := ReadToInterfaceArray<ItdMEssageEntity>(TtdMEssageEntity, 'text_entities');
+end;
+
+function TtdInputPollOption.text_parse_mode: String;
+begin
+  Result := ReadToSimpleType<string>('text_parse_mode');
 end;
 
 End.

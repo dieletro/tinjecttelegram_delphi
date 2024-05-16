@@ -629,6 +629,7 @@ TtdStickerFormat = (
     MenuButtonWebApp,
     MenuButtonDefault
   );
+
   TtdGender = (Male, Female);
   TtdPassportAvaibleData = (PersonalDetails, Passport, InternalPassport,
     DriverLicense, IdentityCard, IdDocument, IdSelfie, Address, UtilityBill,
@@ -637,6 +638,8 @@ TtdStickerFormat = (
 
   TAllowedUpdate = (Message,
     Edited_message, Channel_post, Edited_channel_post,
+    business_connection, business_message, edited_business_message, deleted_business_messages,
+    message_reaction, message_reaction_count,
     Inline_query, Chosen_inline_result, Callback_query,
     ShippingQuery, PreCheckoutQuery, PollState, PollAnswer,
     MyChatMember, ChatMember, ChatJoinRequest, ChatBoost, RemovedChatBoost);

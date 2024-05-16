@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta charset="utf-8">
+<title>WebApp</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="MobileOptimized" content="176" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="robots" content="noindex,nofollow" />
+
+<link href="index.css" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js?1"></script>
+
+<script>
+   const {} = window.Telegram.WebApp;
+  // function buttonClick() {}
+
+   function setThemeClass() {
+       document.documentElement.className = Telegram.WebApp.colorScheme;
+   }
+   Telegram.WebApp.onEvent('themeChanged', setThemeClass);
+   setThemeClass();
+</script>
+
+</head>
+<body>
+
+<div id="container">
+
+    <div id="Body" style="position:absolute;text-align:left;left:1px;top:1px;width:398px;height:608px;z-index:245;">
+
+        <div id="btn_status" class="hint" style="display: none;"></div>
+
+        <div id="CardItens1" style="position:absolute;text-align:left;left:13px;top:5px;width:368px;height:141px;z-index:83;">
+            <div id="Card1" style="position:absolute;text-align:left;left:5px;top:9px;width:120px;height:130px;z-index:18;">
+                <picture id="wb_img1" style="position:absolute;left:26px;top:0px;width:69px;height:72px;z-index:0">
+                    <img src="images/Burger.png" id="img1" alt="" width="69" height="72">
+                </picture>
+                <div id="wb_Text1" style="position:absolute;left:11px;top:72px;width:110px;height:15px;z-index:1;">
+                    <span id="Produto1" class="produtonome">Burger</span>
+                    <span id="Preco1" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div name="" id="bt-dec1" onclick="DecValue('Label1');return false;"  value="-" class="bt-dec" style="position:absolute;left:27px;top:90px;width:32px;height:30px;z-index:2;">
+                    <span class="bt">-</span>
+                </div>
+                <div name="" id="bt-inc1" onclick="IncValue('Label1');return false;"  value="+" class="bt-add" style="position:absolute;left:64px;top:90px;width:32px;height:30px;z-index:3;">
+                    <span class="bt">+</span>
+                </div>
+                <div name="" id="bt-add1" onclick="IncValue('Label1'); ;return false;"  value="ADD" class="bt-add" style="position:absolute;left:12px;top:90px;width:96px;height:30px;z-index:4;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label1" style="position:absolute;left:93px;top:8px;width:19px;height:19px;line-height:19px;z-index:5;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card2" style="position:absolute;text-align:left;left:123px;top:9px;width:120px;height:130px;z-index:19;">
+                <picture id="wb_img2" style="position:absolute;left:33px;top:3px;width:61px;height:70px;z-index:6">
+                    <img src="images/Fries.png" id="img2" alt="" width="61" height="70">
+                </picture>
+                <div id="wb_Text2" style="position:absolute;left:16px;top:72px;width:101px;height:15px;z-index:7;">
+                    <span id="Produto2" class="produtonome">Frites</span>
+                    <span id="Preco2" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec2" onclick="DecValue('Label2');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:31px;top:90px;width:32px;height:30px;z-index:8;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc2" onclick="IncValue('Label2');return false;" name="" value="+" class="bt-add" style="position:absolute;left:68px;top:90px;width:32px;height:30px;z-index:9;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add2" onclick="IncValue('Label2');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:17px;top:90px;width:96px;height:30px;z-index:10;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label2" style="position:absolute;left:92px;top:8px;width:19px;height:19px;line-height:19px;z-index:11;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card3" style="position:absolute;text-align:left;left:243px;top:9px;width:120px;height:130px;z-index:20;">
+                <picture id="wb_img3" style="position:absolute;left:26px;top:2px;width:70px;height:70px;z-index:12">
+                    <img src="images/HotDog.png" id="img3" alt="" width="70" height="75">
+                </picture>
+                <div id="wb_Text3" style="position:absolute;left:7px;top:72px;width:110px;height:15px;z-index:13;">
+                    <span id="Produto3" class="produtonome">Hotdog</span>
+                    <span id="Preco3" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec3" onclick="DecValue('Label3');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:28px;top:90px;width:32px;height:30px;z-index:14;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc3" onclick="IncValue('Label3');return false;" name="" value="+" class="bt-add" style="position:absolute;left:65px;top:90px;width:32px;height:30px;z-index:15;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add3" onclick="IncValue('Label3');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:13px;top:90px;width:96px;height:30px;z-index:16;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label3" style="position:absolute;left:90px;top:8px;width:19px;height:19px;line-height:19px;z-index:17;text-align:center;
+                ">0</label>
+            </div>
+        </div> <!--CardItens1-->
+
+        <div id="CardItens2" style="position:absolute;text-align:left;left:13px;top:143px;width:368px;height:130px;z-index:84;">
+            <div id="Card4" style="position:absolute;text-align:left;left:5px;top:0px;width:120px;height:130px;z-index:39;">
+                <picture id="wb_img4" style="position:absolute;left:26px;top:4px;width:68px;height:61px;z-index:21">
+                    <img src="images/Tako.png" id="img4" alt="" width="68" height="61">
+                </picture>
+                <div id="wb_Text4" style="position:absolute;left:10px;top:72px;width:101px;height:15px;z-index:22;">
+                    <span id="Produto4" class="produtonome">Tako</span>
+                    <span id="Preco4" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec4" onclick="DecValue('Label4');return false;" name="bt-dec1" value="-" class="bt-dec" style="position:absolute;left:27px;top:90px;width:32px;height:30px;z-index:23;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc4" onclick="IncValue('Label4');return false;" name="" value="+" class="bt-add" style="position:absolute;left:64px;top:90px;width:32px;height:30px;z-index:24;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add4" onclick="IncValue('Label4');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:12px;top:90px;width:96px;height:30px;z-index:25;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label4" style="position:absolute;left:93px;top:4px;width:19px;height:19px;line-height:19px;z-index:26;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card5" style="position:absolute;text-align:left;left:123px;top:0px;width:120px;height:130px;z-index:40;">
+                <picture id="wb_img5" style="position:absolute;left:33px;top:3px;width:61px;height:70px;z-index:27">
+                    <img src="images/Pizza.png" id="img5" alt="" width="61" height="68">
+                </picture>
+                <div id="wb_Text5" style="position:absolute;left:13px;top:72px;width:101px;height:15px;z-index:28;">
+                    <span id="Produto5" class="produtonome">Pizza</span>
+                    <span id="Preco5" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div   id="bt-dec5" onclick="DecValue('Label5');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:31px;top:90px;width:32px;height:30px;z-index:29;">
+                    <span class="bt">-</span>
+                </div>
+                <div   id="bt-inc5" onclick="IncValue('Label5');return false;" name="" value="+" class="bt-add" style="position:absolute;left:68px;top:90px;width:32px;height:30px;z-index:30;">
+                    <span class="bt">+</span>
+                </div>
+                <div   id="bt-add5" onclick="IncValue('Label5');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:17px;top:90px;width:96px;height:30px;z-index:31;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label5" style="position:absolute;left:92px;top:4px;width:19px;height:19px;line-height:19px;z-index:32;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card6" style="position:absolute;text-align:left;left:243px;top:0px;width:120px;height:130px;z-index:41;">
+                <picture id="wb_img6" style="position:absolute;left:27px;top:3px;width:68px;height:62px;z-index:33">
+                    <img src="images/Donut.png" id="img6" alt="" width="68" height="61">
+                </picture>
+                <div id="wb_Text6" style="position:absolute;left:8px;top:72px;width:110px;height:15px;z-index:34;">
+                    <span id="Produto6" class="produtonome">Donaut</span>
+                    <span id="Preco6" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec6" onclick="DecValue('Label6');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:28px;top:90px;width:32px;height:30px;z-index:35;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc6" onclick="IncValue('Label6');return false;" name="" value="+" class="bt-add" style="position:absolute;left:65px;top:90px;width:32px;height:30px;z-index:36;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add6" onclick="IncValue('Label6');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:13px;top:90px;width:96px;height:30px;z-index:37;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label6" style="position:absolute;left:90px;top:4px;width:19px;height:19px;line-height:19px;z-index:38;text-align:center;
+                ">0</label>
+            </div>
+
+        </div> <!--CardItens2-->
+
+        <div id="CardItens3" style="position:absolute;text-align:left;left:13px;top:273px;width:368px;height:130px;z-index:85;">
+            <div id="Card7" style="position:absolute;text-align:left;left:5px;top:0px;width:120px;height:130px;z-index:60;">
+                <picture id="wb_img7" style="position:absolute;left:27px;top:1px;width:69px;height:72px;z-index:42">
+                    <img src="images/PopCorn.png" id="img7" alt="" width="69" height="79">
+                </picture>
+                <div id="wb_Text7" style="position:absolute;left:6px;top:72px;width:120px;height:15px;z-index:43;">
+                    <span id="Produto7" class="produtonome">Popcorn</span>
+                    <span id="Preco7" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  class="bt-dec" id="bt-dec7" onclick="DecValue('Label7');return false;" name="bt-dec1" value="-" style="position:absolute;left:27px;top:90px;width:32px;height:30px;z-index:44;">
+                    <span class="bt">-</span>
+                </div>
+                <div  class="bt-add" id="bt-inc7" onclick="IncValue('Label7');return false;" name="" value="+" style="position:absolute;left:64px;top:90px;width:32px;height:30px;z-index:45;">
+                    <span class="bt">+</span>
+                </div>
+                <div  class="bt-add" id="bt-add7" onclick="IncValue('Label7');return false;" name="" value="ADD" style="position:absolute;left:12px;top:90px;width:96px;height:30px;z-index:46;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label7" style="position:absolute;left:93px;top:3px;width:19px;height:19px;line-height:19px;z-index:47;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card8" style="position:absolute;text-align:left;left:123px;top:0px;width:120px;height:130px;z-index:61;">
+                <picture id="wb_img8" style="position:absolute;left:33px;top:3px;width:61px;height:70px;z-index:48">
+                    <img src="images/Coke.png" id="img8" alt="" width="61" height="79">
+                </picture>
+                <div id="wb_Text8" style="position:absolute;left:15px;top:72px;width:97px;height:15px;z-index:49;">
+                    <span id="Produto8" class="produtonome">Coke</span>
+                    <span id="Preco8" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec8" onclick="DecValue('Label8');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:30px;top:90px;width:32px;height:30px;z-index:50;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc8" onclick="IncValue('Label8');return false;" name="" value="+" class="bt-add" style="position:absolute;left:67px;top:90px;width:32px;height:30px;z-index:51;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add8" onclick="IncValue('Label8');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:17px;top:90px;width:96px;height:30px;z-index:52;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label8" style="position:absolute;left:92px;top:3px;width:19px;height:19px;line-height:19px;z-index:53;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card9" style="position:absolute;text-align:left;left:243px;top:0px;width:120px;height:130px;z-index:62;">
+                <picture id="wb_img9" style="position:absolute;left:26px;top:2px;width:70px;height:70px;z-index:54">
+                    <img src="images/Cake.png" id="img9" alt="" width="70" height="65">
+                </picture>
+                <div id="wb_Text9" style="position:absolute;left:13px;top:72px;width:100px;height:15px;z-index:55;">
+                    <span id="Produto9" class="produtonome">Cake</span>
+                    <span id="Preco9" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec9" onclick="DecValue('Label9');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:27px;top:90px;width:32px;height:30px;z-index:56;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc9" onclick="IncValue('Label9');return false;" name="" value="+" class="bt-add" style="position:absolute;left:64px;top:90px;width:32px;height:30px;z-index:57;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add9" onclick="IncValue('Label9');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:13px;top:90px;width:96px;height:30px;z-index:58;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label9" style="position:absolute;left:90px;top:3px;width:19px;height:19px;line-height:19px;z-index:59;text-align:center;
+                ">0</label>
+            </div>
+        </div> <!--CardItens3-->
+
+        <div id="CardItens4" style="position:absolute;text-align:left;left:13px;top:403px;width:368px;height:130px;z-index:86;">
+            <div id="Card10" style="position:absolute;text-align:left;left:5px;top:0px;width:130px;height:130px;z-index:80;">
+                <picture id="wb_img10" style="position:absolute;left:35px;top:6px;width:58px;height:67px;z-index:89">
+                    <img src="images/IceCream.png" id="img10" alt="" width="58" height="86">
+                </picture>
+                <div id="wb_Text10" style="position:absolute;left:4px;top:72px;width:130px;height:15px;z-index:63;">
+                    <span id="Produto10" class="produtonome">Icecream</span>
+                    <span id="Preco10" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec10" onclick="DecValue('Label10');return false;" name="bt-dec1" value="-" class="bt-dec" style="position:absolute;left:26px;top:90px;width:32px;height:30px;z-index:64;">
+                    <span class="bt">-</span>
+                </div>
+                <div id="bt-inc10" onclick="IncValue('Label10');return false;" name="" value="+" class="bt-add" style="position:absolute;left:63px;top:90px;width:32px;height:30px;z-index:65;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add10" onclick="IncValue('Label10');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:12px;top:90px;width:96px;height:30px;z-index:66;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label10" style="position:absolute;left:93px;top:1px;width:19px;height:19px;line-height:19px;z-index:67;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card11" style="position:absolute;text-align:left;left:123px;top:0px;width:120px;height:130px;z-index:81;">
+                <picture id="wb_img11" style="position:absolute;left:35px;top:8px;width:60px;height:57px;z-index:68">
+                    <img src="images/Cookie.png" id="img11" alt="" width="60" height="56">
+                </picture>
+                <div id="wb_Text11" style="position:absolute;left:17px;top:72px;width:97px;height:15px;z-index:69;">
+                    <span id="Produto11" class="produtonome">Cokie</span>
+                    <span id="Preco11" class="produtopreco"><strong>R$:10,00</strong></span>
+                </div>
+                <div  id="bt-dec11" onclick="DecValue('Label11');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:30px;top:90px;width:32px;height:30px;z-index:70;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc11" onclick="IncValue('Label11');return false;" name="" value="+" class="bt-add" style="position:absolute;left:67px;top:90px;width:32px;height:30px;z-index:71;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add11" onclick="IncValue('Label11');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:15px;top:90px;width:96px;height:30px;z-index:72;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label11" style="position:absolute;left:92px;top:1px;width:19px;height:19px;line-height:19px;z-index:73;text-align:center;
+                ">0</label>
+            </div>
+
+            <div id="Card12" style="position:absolute;text-align:left;left:243px;top:0px;width:120px;height:130px;z-index:82;">
+                <picture id="wb_img12" class="ballon" style="position:absolute;left:28px;top:1px;width:70px;height:70px;z-index:74">
+                    <img src="images/Flan.png" id="img12" alt="" width="70" height="58">
+                </picture>
+                <div id="wb_Text12" style="position:absolute;left:13px;top:72px;width:90px;height:10px;z-index:75;">
+                    <span id="Produto12" class="produtonome">Flan</span>
+                    <span id="Preco12" class="produtopreco"><strong>R$:10,00</strong></span>
+                <div  id="bt-dec12" onclick="DecValue('Label12');return false;" name="" value="-" class="bt-dec" style="position:absolute;left:13px;top:18px;width:32px;height:30px;z-index:76;">
+                    <span class="bt">-</span>
+                </div>
+                <div  id="bt-inc12" onclick="IncValue('Label12');return false;" name="" value="+" class="bt-add" style="position:absolute;left:50px;top:18px;width:32px;height:30px;z-index:77;">
+                    <span class="bt">+</span>
+                </div>
+                <div  id="bt-add12" onclick="IncValue('Label12');return false;" name="" value="ADD" class="bt-add" style="position:absolute;left:-1px;top:18px;width:96px;height:30px;z-index:78;">
+                    <span class="bt">ADD</span>
+                </div>
+                <label class="ballon" for="" id="Label12" style="position:absolute;left:70px;top:-70px;width:19px;height:19px;line-height:19px;z-index:79;text-align:center;
+                ">0</label>
+            </div>
+        </div> <!--CardItens4-->
+
+    </div><!--Body-->
+    <div id="usercard" style="display:none"> <!--Cartão de perfil da pessoa que nos contactou-->
+        <p>Conteudo Aqui</p>
+    </div>
+
+</div><!--Container-->
+
+<script type="application/javascript">
+/*    document.querySelector('.bt-dec').addEventListener('mouseover',() => {
+        document.querySelector('.bt-dec').style.cursor = 'pointer';
+    });
+
+    document.querySelector('.bt-add').addEventListener('mouseover',() => {
+        document.querySelector('.bt-add').style.cursor = 'pointer';
+    }); */
+    let comprasJson = "";
+    var num = 0;
+    var countItens = 0;
+
+    load(); /*Inicia as configurações*/
+
+    const WebApp = Telegram.WebApp;
+    const mainButton = WebApp.MainButton;
+    const theme = WebApp.themeParams;
+    const initData = WebApp.initData || '';
+    const initDataUnsafe = WebApp.initDataUnsafe || {};
+
+    initDataUnsafe.web_app_query_id = '123456789456';
+    initData.web_app_query_id = '123456789456';
+
+    WebApp.colorScheme = "light";//“light” or “dark”.
+
+    theme.bg_color = "#FBB727";
+    theme.text_color = '#378e8b';
+    theme.hint_color = '#c59946';
+    theme.link_color = '#d02222';
+    theme.button_color = '#FBB727';
+    theme.button_text_color = '#FFFFFF';
+
+    mainButton.color = "#FBB727";
+    mainButton.textColor = "#FFFFFF";
+
+    mainButton
+        .setText('SEND To WebBot')
+        .hide()
+        .onClick(function(){  Telegram.WebApp.sendData("{"+comprasJson+"}");  });// sendMessage("OLA MUNDO"); webviewClose();
+
+ //   WebApp.onEvent('themeChanged', function() {
+ //      document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+ //   });
+
+ /*   Telegram.WebApp.onEvent('mainButtonClicked', function(){
+        WebApp.sendData("some string that we need to send");
+        //ao clicar no botão principal, enviamos dados em forma de string
+    });*/
+
+
+function produto(FID){
+    var velemento = "Produto"+getNumero(FID);
+    var vproduto = document.getElementById(velemento);
+    return vproduto.innerText;
+}
+
+function preco(FID){
+    var velemento = "Preco"+getNumero(FID);
+    var vpreco = document.getElementById(velemento);
+    return vpreco.innerText;
+}
+
+function load(){
+   for (i = 1; i < 13; i++) {
+      let VLabel = document.getElementById('Label'+i);
+      num = getNumero(VLabel.id);
+      let VbtADD = document.getElementById('bt-add'+num);
+      let VbtInc = document.getElementById('bt-inc'+num);
+      let VbtDec = document.getElementById('bt-dec'+num);
+
+      VLabel.style.display = "none";        
+      VbtInc.style.display = "none";
+      VbtDec.style.display = "none"; 
+      VbtADD.style.display = "block";
+   }
+
+}
+
+function getNumero(FString) {
+   var numsStr = FString.replace(/[^0-9]/g,'');
+   return parseInt(numsStr);
+}
+
+function RemoveTagPreco(FString) {
+    return FString.replace('R$:','');
+}
+
+function Update(ALabel, isInc){
+
+  var num = getNumero(ALabel.id);
+  let AbtADD = document.getElementById('bt-add'+num);
+  let AbtInc = document.getElementById('bt-inc'+num);
+  let AbtDec = document.getElementById('bt-dec'+num);
+
+  if (isInc) {
+    ALabel.innerHTML = parseInt(ALabel.innerHTML) + 1;
+    countItens = parseInt(countItens) + 1;
+  }else{
+      //Global Count
+      if (countItens <= 1 ) {
+         countItens = 0
+      }else{
+         countItens = parseInt(countItens) - 1;
+      }
+      //Display Itens Count
+      if (ALabel.innerHTML <= 1) {
+         ALabel.innerHTML = 0;
+      }else{
+         ALabel.innerHTML = parseInt(ALabel.innerHTML) - 1;     
+      } 
+  }
+  
+  if (ALabel.innerHTML <= 0) {
+      ALabel.style.display = "none";        
+      AbtInc.style.display = "none";
+      AbtDec.style.display = "none"; 
+      AbtADD.style.display = "block";
+      if (countItens < 1){
+          if (mainButton.isVisible) {
+              mainButton.hide();
+          }
+      }
+    }
+
+  if (ALabel.innerHTML > 0) {
+      AbtADD.style.display = "none";
+      ALabel.style.display = "block"; 
+      AbtInc.style.display = "block";
+      AbtDec.style.display = "block";
+      mainButton.show();
+    }
+} /*function Update*/
+
+function IncValue(ID){
+  var FLabel = document.getElementById(ID);
+   
+  Update(FLabel, true);
+
+    if (parseInt(FLabel.innerText) > 0 ) {
+        if (comprasJson != "") {
+            comprasJson = comprasJson + ';"produto":"'+ produto(FLabel.id) + '";"preco":' + RemoveTagPreco(preco(FLabel.id)) + ';"quantidade":' + FLabel.innerText;
+        } else {
+            comprasJson = '"produto":"'+ produto(FLabel.id) + '";"preco":' + RemoveTagPreco(preco(FLabel.id)) + ';"quantidade":' + FLabel.innerText;
+        }
+    }
+
+}
+
+function DecValue(ID){
+  var FLabel = document.getElementById(ID);
+
+  Update(FLabel, false);
+
+    if (parseInt(FLabel.innerText) > 0 ) {
+        if (comprasJson != "") {
+            comprasJson = comprasJson + ';"produto":"'+ produto(FLabel.id) + '";"preco":' + RemoveTagPreco(preco(FLabel.id)) + ';"quantidade":' + FLabel.innerText;
+        } else {
+            comprasJson = '"produto":"'+ produto(FLabel.id) + '";"preco":' + RemoveTagPreco(preco(FLabel.id)) + ';"quantidade":' + FLabel.innerText;
+        }
+    }
+}
+
+function showitens(){
+   alert("Total de Itens : "+countItens);
+}
+
+Telegram.WebApp.ready(); //NEW
+
+</script></body>
+</html>
