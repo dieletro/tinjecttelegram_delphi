@@ -120,7 +120,6 @@ type
     btnCopyMessage: TButton;
     btnEditMessage: TButton;
     btnDeleteMessage: TButton;
-    Button13: TButton;
     procedure btnEnviaTextoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -212,7 +211,6 @@ type
     procedure btnCopyMessageClick(Sender: TObject);
     procedure btnEditMessageClick(Sender: TObject);
     procedure btnDeleteMessageClick(Sender: TObject);
-    procedure Button13Click(Sender: TObject);
   private
     procedure CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
       AInlineMode: Boolean; url: string);
@@ -1789,67 +1787,6 @@ begin
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
-end;
-
-procedure TForm1.Button13Click(Sender: TObject);
-var
-  I : Integer;
-  F: Integer;
-begin
-  if FileCount > 10 then
-    FileCount := 0
-  else
-    FileCount := FileCount + 1;
-
-{
-InputMediaAnimation
-InputMediaDocument
-InputMediaAudio
-InputMediaPhoto
-InputMediaVideo
-
-
-medias is Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo
-}
-
-  AbrirArquivo.Filter := VRes_Filtro_MediaGroup;//VRes_Filtro_Foto_Video;
-  if (FileCount <= 10) or (AbrirArquivo.Files.Count <= 10) then // Limite de arquivos da API
-  Begin
-    if AbrirArquivo.Execute then
-    Begin
-      if AbrirArquivo.Files.Count > 1 then
-      Begin
-//        SetLength(MyFiles, AbrirArquivo.Files.Count);
-        memConsole.Lines.Add('Files.Count: '+AbrirArquivo.Files.Count.ToString);
-        memConsole.Lines.Add('FileCount: '+FileCount.ToString);
-        for I := 0 to AbrirArquivo.Files.Count -1 do
-          memConsole.Lines.Add('Files.Name '+I.ToString+': '+AbrirArquivo.Files.KeyNames[I]);
-//          MyFiles[I] := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.Files.Names[I]);
-      End
-        Else
-      Begin
-//        SetLength(MyFiles, FileCount);
-//        MyFiles[FileCount - 1] := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
-      End;
-      {
-      SetLength(MyMedia, Length(MyFiles));
-      if (ExtractFileExt(AbrirArquivo.FileName) = '.png') or
-         (ExtractFileExt(AbrirArquivo.FileName) = '.jpg') or
-         (ExtractFileExt(AbrirArquivo.FileName) = '.jpeg') or
-         (ExtractFileExt(AbrirArquivo.FileName) = '.bmp') then
-        MyMedia[FileCount - 1] := TtdInputMediaPhoto.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);
-      if ExtractFileExt(AbrirArquivo.FileName) = '.mp4' then
-        MyMedia[FileCount - 1] := TtdInputMediaVideo.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);
-      if (ExtractFileExt(AbrirArquivo.FileName) = '.mp3') or
-         (ExtractFileExt(AbrirArquivo.FileName) = '.wav') then
-        MyMedia[FileCount - 1] := TtdInputMediaAudio.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup)
-      else
-        MyMedia[FileCount - 1] := TtdInputMediaDocument.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);  }
-    End;
-
-  End
-  Else
-    Showmessage(VRes_Limite_Arquivos_MediaGroup);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

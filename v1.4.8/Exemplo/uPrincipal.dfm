@@ -3653,16 +3653,6 @@ object Form1: TForm1
         ScrollBars = ssBoth
         TabOrder = 9
       end
-      object Button13: TButton
-        Left = 575
-        Top = 90
-        Width = 137
-        Height = 25
-        Caption = 'teste'
-        Default = True
-        TabOrder = 10
-        OnClick = Button13Click
-      end
     end
     object TabSheet1: TTabSheet
       Caption = 'SendMethods'
