@@ -120,6 +120,7 @@ type
     btnCopyMessage: TButton;
     btnEditMessage: TButton;
     btnDeleteMessage: TButton;
+    Button13: TButton;
     procedure btnEnviaTextoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -211,6 +212,7 @@ type
     procedure btnCopyMessageClick(Sender: TObject);
     procedure btnEditMessageClick(Sender: TObject);
     procedure btnDeleteMessageClick(Sender: TObject);
+    procedure Button13Click(Sender: TObject);
   private
     procedure CarregarBTStr(AStrArrayBtName: TArray<TArray<String>>;
       AInlineMode: Boolean; url: string);
@@ -247,6 +249,8 @@ type
     VRes_Filtro_Stiker,
     VRes_Filtro_Todos,
     VRes_Filtro_Audio,
+    VRes_Filtro_Documentos,
+    VRes_Filtro_MediaGroup,
     //
     VRes_Animacao,
     VRes_Dado,
@@ -327,6 +331,8 @@ Begin
   VRes_Filtro_Stiker      := ARes_Filtro_Stiker;
   VRes_Filtro_Todos       := ARes_Filtro_Todos;
   VRes_Filtro_Audio       := ARes_Filtro_Audio;
+  VRes_Filtro_Documentos  := ARes_Filtro_Documentos;
+  VRes_Filtro_MediaGroup  := ARes_Filtro_MediaGroup;
   //
   VRes_Animacao     := ARes_Animacao;
   VRes_Dado         := ARes_Dado;
@@ -471,22 +477,44 @@ end;
 procedure TForm1.btnADDClick(Sender: TObject);
 var
   I : Integer;
-  F: Integer;
 begin
-  if FileCount > 10 then
-    FileCount := 0;
-  FileCount := FileCount + 1;
-  AbrirArquivo.Filter := VRes_Filtro_Foto_Video;
-  if FileCount <= 10 then // Limite de arquivos da API
+
+  AbrirArquivo.Filter := VRes_Filtro_MediaGroup;//VRes_Filtro_Foto_Video;
+  if (AbrirArquivo.Files.Count <= 10) then // Limite de 10 arquivos da API
   Begin
-    SetLength(MyFiles, FileCount);
     if AbrirArquivo.Execute then
-      MyFiles[FileCount - 1] := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
-    SetLength(MyMedia, Length(MyFiles));
-    if ExtractFileExt(AbrirArquivo.FileName) = '.png' then
-      MyMedia[FileCount - 1] := TtdInputMediaPhoto.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);
-    if ExtractFileExt(AbrirArquivo.FileName) = '.mp4' then
-      MyMedia[FileCount - 1] := TtdInputMediaVideo.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);
+    Begin
+      if AbrirArquivo.Files.Count >= 1 then
+      Begin
+        SetLength(MyFiles, AbrirArquivo.Files.Count);
+        for I := 0 to AbrirArquivo.Files.Count -1 do
+        Begin
+          MyFiles[I] := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.Files.KeyNames[I]);
+
+          SetLength(MyMedia, Length(MyFiles));
+          if (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.png') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.jpg') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.jpeg') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.bmp') then
+            MyMedia[I] := TtdInputMediaPhoto.Create(MyFiles[I], VRes_Teste_MidiaGroup+' TtdInputMediaPhoto');
+          if (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.mp4') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.wmv') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.vid') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.flv') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.m4v') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.f4v') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.lrv') then
+            MyMedia[I] := TtdInputMediaVideo.Create(MyFiles[I], VRes_Teste_MidiaGroup+' TtdInputMediaVideo');
+          if (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.mp3') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.ogg') or
+             (ExtractFileExt(AbrirArquivo.Files.KeyNames[I]) = '.wav') then
+            MyMedia[I] := TtdInputMediaAudio.Create(MyFiles[I], VRes_Teste_MidiaGroup+' TtdInputMediaAudio')
+          else
+            MyMedia[I] := TtdInputMediaDocument.Create(MyFiles[I], VRes_Teste_MidiaGroup+' TtdInputMediaDocument');
+        End;
+      End;
+    End;
+
   End
   Else
     Showmessage(VRes_Limite_Arquivos_MediaGroup);
@@ -765,21 +793,26 @@ begin
 end;
 
 procedure TForm1.btnEnviaAudioClick(Sender: TObject);
+var
+  IdOut: String;
 begin
-  AbrirArquivo.Filter := VRes_Filtro_Audio;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
-    try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendAudio(StrToInt64(txtID.Text), MyFile,VRes_Texto_Audio,
-        LParseMode, 0,'Titulo Sobreescrito',cbDisableNotification.Checked, Nil, LMarkup, cbProtectedContent.Checked).MessageId.ToString);
+      try
+        AbrirArquivo.Filter := VRes_Filtro_Audio;
+        if AbrirArquivo.Execute then
+          MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);      
+
+        IdOut := InjectTelegramBot1.SendAudio(StrToInt64(txtID.Text), MyFile,VRes_Texto_Audio,
+          LParseMode, 0,'Titulo Sobreescrito',cbDisableNotification.Checked, Nil, LMarkup, cbProtectedContent.Checked).MessageId.ToString;
+          
+        memConsole.Lines.Add('Last MSG ID: '+ IdOut);
       except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Audio);
-      end;
-    end;
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Audio);
+        end;
+      end;   
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -844,18 +877,22 @@ begin
   entre outros
   }
   //Neste caso irei enviar a ação Escrevendo...  (Typing)
-  MyAction := TtdSendChatAction.Typing;
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
-        InjectTelegramBot1.SendChatAction(MyChatId, MyAction);
+      try
+        MyAction := TtdSendChatAction.Typing;
+        MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
+          InjectTelegramBot1.SendChatAction(MyChatId, MyAction);
       except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Acao);
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Acao);
+        end;
       end;
-    end;
+    finally
+      //
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -864,95 +901,130 @@ procedure TForm1.btnEnviarAnimacaoClick(Sender: TObject);
 var
  MyThumb : TtdFileToSend;
 begin
-  AbrirArquivo.Filter := VRes_Filtro_Video;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile, AbrirArquivo.FileName);
-  AbrirArquivo.Filter := VRes_Filtro_Fotos;
-  if AbrirArquivo.Execute then
-    MyThumb := TtdFileToSend.Create(TtdFileToSendTag.FromFile, AbrirArquivo.FileName);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendAnimation(StrToInt64(txtID.Text), MyFile,30,0,0,MyThumb,
-        VRes_Texto_Animacao, LParseMode, cbDisableNotification.Checked, Nil,LMarkup, cbProtectedContent.Checked).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Animacao);
+      try
+        AbrirArquivo.Filter := VRes_Filtro_Video;
+        if AbrirArquivo.Execute then
+          MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile, AbrirArquivo.FileName);
+        AbrirArquivo.Filter := VRes_Filtro_Fotos;
+        if AbrirArquivo.Execute then
+          MyThumb := TtdFileToSend.Create(TtdFileToSendTag.FromFile, AbrirArquivo.FileName);      
+
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendAnimation(StrToInt64(txtID.Text), MyFile,30,0,0,MyThumb,
+          VRes_Texto_Animacao, LParseMode, cbDisableNotification.Checked, Nil,LMarkup, cbProtectedContent.Checked).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Animacao);
+        end;
       end;
-    end;
+    finally
+      MyFile.Free;
+      MyThumb.Free;
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarContatoClick(Sender: TObject);
 begin
-  MyContact := TtdContact.Create('5521997196000','Ruan Diego','Lacerda Menezes','CB Lacerda',0);
+
   if BotManager1.IsActive then
-  begin
+  begin  
     if txtID.Text <> '' then
-    try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendContact(StrToInt64(txtID.Text), MyContact, False, NIl, LMarkup).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Contato);
+      try
+        try
+          MyContact := TtdContact.Create('5521997196000','Ruan Diego','Lacerda Menezes','3°SGT PM Lacerda',1042366601);
+          
+          memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendContact(StrToInt64(txtID.Text), MyContact, False, NIl, LMarkup).MessageId.ToString);
+          except on e:exception do
+          begin
+            memConsole.Lines.Add(VRes_Falha+VRes_Contato);
+          end;
+        end;
+      finally
+          MyContact.Free;    
       end;
-    end;
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarDocumentoClick(Sender: TObject);
 begin
-  MyFile := Nil;
-  AbrirArquivo.Filter := VRes_Filtro_Todos;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.FromFile(AbrirArquivo.FileName);
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
-    try                                                         //Thumb 320x320 px até 200k
+      try
+        try
+          //Thumb 320x320 px até 200k
+          MyFile := nil;
+          AbrirArquivo.Filter := VRes_Filtro_Todos;
+          if AbrirArquivo.Execute then
+            MyFile := TtdFileToSend.FromFile(AbrirArquivo.FileName);
 
-      memConsole.Lines.Add('Last MSG ID: '+
-      InjectTelegramBot1.SendDocument(StrToInt64(txtID.Text), MyFile, nil ,
-         VRes_Texto_Documento, LParseMode, False, cbDisableNotification.Checked, NIl,
-         LMarkup, cbProtectedContent.Checked).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Documento);
-        memConsole.Lines.Add(e.Message);
-      end;
-    end;
+          MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
+          
+          memConsole.Lines.Add('Last MSG ID: '+
+          InjectTelegramBot1.SendDocument(MyChatId.ID, MyFile, nil ,
+             VRes_Texto_Documento, LParseMode, False, cbDisableNotification.Checked, NIl,
+             LMarkup, cbProtectedContent.Checked).MessageId.ToString);
+        except on e:exception do
+          begin
+            memConsole.Lines.Add(VRes_Falha+VRes_Documento);
+            memConsole.Lines.Add(e.Message);
+          end;
+        end;
+      finally
+        MyFile.Free;
+      end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarGrpMidiasClick(Sender: TObject);
 var
-  I, O: integer;
+  I: integer;
 Begin
   if BotManager1.IsActive then
   begin
+    
     if txtID.Text <> '' then
-    try
-      MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
-      if Assigned(MyMedia) then
+      if Assigned(MyMedia) and (AbrirArquivo.Files.Count > 0) and (length(MyMedia) > 0) then
+      Begin
         try
-          InjectTelegramBot1.sendMediaGroup(MyChatId.ID, MyMedia,
-              cbDisableNotification.Checked, Nil, cbProtectedContent.Checked);
-        except on e:exception do
-          begin
-            memConsole.Lines.Add(VRes_Falha+VRes_GrupoMidia);
+          MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
+          try
+            InjectTelegramBot1.sendMediaGroup(MyChatId.ID, MyMedia,
+                cbDisableNotification.Checked, Nil, cbProtectedContent.Checked);
+          except on e:exception do
+            begin
+              memConsole.Lines.Add(VRes_Falha+VRes_GrupoMidia);
+            end;
           end;
-        end;
-    finally
-      //MyFile.Free;
-      FileCount := 0;
-      for O := 0 to Length(MyFiles) - 1 do
-        MyFiles[O].Free;
-      for I := 0 to Length(MyMedia) - 1 do
-        MyMedia[I].Free;
-    end;
+        finally
+          if length(MyFiles) > 0 then
+            for I := Low(MyFiles) to High(MyFiles) do
+              if I >= 0 then
+              Begin
+                MyFiles[I].Free;
+                MyFiles[I]:= Nil;
+              End;
+
+          if length(MyMedia) > 0 then
+            for I := Low(MyMedia) to High(MyMedia) do
+              if I >= 0 then
+              Begin
+                MyMedia[I].Free;
+                MyMedia[I]:= Nil;
+              End;
+
+          if AbrirArquivo.Files.Count > 0 then
+            AbrirArquivo.Files.Clear;
+        end; 
+      End;
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -962,43 +1034,53 @@ var
   AText, sJson, FotoUrl : String;
   Ctt : Int64;
   pvToken, BrandName, pgMetod: String;
+  I: Integer;
 begin
-  FotoUrl := 'https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png';
-  pvToken := txtTokenBanco.Text;//'SEU TOKEN_PROVIDER GERADO NO BOTFATHER PARA PAGAMENTOS';
-  BrandName := 'Visa';
-  pgMetod := 'pm_card_visa';
-                                                                                      //R$10,00
- // MyInvoice := TtdInvoice.Create('Teste Titulo','Descrição', 'www.lmcodenew.com.br','USD',1000);
-  if txtTokenBanco.Text = '' then
-  Begin
-    Showmessage(VRes_Ajuda_Token_Banco);
-    Exit;
-  End;
-  SetLength(MyPrices, 2);
-  MyPrices[0] :=  TtdLabeledPrice.Create(VRes_ProdutoA, 1000);
-  MyPrices[1] :=  TtdLabeledPrice.Create(VRes_ProdutoB, 300);
 
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
-                                 //ID          //TITULO   //DESC               //PLayload      //Token  //Param //Curr  //Prices //ProvData    //Foto
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendInvoice(MyChatId.ID,
-          VRes_Titulo_PG,
-          VRes_Descricao_PG,
-          VRes_PlayLoad_PG,
-          pvToken, pgMetod ,'USD', MyPrices,
-          5478750, //MaxTipAmount
-          [],  //SuggestedTipAmounts = Array of Integer
-          '', //ProviderData
-          FotoUrl, 300, 100, 100,
-          FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0, nil).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Pagamento);
+      try
+        FotoUrl := 'https://user-images.githubusercontent.com/11804577/79389701-fd284580-7f44-11ea-8238-bab525a19caa.png';
+        pvToken := txtTokenBanco.Text;//'SEU TOKEN_PROVIDER GERADO NO BOTFATHER PARA PAGAMENTOS';
+        BrandName := 'Visa';
+        pgMetod := 'pm_card_visa';
+                                                                                            //R$10,00
+        // MyInvoice := TtdInvoice.Create('Teste Titulo','Descrição', 'www.lmcodenew.com.br','USD',1000);
+        if txtTokenBanco.Text = '' then
+        Begin
+          Showmessage(VRes_Ajuda_Token_Banco);
+          Exit;
+        End;
+        SetLength(MyPrices, 2);
+        MyPrices[0] :=  TtdLabeledPrice.Create(VRes_ProdutoA, 1000);
+        MyPrices[1] :=  TtdLabeledPrice.Create(VRes_ProdutoB, 300);      
+
+        MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
+                                   //ID          //TITULO   //DESC               //PLayload      //Token  //Param //Curr  //Prices //ProvData    //Foto
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendInvoice(MyChatId.ID,
+            VRes_Titulo_PG,
+            VRes_Descricao_PG,
+            VRes_PlayLoad_PG,
+            pvToken, pgMetod ,'USD', MyPrices,
+            5478750, //MaxTipAmount
+            [],  //SuggestedTipAmounts = Array of Integer
+            '', //ProviderData
+            FotoUrl, 300, 100, 100,
+            FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,0, nil).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Pagamento);
+        end;
       end;
-    end;
+    finally
+      if Assigned(MyPrices) then 
+        if length(MyPrices) > 0 then
+          for I := Low(MyPrices) to High(MyPrices) do
+            if I >= 0 then
+              MyPrices[I].Free;    
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -1033,38 +1115,46 @@ procedure TForm1.btnEnviarLocalizacaoClick(Sender: TObject);
 var
   lt, lg: Single;
 begin
-  lt := -22.8272758;
-  lg := -43.0292233;
-  MyLocation := TtdLocation.Create(lt,lg);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendLocation(StrToInt64(txtID.Text), MyLocation, False, NIl, LMarkup).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Localizacao);
+      try
+        lt := -22.8272758;
+        lg := -43.0292233;
+        MyLocation := TtdLocation.Create(lt,lg);
+      
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendLocation(StrToInt64(txtID.Text), MyLocation, False, NIl, LMarkup).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Localizacao);
+        end;
       end;
-    end;
+    finally 
+      MyLocation.Free;    
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarNotaDeVideoClick(Sender: TObject);
 begin
-  AbrirArquivo.Filter := VRes_Filtro_Video;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
-    try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVideoNote(StrToInt64(txtID.Text), MyFile, 0, 0, False, Nil, LMarkup).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Nota_Video);
-      end;
-    end;
+      try
+        AbrirArquivo.Filter := VRes_Filtro_Video;
+        if AbrirArquivo.Execute then
+          MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);      
+
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVideoNote(StrToInt64(txtID.Text), MyFile, 0, 0, False, Nil, LMarkup).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Nota_Video);
+        end;
+      end;   
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -1073,49 +1163,68 @@ procedure TForm1.btnEnviarPollClick(Sender: TObject);
 var
   MyStrArray: Array of String;
   MyInputPollOption: TtdInputPollOption;
+  I: Integer;
 begin
-  MyInputPollOption := TtdInputPollOption.Create('');
-  MyStrArray := [
-  'eSeGeCe',
-  'TelegApi',
-  'CloudAPI',
-  'TInjectTelegramBot'];
-  //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
-  MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      memConsole.Lines.Add('Last MSG ID: '+
-        InjectTelegramBot1.SendPoll(MyChatId,
-              VRes_Quem_Desc_Brasil, [MyInputPollOption], False,
-              TtdQuizType.qtQuiz, False, 3, VRes_Ta_Doidao,
-              [], 0, 0, False, False,Nil, LMarkup).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Enquete_Quiz);
+      try
+        MyInputPollOption := TtdInputPollOption.Create('');
+        MyStrArray := [
+        'eSeGeCe',
+        'TelegApi',
+        'CloudAPI',
+        'TInjectTelegramBot'];
+        //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
+        MyChatId  := TtdUserLink.FromID(StrToInt64(txtID.Text));      
+
+        memConsole.Lines.Add('Last MSG ID: '+
+          InjectTelegramBot1.SendPoll(MyChatId,
+                VRes_Quem_Desc_Brasil, [MyInputPollOption], False,
+                TtdQuizType.qtQuiz, False, 3, VRes_Ta_Doidao,
+                [], 0, 0, False, False,Nil, LMarkup).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Enquete_Quiz);
+        end;
       end;
-    end;
+    finally
+      if Assigned(MyStrArray) then 
+        if length(MyStrArray) > 0 then
+          for I := Low(MyStrArray) to High(MyStrArray) do
+            if I >= 0 then
+              MyStrArray[I] := '';
+              
+      MyInputPollOption.Free;
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarStikerClick(Sender: TObject);
 begin
-  AbrirArquivo.Filter := VRes_Filtro_Stiker;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendSticker(StrToInt64(txtID.Text), MyFile,
-          cbDisableNotification.Checked, 0, LMarkup).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Stiker);
+      try
+        AbrirArquivo.Filter := VRes_Filtro_Stiker;
+        if AbrirArquivo.Execute then
+          MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);      
+
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendSticker(StrToInt64(txtID.Text), MyFile,
+            cbDisableNotification.Checked, 0, LMarkup).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Stiker);
+        end;
       end;
-    end;
+    finally
+      MyFile.Free;
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -1124,65 +1233,77 @@ procedure TForm1.btnEnviarVenueClick(Sender: TObject);
 var
   lt, lg: Single;
 begin
-  lt := -22.8272758;
-  lg := -43.0292233;
-///Desta Forma é necessário instanciar o MyLocation e passa-lo como paramentro ao instanciar o MyVenue
- // MyLocation := TtdLocation.Create(lt,lg);
- // MyVenue := TtdVenue.Create(MyLocation, VRes_Ex_Endereco_Digitado, VRes_Ex_Titulo,'',VRes_Ex_Tipo);
- //Desta Forma o MyLocation não precisa ser instanciado pois os parametros de coordenado sãopassados diretamente aqui
- MyVenue := TtdVenue.Create(lt,lg, VRes_Ex_Endereco_Digitado, VRes_Ex_Titulo,'',VRes_Ex_Tipo);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
     try
-      //A Função SendVenue depende do Mylocation
-      //InjectTelegramBot1.SendVenue(StrToInt64(txtID.Text), MyVenue, MyLocation, False, 0, LMarkup);
-      //A Função SendVenue2 NÃO depende do Mylocation
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVenue2(StrToInt64(txtID.Text), MyVenue, False, Nil, LMarkup).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Localizacao);
+      try
+        lt := -22.8272758;
+        lg := -43.0292233;
+        
+        // Desta Forma é necessário instanciar o MyLocation e passa-lo como paramentro ao instanciar o MyVenue
+        // MyLocation := TtdLocation.Create(lt,lg);
+        // MyVenue := TtdVenue.Create(MyLocation, VRes_Ex_Endereco_Digitado, VRes_Ex_Titulo,'',VRes_Ex_Tipo);
+ 
+        //Desta Forma o MyLocation não precisa ser instanciado pois os parametros de coordenado sãopassados diretamente aqui
+        MyVenue := TtdVenue.Create(lt,lg, VRes_Ex_Endereco_Digitado, VRes_Ex_Titulo,'',VRes_Ex_Tipo);
+
+        //A Função SendVenue depende do Mylocation
+        //InjectTelegramBot1.SendVenue(StrToInt64(txtID.Text), MyVenue, MyLocation, False, 0, LMarkup);
+        //A Função SendVenue2 NÃO depende do Mylocation
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVenue2(StrToInt64(txtID.Text), MyVenue, False, Nil, LMarkup).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Localizacao);
+        end;
       end;
-    end;
+    finally
+      MyVenue.Free;
+    end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarVideoClick(Sender: TObject);
 begin
-  AbrirArquivo.Filter := VRes_Filtro_Video;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
-    try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVideo(StrToInt64(txtID.Text), MyFile,VRes_TExto_Video,
-          LParseMode, True, 0, 0, 0, cbDisableNotification.Checked, NIl, LMarkup, cbProtectedContent.Checked).MessageId.ToString);
-      except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Video);
-      end;
-    end;
+      try
+        AbrirArquivo.Filter := VRes_Filtro_Video;
+        if AbrirArquivo.Execute then
+          MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);      
+
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVideo(StrToInt64(txtID.Text), MyFile,VRes_TExto_Video,
+            LParseMode, True, 0, 0, 0, cbDisableNotification.Checked, NIl, LMarkup, cbProtectedContent.Checked).MessageId.ToString);
+        except on e:exception do
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Video);
+        end;
+      end;  
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 procedure TForm1.btnEnviarVozClick(Sender: TObject);
 begin
-  AbrirArquivo.Filter := VRes_Filtro_Voz;
-  if AbrirArquivo.Execute then
-    MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+
   if BotManager1.IsActive then
   begin
     if txtID.Text <> '' then
-    try
-      memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVoice(StrToInt64(txtID.Text), MyFile,VRes_Texto_Voz, LParseMode, 0, False, NIl,LMarkup).MessageId.ToString);
+      try
+        AbrirArquivo.Filter := VRes_Filtro_Voz;
+        if AbrirArquivo.Execute then
+          MyFile := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);      
+
+        memConsole.Lines.Add('Last MSG ID: '+InjectTelegramBot1.SendVoice(StrToInt64(txtID.Text), MyFile,VRes_Texto_Voz, LParseMode, 0, False, NIl,LMarkup).MessageId.ToString);
       except on e:exception do
-      begin
-        memConsole.Lines.Add(VRes_Falha+VRes_Grav_Voz);
-      end;
-    end;
+        begin
+          memConsole.Lines.Add(VRes_Falha+VRes_Grav_Voz);
+        end;
+      end;    
   end
   else
     memConsole.Lines.Add(VRes_Ative_Servico);
@@ -1195,11 +1316,15 @@ begin
   Begin
     if txtID.Text <> '' then
     try
-      MyChatId := TtdUserLink.FromID(StrToInt64(txtID.Text));
-      MSG := TtdMessage(BotManager1.Bot.SendMessage(MyChatId.ID, VRes_Este_Seu_ID + MyChatId.ID.ToString, LParseMode, Nil, cbDisableNotification.Checked, Nil, LMarkup, cbProtectedContent.Checked));
+      try
+        MyChatId := TtdUserLink.FromID(StrToInt64(txtID.Text));
+        MSG := TtdMessage(BotManager1.Bot.SendMessage(MyChatId.ID, VRes_Este_Seu_ID + MyChatId.ID.ToString, LParseMode, Nil, cbDisableNotification.Checked, Nil, LMarkup, cbProtectedContent.Checked));
+      except on E: Exception do
+        memConsole.Lines.Add(VRes_Falha_Envio_Destinatario + E.Message);
+      end;
+    finally
       memConsole.Lines.Add('Last MSG ID: '+IntToStr(MSG.MessageId));
-    except on E: Exception do
-      memConsole.Lines.Add(VRes_Falha_Envio_Destinatario + E.Message);
+      MSG := Nil;
     end;
   End
   else
@@ -1666,6 +1791,67 @@ begin
     memConsole.Lines.Add(VRes_Ative_Servico);
 end;
 
+procedure TForm1.Button13Click(Sender: TObject);
+var
+  I : Integer;
+  F: Integer;
+begin
+  if FileCount > 10 then
+    FileCount := 0
+  else
+    FileCount := FileCount + 1;
+
+{
+InputMediaAnimation
+InputMediaDocument
+InputMediaAudio
+InputMediaPhoto
+InputMediaVideo
+
+
+medias is Array of InputMediaAudio, InputMediaDocument, InputMediaPhoto and InputMediaVideo
+}
+
+  AbrirArquivo.Filter := VRes_Filtro_MediaGroup;//VRes_Filtro_Foto_Video;
+  if (FileCount <= 10) or (AbrirArquivo.Files.Count <= 10) then // Limite de arquivos da API
+  Begin
+    if AbrirArquivo.Execute then
+    Begin
+      if AbrirArquivo.Files.Count > 1 then
+      Begin
+//        SetLength(MyFiles, AbrirArquivo.Files.Count);
+        memConsole.Lines.Add('Files.Count: '+AbrirArquivo.Files.Count.ToString);
+        memConsole.Lines.Add('FileCount: '+FileCount.ToString);
+        for I := 0 to AbrirArquivo.Files.Count -1 do
+          memConsole.Lines.Add('Files.Name '+I.ToString+': '+AbrirArquivo.Files.KeyNames[I]);
+//          MyFiles[I] := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.Files.Names[I]);
+      End
+        Else
+      Begin
+//        SetLength(MyFiles, FileCount);
+//        MyFiles[FileCount - 1] := TtdFileToSend.Create(TtdFileToSendTag.FromFile,AbrirArquivo.FileName);
+      End;
+      {
+      SetLength(MyMedia, Length(MyFiles));
+      if (ExtractFileExt(AbrirArquivo.FileName) = '.png') or
+         (ExtractFileExt(AbrirArquivo.FileName) = '.jpg') or
+         (ExtractFileExt(AbrirArquivo.FileName) = '.jpeg') or
+         (ExtractFileExt(AbrirArquivo.FileName) = '.bmp') then
+        MyMedia[FileCount - 1] := TtdInputMediaPhoto.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);
+      if ExtractFileExt(AbrirArquivo.FileName) = '.mp4' then
+        MyMedia[FileCount - 1] := TtdInputMediaVideo.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);
+      if (ExtractFileExt(AbrirArquivo.FileName) = '.mp3') or
+         (ExtractFileExt(AbrirArquivo.FileName) = '.wav') then
+        MyMedia[FileCount - 1] := TtdInputMediaAudio.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup)
+      else
+        MyMedia[FileCount - 1] := TtdInputMediaDocument.Create(MyFiles[FileCount - 1], VRes_Teste_MidiaGroup);  }
+    End;
+
+  End
+  Else
+    Showmessage(VRes_Limite_Arquivos_MediaGroup);
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   //Outra forma de Pegar o link com os dados do usuario e remeter na mensagem
@@ -1944,11 +2130,14 @@ Begin
   result := FloatToStr(floatValue);
 End;
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  I: Integer;
 begin
 //  if InjectTelegramReceiverService1.IsActive then
 //    InjectTelegramReceiverService1.Stop;
   if BotManager1.IsActive then
     BotManager1.Stop;
+
 end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin

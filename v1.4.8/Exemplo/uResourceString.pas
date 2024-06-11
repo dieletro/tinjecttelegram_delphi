@@ -11,7 +11,8 @@ ResourceString
   ARes_Filtro_Stiker = 'Stiker|*.jpeg;*.jpg;*.gif;*.png;*.bmp;*.tgs';
   ARes_Filtro_Todos = 'Todos os Arquivos|*.*';
   ARes_Filtro_Audio = 'Audio|*.mp3;*.wav;*.ogg';
-
+  ARes_Filtro_Documentos = 'Documentos de Texto|*.doc;*.docx;*.txt;*.cvs;*.xls;*.xlsx;*.ppt;*.pptx|Todos|*.*';
+  ARes_Filtro_MediaGroup = 'Grupo de Media|*.jpeg;*.jpg;*.gif;*.png;*.bmp;*.mp4;*.wmv;*.vid;*.flv;*.m4v;*.f4v;*.lrv;*.mp3;*.wav;*.ogg;*.odg;*.odp;*.ods;*.odt;*.doc;*.docx;*.txt;*.cvs;*.xls;*.xlsx;*.ppt;*.pptx';
   //
   ARes_Animacao = 'Animação.';
   ARes_Dado = ' Dado.';

@@ -1125,13 +1125,13 @@ InputMediaVideo
     FTitle: string;
     FPerformer: string;
     FDuration: Integer;
-    FThumbnail: TtdFileToSend;
+//    FThumbnail: TtdFileToSend;
   public
-    constructor Create(AMedia: TtdFileToSend; const ACaption: string = ''; AType: String = '';
+    constructor Create(AMedia: TtdFileToSend; const ACaption: string = '';
       AParseMode: String = ''; const ACaptionEntities: TArray<ItdMessageEntity> = [];
       ADuration: Integer = 0; APerformer: String = ''; ATitle: String = ''); reintroduce;
-    [JsonName('thumbnail')]
-    property Thumbnail: TtdFileToSend read FThumbnail write FThumbnail;
+//    [JsonName('thumbnail')]
+//    property Thumbnail: TtdFileToSend read FThumbnail write FThumbnail;
     [JsonName('duration')]
     property Duration: Integer read FDuration write FDuration;
     [JsonName('performer')]
@@ -1374,6 +1374,7 @@ constructor TtdInputMediaAnimation.Create(AMedia: TtdFileToSend;
   const ACaption: string; ADuration: Integer; APerformer: String; ATitle: String);
 begin
   inherited Create(AMedia, ACaption);
+  FType := 'animation';
   FDuration := ADuration;
 end;
 
@@ -1383,19 +1384,22 @@ constructor TtdInputMediaDocument.Create(AMedia: TtdFileToSend;
   const ACaption: string; ADisableContentTypeDetection: Boolean);
 begin
   inherited Create(AMedia, ACaption);
+  FType := 'document';
   FDisableContentTypeDetection := ADisableContentTypeDetection;
 end;
 
 { TtdInputMediaAudio }
 
 constructor TtdInputMediaAudio.Create(AMedia: TtdFileToSend; const ACaption: string;
-      AType: String; AParseMode: String; const ACaptionEntities: TArray<ItdMessageEntity>;
+      AParseMode: String; const ACaptionEntities: TArray<ItdMessageEntity>;
       ADuration: Integer; APerformer: String; ATitle: String);
 begin
-  inherited Create(AType, AMedia, ACaption, AParseMode, ACaptionEntities);
+  inherited Create('audio', AMedia, ACaption, AParseMode, ACaptionEntities);
+//  FType := 'audio';
   FDuration := ADuration;
   FPerformer := APerformer;
   FTitle := ATitle;
+//  FThumbnail := Nil;
 end;
 
 End.

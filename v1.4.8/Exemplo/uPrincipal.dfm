@@ -3526,7 +3526,7 @@ object Form1: TForm1
     Top = 169
     Width = 740
     Height = 344
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Align = alTop
     TabOrder = 0
     object TabSheet2: TTabSheet
@@ -3652,6 +3652,16 @@ object Form1: TForm1
         Height = 202
         ScrollBars = ssBoth
         TabOrder = 9
+      end
+      object Button13: TButton
+        Left = 575
+        Top = 90
+        Width = 137
+        Height = 25
+        Caption = 'teste'
+        Default = True
+        TabOrder = 10
+        OnClick = Button13Click
       end
     end
     object TabSheet1: TTabSheet
@@ -4226,8 +4236,9 @@ object Form1: TForm1
   object AbrirArquivo: TOpenDialog
     Filter = 'Imagens|*.jpeg;*.jpg;*.gif;*.png;*.bmp'
     FilterIndex = 0
+    Options = [ofHideReadOnly, ofAllowMultiSelect, ofEnableSizing]
     Left = 608
-    Top = 298
+    Top = 314
   end
   object InjectTelegramBot1: TInjectTelegramBot
     Logger = InjectTelegramExceptionManagerUI1

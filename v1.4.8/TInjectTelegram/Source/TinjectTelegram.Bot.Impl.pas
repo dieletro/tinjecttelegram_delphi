@@ -3951,18 +3951,26 @@ begin
     .AddParameter('reply_parameters', TInterfacedObject(ReplyParameters), nil, False) //
     .AddParameter('protect_content ', ProtectContent, False, False) //
     .AddParameter('message_thread_id ', MessageThreadId, 0, False); //
-  for LMedia in AMedia do
-  begin
-    case LMedia.GetFileToSend.Tag of
-      TtdFileToSendTag.FromFile:
-        LRequest.AddRawFile(ExtractFileName(LMedia.GetFileToSend.Data), LMedia.GetFileToSend.Data);
-      TtdFileToSendTag.FromStream:
-        LRequest.AddRawStream(LMedia.GetFileToSend.Data, LMedia.GetFileToSend.Content,
-          LMedia.GetFileToSend.Data);
+
+  try
+    for LMedia in AMedia do
+    begin
+      case LMedia.GetFileToSend.Tag of
+        TtdFileToSendTag.FromFile:
+          LRequest.AddRawFile(ExtractFileName(LMedia.GetFileToSend.Data), LMedia.GetFileToSend.Data);
+        TtdFileToSendTag.FromStream:
+          LRequest.AddRawStream(LMedia.GetFileToSend.Data, LMedia.GetFileToSend.Content,
+            LMedia.GetFileToSend.Data);
+      end;
     end;
+
+  finally
+    Result := GetArrayFromMethod<ItdMessage>(TtdMessage, LRequest.Execute);
+    Logger.Leave(Self, 'SendMediaGroup');
+
+    //LMedia.Free;
   end;
-  Result := GetArrayFromMethod<ItdMessage>(TtdMessage, LRequest.Execute);
-  Logger.Leave(Self, 'SendMediaGroup');
+
 end;
 function TInjectTelegramBot.SendPhoto(
   const ChatId: TtdUserLink;
@@ -4364,26 +4372,37 @@ function TInjectTelegramBot.SendDocument(
       const BusinessConnectionId: string): ItdMessage;
 var
   LTmpJson: String;
+  I: Integer;
 begin
-  Logger.Enter(Self, 'SendDocument');
-  LTmpJson := TJsonUtils.ArrayToJString<TtdMessageEntity>(CaptionEntities);
-  Result := TtdMessage.Create(GetRequest.SetMethod('sendDocument') //
-    .AddParameter('business_connection_id ', BusinessConnectionId, '', False) //
-    .AddParameter('chat_id', ChatId, 0, True) //
-    .AddParameter('document', Document, nil, True) //
-{ TODO 5 -oRuan Diego -csendDocument : Bug Fix 00123 }
-//    .AddParameter('thumbnail', Thumbnail, nil, False) //
-    .AddParameter('caption', Caption, '', False) //
-    .AddParameter('parse_mode', ParseMode.ToString, '', False) //
-    .AddParameter('caption_entities', LTmpJson, '[]', False) //
-    .AddParameter('disable_content_type_detection', DisableContentTypeDetection, False, False) //
-    .AddParameter('disable_notification', DisableNotification, False, False) //
-    .AddParameter('reply_parameters', TInterfacedObject(ReplyParameters), nil, False) //
-    .AddParameter('protect_content ', ProtectContent, False, False) //
-    .AddParameter('message_thread_id ', MessageThreadId, 0, False) //
-    .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
-    .Execute);
-  Logger.Leave(Self, 'SendDocument');
+  try
+    Logger.Enter(Self, 'SendDocument');
+    LTmpJson := TJsonUtils.ArrayToJString<TtdMessageEntity>(CaptionEntities);
+    Result := TtdMessage.Create(GetRequest.SetMethod('sendDocument') //
+      .AddParameter('business_connection_id ', BusinessConnectionId, '', False) //
+      .AddParameter('chat_id', ChatId, 0, True) //
+      .AddParameter('document', Document, nil, True) //
+  { TODO 5 -oRuan Diego -csendDocument : Bug Fix 00123 }
+  //    .AddParameter('thumbnail', Thumbnail, nil, False) //
+      .AddParameter('caption', Caption, '', False) //
+      .AddParameter('parse_mode', ParseMode.ToString, '', False) //
+      .AddParameter('caption_entities', LTmpJson, '[]', False) //
+      .AddParameter('disable_content_type_detection', DisableContentTypeDetection, False, False) //
+      .AddParameter('disable_notification', DisableNotification, False, False) //
+      .AddParameter('reply_parameters', TInterfacedObject(ReplyParameters), nil, False) //
+      .AddParameter('protect_content ', ProtectContent, False, False) //
+      .AddParameter('message_thread_id ', MessageThreadId, 0, False) //
+      .AddParameter('reply_markup', TInterfacedObject(ReplyMarkup), nil, False) //
+      .Execute);
+    Logger.Leave(Self, 'SendDocument');
+  finally
+    LTmpJson := '';
+    if Length(CaptionEntities) > 0 then
+      for I := Low(CaptionEntities) to High(CaptionEntities) do
+        CaptionEntities[I].Free;
+    TInterfacedObject(ReplyMarkup).Free;
+    TInterfacedObject(ReplyParameters).Free;
+  end;
+
 end;
 function TInjectTelegramBot.banChatMember(const ChatId: TtdUserLink; const UserId:
   Int64; const UntilDate: TDateTime; const RevokeMessages: Boolean): Boolean;
